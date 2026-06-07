@@ -1,0 +1,1815 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="background.css" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --background: #071425;
+        --surface: #101b2c;
+        --field: #071425;
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.7);
+        --soft: rgba(255, 255, 255, 0.5);
+        --red: #d11217;
+        --blue: #1973c9;
+        --gradient: linear-gradient(100.5deg, #00346f 0%, #d11217 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--background);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse at 0% 0%,
+            rgba(0, 119, 255, 0.34) 0%,
+            rgba(0, 88, 190, 0.2) 34%,
+            rgba(0, 52, 111, 0.08) 58%,
+            transparent 76%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(0, 119, 255, 0.14) 0%,
+            rgba(0, 52, 111, 0.08) 44%,
+            transparent 72%
+          );
+        filter: blur(70px);
+        content: "";
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .profile-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .profile-page .site-menu__item.is-active {
+        color: var(--levelup-muted-strong);
+      }
+
+      .profile-thumb {
+        width: 42px;
+        height: 42px;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .content {
+        padding: 26px 34px 56px;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 0 22px;
+        font-size: clamp(30px, 3.5vw, 40px);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .section-title svg {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 auto;
+      }
+
+      .section-title img {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 auto;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+        opacity: 0.95;
+      }
+
+      .panel {
+        position: relative;
+        border: 1.25px solid var(--border);
+        border-radius: 10px;
+        background: rgba(16, 27, 44, 0.72);
+        padding: 10px;
+      }
+
+      .edit-icon {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .hero-card {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 28px;
+        align-items: center;
+        min-height: 168px;
+        margin-bottom: 10px;
+        padding: 18px 28px;
+      }
+
+      .photo-block {
+        text-align: center;
+      }
+
+      .avatar {
+        width: 84px;
+        height: 84px;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .upload-button {
+        display: none;
+        width: 118px;
+        height: 23px;
+        margin: 8px auto 0;
+        place-items: center;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.34);
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .hero-card.is-editing .upload-button {
+        display: grid;
+        cursor: pointer;
+      }
+
+      .hero-copy h1 {
+        margin: 0;
+        font-size: clamp(28px, 3.1vw, 38px);
+        font-weight: 800;
+        line-height: 1.05;
+      }
+
+      .hero-copy h2 {
+        margin: 4px 0 10px;
+        font-size: clamp(18px, 2vw, 25px);
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .hero-copy p {
+        max-width: 800px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.25;
+      }
+
+      .resume-grid {
+        display: grid;
+        grid-template-columns: minmax(270px, 360px) 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .column {
+        display: grid;
+        gap: 10px;
+      }
+
+      .panel-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 10px;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .panel-title svg,
+      .panel-title img {
+        width: 23px;
+        height: 23px;
+        object-fit: contain;
+        flex: 0 0 auto;
+      }
+
+      .icon-white {
+        filter: brightness(0) invert(1);
+        opacity: 0.95;
+      }
+
+      .personal-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .personal-item,
+      .list-box,
+      .certification-list {
+        overflow: hidden;
+        border: 1.25px solid var(--border);
+        border-radius: 10px;
+        background: var(--field);
+      }
+
+      .personal-item {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 10px;
+        align-items: center;
+        min-height: 54px;
+        padding: 8px 11px;
+      }
+
+      .personal-item svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .personal-item img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+        opacity: 0.95;
+      }
+
+      .personal-item strong {
+        display: block;
+        font-size: 15px;
+        line-height: 1.1;
+      }
+
+      .personal-item span {
+        display: block;
+        color: var(--muted);
+        font-size: 15px;
+        margin-top: 2px;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag-list > span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1.25px solid var(--border);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 13px;
+        font-weight: 700;
+        padding: 5px 10px;
+      }
+
+      .tag-remove,
+      .remove-entry,
+      .remove-certification,
+      .remove-project {
+        display: none;
+        width: 18px;
+        height: 18px;
+        place-items: center;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(209, 18, 23, 0.9);
+        color: #fff;
+        font-size: 12px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .tag-remove {
+        width: 14px;
+        height: 14px;
+        background: rgba(255, 255, 255, 0.14);
+        font-size: 10px;
+      }
+
+      .panel.is-editing .tag-remove {
+        display: grid;
+      }
+
+      .remove-entry,
+      .remove-certification,
+      .remove-project {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+      }
+
+      .panel.is-editing .remove-entry,
+      .panel.is-editing .remove-certification,
+      .panel.is-editing .remove-project {
+        display: grid;
+      }
+
+      .skill-panel {
+        padding: 10px 12px;
+      }
+
+      .entry,
+      .certification-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 10px;
+        align-items: center;
+        border-bottom: 1.25px solid var(--border);
+        padding: 10px 12px;
+      }
+
+      .entry:last-child,
+      .certification-card:last-child {
+        border-bottom: 0;
+      }
+
+      .entry img,
+      .certification-card img {
+        width: 46px;
+        height: 46px;
+        align-self: center;
+        border-radius: 10px;
+        object-fit: contain;
+        background: #fff;
+      }
+
+      .entry h3,
+      .certification-card strong {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 800;
+        line-height: 1.05;
+      }
+
+      .entry strong,
+      .certification-card span {
+        display: block;
+        margin-top: 2px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .entry p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.18;
+      }
+
+      [contenteditable="true"] {
+        border-radius: 6px;
+        outline: 1px solid rgba(25, 115, 201, 0.75);
+        background: rgba(25, 115, 201, 0.08);
+        color: #fff !important;
+        padding: 1px 3px;
+      }
+
+      .add-form {
+        display: none;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .panel.is-editing .add-form,
+      .panel.is-adding .add-form {
+        display: grid;
+      }
+
+      .add-form input {
+        min-width: 0;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: var(--field);
+        color: #fff;
+        font-size: 12px;
+        outline: none;
+        padding: 7px 9px;
+      }
+
+      .add-form button {
+        border: 0;
+        border-radius: 8px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 7px 10px;
+      }
+
+      .portfolio {
+        margin-top: 40px;
+      }
+
+      .portfolio-panel {
+        min-height: 512px;
+        padding: 24px 44px 30px;
+        text-align: center;
+      }
+
+      .portfolio-panel h3 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .portfolio-panel p {
+        max-width: 540px;
+        margin: 9px auto 22px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: 260px 296px 260px 296px;
+        gap: 12px;
+        width: 1184px;
+        max-width: 100%;
+        margin: 0 auto;
+        align-items: start;
+        justify-content: center;
+      }
+
+      .portfolio-stack {
+        display: grid;
+        gap: 12px;
+        width: 296px;
+        grid-template-rows: repeat(2, 192px);
+      }
+
+      .portfolio-track {
+        position: relative;
+        overflow: hidden;
+        width: min(1240px, 100%);
+        margin: 0 auto;
+      }
+
+      .portfolio-pages {
+        display: flex;
+        transition: transform 0.25s ease;
+      }
+
+      .portfolio-page {
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .portfolio-card {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        min-height: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: transparent;
+      }
+
+      .portfolio-stack .portfolio-card {
+        width: 296px;
+        height: 192px;
+        min-height: 0;
+      }
+
+      .portfolio-card img {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: contain;
+        display: block;
+        image-rendering: auto;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        transition:
+          transform 0.28s ease,
+          filter 0.28s ease;
+      }
+
+      .portfolio-card.tall {
+        width: 260px;
+        height: 396px;
+        min-height: 0;
+      }
+
+      .portfolio-card.tall img {
+        height: 100%;
+        max-height: none;
+      }
+
+      .portfolio-info {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 14px 16px;
+        background: linear-gradient(
+          180deg,
+          rgba(7, 20, 37, 0.22) 0%,
+          rgba(7, 20, 37, 0.94) 100%
+        );
+        color: #fff;
+        text-align: left;
+        opacity: 0;
+        transition: opacity 0.22s ease;
+      }
+
+      .portfolio-info h4 {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.05;
+      }
+
+      .portfolio-info p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 11px;
+        line-height: 1.12;
+      }
+
+      .portfolio-card:hover img {
+        filter: brightness(0.48);
+        transform: translateZ(0) scale(1.02);
+      }
+
+      .portfolio-card:hover .portfolio-info {
+        opacity: 1;
+      }
+
+      .zoom-project {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 3;
+        display: none;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 0;
+        border-radius: 0;
+        background: rgba(7, 20, 37, 0.22);
+        color: #fff;
+        cursor: pointer;
+        transform: translate(-50%, -50%);
+        padding: 0;
+      }
+
+      .zoom-project::before {
+        width: 34px;
+        height: 34px;
+        background: #fff;
+        content: "";
+        mask: url("https://img.icons8.com/external-creatype-outline-colourcreatype/64/external-zoom-interface-a2-creatype-outline-colourcreatype.png")
+          center / contain no-repeat;
+        -webkit-mask: url("https://img.icons8.com/external-creatype-outline-colourcreatype/64/external-zoom-interface-a2-creatype-outline-colourcreatype.png")
+          center / contain no-repeat;
+      }
+
+      .zoom-project img {
+        display: none;
+      }
+
+      .portfolio-card:hover .zoom-project {
+        display: grid;
+      }
+
+      .portfolio-panel.is-editing .zoom-project {
+        display: none;
+      }
+
+      .remove-project {
+        z-index: 4;
+      }
+
+      .portfolio-edit {
+        display: none;
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .portfolio-panel.is-editing .portfolio-edit {
+        display: grid;
+      }
+
+      .portfolio-edit input,
+      .portfolio-edit textarea {
+        width: 100%;
+        min-width: 0;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: var(--field);
+        color: #fff;
+        font: inherit;
+        font-size: 11px;
+        outline: none;
+        padding: 6px 8px;
+      }
+
+      .portfolio-edit textarea {
+        min-height: 52px;
+        resize: vertical;
+      }
+
+      .portfolio-arrow {
+        display: none;
+        position: absolute;
+        top: 50%;
+        z-index: 3;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border: 1.25px solid var(--border);
+        border-radius: 50%;
+        background: rgba(7, 20, 37, 0.88);
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+        transform: translateY(-50%);
+      }
+
+      .portfolio-panel.has-extra .portfolio-arrow {
+        display: grid;
+      }
+
+      .portfolio-arrow--prev {
+        left: 20px;
+      }
+
+      .portfolio-arrow--next {
+        right: 20px;
+      }
+
+      .save-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 28px;
+      }
+
+      .save-button {
+        display: grid;
+        width: min(240px, 100%);
+        min-height: 50px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .site-footer {
+        margin-top: 2px;
+      }
+
+      .project-zoom {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: rgba(3, 12, 24, 0.82);
+        backdrop-filter: blur(8px);
+      }
+
+      .project-zoom.is-open {
+        display: flex;
+      }
+
+      .project-zoom__content {
+        position: relative;
+        display: grid;
+        width: min(920px, 92vw);
+        max-height: 88vh;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+        overflow: hidden;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .project-zoom__content img {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        background: #061426;
+      }
+
+      .project-zoom__text {
+        padding: 14px 18px 16px;
+        text-align: left;
+      }
+
+      .project-zoom__text h3 {
+        margin: 0 0 6px;
+        color: #fff;
+        font-size: 20px;
+        line-height: 1.1;
+      }
+
+      .project-zoom__text p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .project-zoom__close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        border: 1.25px solid rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        background: rgba(7, 20, 37, 0.78);
+        color: #fff;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      @media (max-width: 980px) {
+        .content {
+          padding: 24px 18px 56px;
+        }
+
+        .hero-card,
+        .resume-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-card {
+          text-align: center;
+          padding: 24px 18px;
+        }
+
+        .portfolio-panel {
+          padding: 22px 24px 26px;
+        }
+
+        .portfolio-track {
+          width: min(560px, 100%);
+        }
+
+        .portfolio-grid {
+          grid-template-columns: 110px 126px 110px 126px;
+          gap: 8px;
+          width: 502px;
+          max-width: 100%;
+        }
+
+        .portfolio-stack {
+          width: 126px;
+          gap: 8px;
+          grid-template-rows: repeat(2, 80px);
+        }
+
+        .portfolio-stack .portfolio-card {
+          width: 126px;
+          height: 80px;
+        }
+
+        .portfolio-card.tall {
+          width: 110px;
+          height: 168px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="profile-page">
+      <div id="site-menu" data-active="dashboard" data-auth="true"></div>
+
+      <section class="content">
+        <h1 class="section-title">
+          <img src="https://img.icons8.com/ios/50/resume.png" alt="resume" />
+          Currículo
+        </h1>
+
+        <article class="panel hero-card">
+          <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 20h4l11-11-4-4L4 16v4z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <div class="photo-block">
+            <img
+              class="avatar"
+              src="IMAGENS/FOTO_PERFIL.png"
+              alt="Foto de perfil"
+            />
+            <span class="upload-button">Fazer Upload</span>
+          </div>
+          <div class="hero-copy">
+            <h1>Victor Hugo Braga Alcantara</h1>
+            <h2>Bacharelado em Design</h2>
+            <p>
+              Estudante de Design apaixonado por criar experiências digitais que
+              conectam pessoas. Com vivência em atendimento e olhar afiado para
+              UI/UX, busco unir estética, acessibilidade e funcionalidade.
+              Idealizador do projeto Voya. Especialista em prototipagem e sempre
+              em busca de resolver problemas complexos com soluções visuais
+              simples e elegantes.
+            </p>
+          </div>
+        </article>
+
+        <section class="resume-grid">
+          <aside class="column">
+            <article class="panel">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="8"
+                    r="4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M4 21c1.2-5 5-7 8-7s6.8 2 8 7"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  /></svg
+                >Dados pessoais
+              </h2>
+              <div class="personal-list">
+                <div class="personal-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M4 6h16v12H4z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M4 7l8 6 8-6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Email:</strong
+                    ><span>victor.hugo.aabb2@gmail.com</span>
+                  </div>
+                </div>
+                <div class="personal-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M7 4l3 5-2 2c1.2 2.4 2.6 3.8 5 5l2-2 5 3c-.3 2-1.5 3-3.2 3C9.8 20 4 14.2 4 7.2 4 5.5 5 4.3 7 4z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Telefone:</strong><span>(11) 99654-8764</span>
+                  </div>
+                </div>
+                <div class="personal-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="4"
+                      y="5"
+                      width="16"
+                      height="17"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 3v4M16 3v4M4 10h16"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Data de nascimento</strong><span>05/06/2001</span>
+                  </div>
+                </div>
+                <div class="personal-item">
+                  <img
+                    src="https://img.icons8.com/ios-filled/50/gender.png"
+                    alt="gender"
+                  />
+                  <div><strong>Gênero</strong><span>Homem Cisgênero</span></div>
+                </div>
+                <div class="personal-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <circle
+                      cx="12"
+                      cy="10"
+                      r="2.5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Localização</strong><span>São Paulo, SP</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel" data-add-type="certification">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <img
+                  class="icon-white"
+                  src="https://img.icons8.com/ios/50/diploma.png"
+                  alt="diploma"
+                />Certificações
+              </h2>
+              <div class="certification-list">
+                <div class="certification-card">
+                  <img src="IMAGENS/Rectangle 30.png" alt="" />
+                  <div>
+                    <strong>HTML E CSS - Do básico ao avançado</strong
+                    ><span>Udemy</span>
+                  </div>
+                </div>
+              </div>
+              <form class="add-form certification-form">
+                <input type="text" placeholder="Nome da certificação" />
+                <input type="text" placeholder="Instituição" />
+                <input type="text" placeholder="IMAGENS/certificado.png" />
+                <button type="submit">Adicionar</button>
+              </form>
+            </article>
+          </aside>
+
+          <section class="column">
+            <article class="panel skill-panel" data-add-type="hard-skill">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M13 2L4 14h8l-1 8 9-12h-8l1-8z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  /></svg
+                >Hard Skills
+              </h2>
+              <div class="tag-list">
+                <span>Photoshop</span><span>Illustrator</span><span>Figma</span
+                ><span>CSS3</span><span>HTML5</span>
+              </div>
+              <form class="add-form">
+                <input type="text" placeholder="Nome da hard skill" /><button
+                  type="submit"
+                >
+                  Adicionar
+                </button>
+              </form>
+            </article>
+
+            <article class="panel skill-panel" data-add-type="soft-skill">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <img
+                  class="icon-white"
+                  src="https://img.icons8.com/comic/100/brain.png"
+                  alt="brain"
+                />Soft Skills
+              </h2>
+              <div class="tag-list">
+                <span>Empatia e Escuta Ativa</span
+                ><span>Comunicação Assertiva</span
+                ><span>Resolução de Problemas</span><span>Adaptabilidade</span
+                ><span>Organização e Gestão de Tempo</span
+                ><span>Colaboração e Trabalho em Equipe</span>
+              </div>
+              <form class="add-form">
+                <input type="text" placeholder="Nome da soft skill" /><button
+                  type="submit"
+                >
+                  Adicionar
+                </button>
+              </form>
+            </article>
+
+            <article class="panel" data-add-type="experience">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <rect
+                    x="4"
+                    y="7"
+                    width="16"
+                    height="13"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  /></svg
+                >Experiência Profissional
+              </h2>
+              <div class="list-box">
+                <div class="entry">
+                  <img src="IMAGENS/COCA-COLA.png" alt="" />
+                  <div>
+                    <h3>Assistente Administrativo</h3>
+                    <strong>Coca-cola FEMSA</strong>
+                    <p>
+                      Sólida vivência em rotinas administrativas e contato
+                      direto com o público. Ágil na resolução de problemas e
+                      focado em garantir a organização e eficiência das
+                      operações do dia a dia.
+                    </p>
+                  </div>
+                </div>
+                <div class="entry">
+                  <img src="IMAGENS/AMIL.png" alt="" />
+                  <div>
+                    <h3>Atendente de Relacionamento</h3>
+                    <strong>Amil Assistência Médica</strong>
+                    <p>
+                      Experiência focada no relacionamento com o público,
+                      prestando suporte ágil e humanizado. Responsável por
+                      receber solicitações, mediar conflitos e acompanhar todo o
+                      fluxo do atendimento.
+                    </p>
+                  </div>
+                </div>
+                <div class="entry">
+                  <img src="IMAGENS/NATURA.png" alt="" />
+                  <div>
+                    <h3>Jovem Aprendiz</h3>
+                    <strong>Natura</strong>
+                    <p>
+                      Experiência inicial como Jovem Aprendiz focada no suporte
+                      administrativo, organização de arquivos e controle de
+                      documentos.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <form class="add-form entry-form">
+                <input type="text" placeholder="Cargo" />
+                <input type="text" placeholder="Empresa" />
+                <input type="text" placeholder="Descrição" />
+                <input type="text" placeholder="IMAGENS/empresa.png" />
+                <button type="submit">Adicionar</button>
+              </form>
+            </article>
+
+            <article class="panel" data-add-type="education">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 20h4l11-11-4-4L4 16v4z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h2 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 4L21 9l-9 5-9-5 9-5z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6 12v5l6 3 6-3v-5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  /></svg
+                >Educação
+              </h2>
+              <div class="list-box">
+                <div class="entry">
+                  <img src="IMAGENS/ENSINO_MÉDIO.png" alt="" />
+                  <div>
+                    <h3>Ensino Médio</h3>
+                    <strong
+                      >E.E. Exemplo Qualquer de Escola de Ensino Médio</strong
+                    >
+                    <p>2019 - 2021</p>
+                  </div>
+                </div>
+                <div class="entry">
+                  <img src="IMAGENS/FIAMFAAM.png" alt="" />
+                  <div>
+                    <h3>Bacharelado em Design</h3>
+                    <strong>FMU | FIAM FAAM</strong>
+                    <p>07/2024 - 06/2028</p>
+                  </div>
+                </div>
+              </div>
+              <form class="add-form entry-form">
+                <input type="text" placeholder="Curso" />
+                <input type="text" placeholder="Instituição" />
+                <input type="text" placeholder="Período" />
+                <input type="text" placeholder="IMAGENS/instituicao.png" />
+                <button type="submit">Adicionar</button>
+              </form>
+            </article>
+          </section>
+        </section>
+
+        <section class="portfolio">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <rect
+                x="3"
+                y="7"
+                width="18"
+                height="14"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M3 13h18" stroke="currentColor" stroke-width="2" />
+            </svg>
+            Portfólio
+          </h2>
+
+          <article class="panel portfolio-panel">
+            <svg class="edit-icon" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 20h4l11-11-4-4L4 16v4z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <h3>Meus Projetos</h3>
+            <p>
+              Uma seleção de trabalhos que refletem minha abordagem ao design —
+              intencional, funcional e visualmente marcante.
+            </p>
+            <div class="portfolio-track">
+              <button
+                class="portfolio-arrow portfolio-arrow--prev"
+                type="button"
+                aria-label="Projetos anteriores"
+              >
+                ‹
+              </button>
+              <div class="portfolio-pages">
+                <div class="portfolio-page">
+                  <div class="portfolio-grid">
+                    <figure class="portfolio-card tall">
+                      <img
+                        src="IMAGENS/PROJETO_1.png"
+                        alt="Projeto de design gráfico"
+                      />
+                      <figcaption class="portfolio-info">
+                        <h4>Projeto em Design Gráfico</h4>
+                        <p>
+                          Projeto desenvolvido na disciplinas tal, com intuito
+                          tal,. Meu maior desafio foi tal, onde também conseguir
+                          adiquirir conhecimentos de tal coisa
+                        </p>
+                      </figcaption>
+                    </figure>
+                    <div class="portfolio-stack">
+                      <figure class="portfolio-card">
+                        <img
+                          src="IMAGENS/PROJETO_2.png"
+                          alt="Projeto de interfaces"
+                        />
+                        <figcaption class="portfolio-info">
+                          <h4>Projeto em Design de Interfaces</h4>
+                          <p>
+                            Projeto desenvolvido na disciplinas tal, com intuito
+                            tal,. Meu maior desafio foi tal, onde também
+                            conseguir adiquirir conhecimentos de tal coisa
+                          </p>
+                        </figcaption>
+                      </figure>
+                      <figure class="portfolio-card">
+                        <img
+                          src="IMAGENS/PROJETO_3.png"
+                          alt="Projeto de serviços"
+                        />
+                        <figcaption class="portfolio-info">
+                          <h4>Projeto em Design de Serviços</h4>
+                          <p>
+                            Projeto desenvolvido na disciplinas tal, com intuito
+                            tal,. Meu maior desafio foi tal, onde também
+                            conseguir adiquirir conhecimentos de tal coisa
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </div>
+                    <figure class="portfolio-card tall">
+                      <img
+                        src="IMAGENS/PROJETO_4.png"
+                        alt="Projeto de estilos de design"
+                      />
+                      <figcaption class="portfolio-info">
+                        <h4>Projeto em Estilos de Design</h4>
+                        <p>
+                          Projeto desenvolvido na disciplinas tal, com intuito
+                          tal,. Meu maior desafio foi tal, onde também conseguir
+                          adiquirir conhecimentos de tal coisa
+                        </p>
+                      </figcaption>
+                    </figure>
+                    <div class="portfolio-stack">
+                      <figure class="portfolio-card">
+                        <img
+                          src="IMAGENS/PROJETO_5.png"
+                          alt="Projeto de tipografia"
+                        />
+                        <figcaption class="portfolio-info">
+                          <h4>Projeto em Tipografia</h4>
+                          <p>
+                            Projeto desenvolvido na disciplinas tal, com intuito
+                            tal,. Meu maior desafio foi tal, onde também
+                            conseguir adiquirir conhecimentos de tal coisa
+                          </p>
+                        </figcaption>
+                      </figure>
+                      <figure class="portfolio-card">
+                        <img
+                          src="IMAGENS/PROJETO_6.png"
+                          alt="Projeto de design editorial"
+                        />
+                        <figcaption class="portfolio-info">
+                          <h4>Projeto em Design Editoral</h4>
+                          <p>
+                            Projeto desenvolvido na disciplinas tal, com intuito
+                            tal,. Meu maior desafio foi tal, onde também
+                            conseguir adiquirir conhecimentos de tal coisa
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="portfolio-arrow portfolio-arrow--next"
+                type="button"
+                aria-label="Próximos projetos"
+              >
+                ›
+              </button>
+            </div>
+            <form class="add-form portfolio-add-form">
+              <input type="text" placeholder="Título do projeto" />
+              <textarea placeholder="Descrição do projeto"></textarea>
+              <input type="text" placeholder="IMAGENS/projeto.png" />
+              <button type="submit">Adicionar projeto</button>
+            </form>
+          </article>
+
+          <div class="save-row">
+            <a class="save-button" href="#">Salvar alterações</a>
+          </div>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        © Conecta Carreiras 2026. Todos os Direitos Reservados.
+      </footer>
+    </main>
+
+    <div class="project-zoom" aria-hidden="true">
+      <div
+        class="project-zoom__content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Projeto ampliado"
+      >
+        <button class="project-zoom__close" type="button" aria-label="Fechar">
+          x
+        </button>
+        <img src="" alt="" />
+        <div class="project-zoom__text">
+          <h3></h3>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="menu.js"></script>
+    <script>
+      const actions = document.querySelector(".site-menu__actions");
+      const userIcon = actions?.querySelector(
+        ".site-menu__icon-button:last-child",
+      );
+      if (userIcon) {
+        userIcon.innerHTML =
+          '<img class="profile-thumb" src="IMAGENS/FOTO_PERFIL.png" alt="Perfil">';
+      }
+
+      const editableSelectors = [
+        ".hero-copy h1",
+        ".hero-copy h2",
+        ".hero-copy p",
+        ".personal-item span",
+        ".entry h3",
+        ".entry strong",
+        ".entry p",
+        ".certification-card strong",
+        ".certification-card span",
+        ".portfolio-info h4",
+        ".portfolio-info p",
+      ];
+
+      function addTagRemoveButton(tag) {
+        if (tag.querySelector(".tag-remove")) return;
+        const text = tag.textContent.trim();
+        const label = document.createElement("span");
+        label.className = "tag-label";
+        label.textContent = text;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "tag-remove";
+        remove.setAttribute("aria-label", `Remover ${text}`);
+        remove.textContent = "x";
+        remove.addEventListener("click", () => tag.remove());
+        tag.textContent = "";
+        tag.append(label, remove);
+      }
+
+      function addEntryRemoveButton(entry, className = "remove-entry") {
+        if (entry.querySelector(`.${className}`)) return;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = className;
+        remove.setAttribute("aria-label", "Excluir item");
+        remove.textContent = "x";
+        remove.addEventListener("click", () => entry.remove());
+        entry.appendChild(remove);
+      }
+
+      function addTag(panel, value) {
+        const text = value.trim();
+        const tagList = panel.querySelector(".tag-list");
+        if (!text || !tagList) return;
+        const tag = document.createElement("span");
+        tag.textContent = text;
+        addTagRemoveButton(tag);
+        tagList.appendChild(tag);
+      }
+
+      function addCertification(panel, title, issuer, imageSrc) {
+        const list = panel.querySelector(".certification-list");
+        if (!list || !title.trim()) return;
+        const card = document.createElement("div");
+        card.className = "certification-card";
+        card.innerHTML = `
+        <img src="${imageSrc.trim() || "IMAGENS/Rectangle 30.png"}" alt="">
+        <div><strong>${title.trim()}</strong><span>${issuer.trim()}</span></div>
+      `;
+        addEntryRemoveButton(card, "remove-certification");
+        list.appendChild(card);
+      }
+
+      function addEntry(panel, title, subtitle, description, imageSrc) {
+        const list = panel.querySelector(".list-box");
+        if (!list || !title.trim()) return;
+        const imagePath = imageSrc.trim() || "IMAGENS/FIAMFAAM.png";
+        const entry = document.createElement("div");
+        entry.className = "entry";
+        entry.innerHTML = `
+        <img src="${imagePath}" alt="">
+        <div><h3>${title.trim()}</h3><strong>${subtitle.trim()}</strong><p>${description.trim()}</p></div>
+      `;
+        addEntryRemoveButton(entry);
+        list.appendChild(entry);
+      }
+
+      document.querySelectorAll(".tag-list > span").forEach(addTagRemoveButton);
+      document
+        .querySelectorAll(".entry")
+        .forEach((entry) => addEntryRemoveButton(entry));
+      document
+        .querySelectorAll(".certification-card")
+        .forEach((card) => addEntryRemoveButton(card, "remove-certification"));
+
+      document.querySelectorAll(".edit-icon").forEach((icon) => {
+        icon.setAttribute("role", "button");
+        icon.setAttribute("tabindex", "0");
+        icon.setAttribute("aria-label", "Editar seção");
+
+        const togglePanel = () => {
+          const panel = icon.closest(".panel");
+          if (!panel) return;
+          const isEditing = panel.classList.toggle("is-editing");
+          panel
+            .querySelectorAll(editableSelectors.join(","))
+            .forEach((item) => {
+              item.contentEditable = String(isEditing);
+              item.spellcheck = false;
+            });
+          if (isEditing) {
+            const firstEditable = panel.querySelector(
+              '[contenteditable="true"]',
+            );
+            if (firstEditable) firstEditable.focus();
+          }
+        };
+
+        icon.addEventListener("click", togglePanel);
+        icon.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            togglePanel();
+          }
+        });
+      });
+
+      document
+        .querySelector(".upload-button")
+        ?.addEventListener("click", () => {
+          const path = window.prompt(
+            "Informe o caminho da imagem",
+            "IMAGENS/FOTO_PERFIL.png",
+          );
+          if (!path || !path.trim()) return;
+          const avatar = document.querySelector(".avatar");
+          if (avatar) avatar.src = path.trim();
+        });
+
+      const portfolioPanel = document.querySelector(".portfolio-panel");
+      const portfolioPages = document.querySelector(".portfolio-pages");
+      const projectZoom = document.querySelector(".project-zoom");
+      let portfolioPageIndex = 0;
+
+      function addProjectRemoveButton(card) {
+        if (
+          card.getAttribute("aria-hidden") === "true" ||
+          card.querySelector(".remove-project")
+        )
+          return;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-project";
+        remove.setAttribute("aria-label", "Remover projeto");
+        remove.textContent = "x";
+        remove.addEventListener("click", (event) => {
+          event.stopPropagation();
+          card.remove();
+          rebuildPortfolioFromCards();
+        });
+        card.appendChild(remove);
+      }
+
+      function addProjectZoomButton(card) {
+        if (
+          card.getAttribute("aria-hidden") === "true" ||
+          card.querySelector(".zoom-project")
+        )
+          return;
+        const zoom = document.createElement("button");
+        zoom.type = "button";
+        zoom.className = "zoom-project";
+        zoom.setAttribute("aria-label", "Ampliar projeto");
+        zoom.innerHTML =
+          '<img width="64" height="64" src="https://img.icons8.com/external-creatype-outline-colourcreatype/64/external-zoom-interface-a2-creatype-outline-colourcreatype.png" alt="">';
+        zoom.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openProjectZoom(card);
+        });
+        card.appendChild(zoom);
+      }
+
+      function openProjectZoom(card) {
+        if (!projectZoom || portfolioPanel?.classList.contains("is-editing"))
+          return;
+        const img = card.querySelector("img");
+        const title =
+          card.querySelector(".portfolio-info h4")?.textContent || "Projeto";
+        const description =
+          card.querySelector(".portfolio-info p")?.textContent || "";
+        const zoomImg = projectZoom.querySelector("img");
+        const zoomTitle = projectZoom.querySelector("h3");
+        const zoomDescription = projectZoom.querySelector("p");
+        if (zoomImg && img) {
+          zoomImg.src = img.src;
+          zoomImg.alt = img.alt || title;
+        }
+        if (zoomTitle) zoomTitle.textContent = title;
+        if (zoomDescription) zoomDescription.textContent = description;
+        projectZoom.classList.add("is-open");
+        projectZoom.setAttribute("aria-hidden", "false");
+      }
+
+      function closeProjectZoom() {
+        if (!projectZoom) return;
+        projectZoom.classList.remove("is-open");
+        projectZoom.setAttribute("aria-hidden", "true");
+      }
+
+      function preparePortfolioCard(card) {
+        if (!card || card.getAttribute("aria-hidden") === "true") return card;
+        addProjectRemoveButton(card);
+        addProjectZoomButton(card);
+        return card;
+      }
+
+      function getRealPortfolioCards() {
+        if (!portfolioPages) return [];
+        return Array.from(
+          portfolioPages.querySelectorAll(".portfolio-card"),
+        ).filter((card) => {
+          return card.getAttribute("aria-hidden") !== "true";
+        });
+      }
+
+      function rebuildPortfolioFromCards() {
+        if (!portfolioPages) return;
+        const cards = getRealPortfolioCards().map((card) => {
+          card.classList.remove("tall");
+          return card;
+        });
+        portfolioPages.innerHTML = "";
+        for (let index = 0; index < cards.length; index += 6) {
+          portfolioPages.appendChild(
+            buildPortfolioPage(cards.slice(index, index + 6)),
+          );
+        }
+        portfolioPageIndex = Math.min(
+          portfolioPageIndex,
+          Math.max(portfolioPages.children.length - 1, 0),
+        );
+        updatePortfolioNav();
+      }
+
+      function createPortfolioCard(title, description, imageSrc, tall = false) {
+        const figure = document.createElement("figure");
+        figure.className = `portfolio-card${tall ? " tall" : ""}`;
+        figure.innerHTML = `
+        <img src="${imageSrc.trim() || "IMAGENS/PROJETO_1.png"}" alt="${title.trim()}">
+        <figcaption class="portfolio-info"><h4>${title.trim()}</h4><p>${description.trim()}</p></figcaption>
+      `;
+        return preparePortfolioCard(figure);
+      }
+
+      function buildPortfolioPage(cards) {
+        const page = document.createElement("div");
+        page.className = "portfolio-page";
+        const grid = document.createElement("div");
+        grid.className = "portfolio-grid";
+        const stackOne = document.createElement("div");
+        stackOne.className = "portfolio-stack";
+        const stackTwo = document.createElement("div");
+        stackTwo.className = "portfolio-stack";
+        let tallOne = null;
+        let tallTwo = null;
+
+        cards.forEach((card, index) => {
+          preparePortfolioCard(card);
+          if (index === 0) {
+            card.classList.add("tall");
+            tallOne = card;
+          } else if (index === 3) {
+            card.classList.add("tall");
+            tallTwo = card;
+          } else if (index < 3) {
+            stackOne.appendChild(card);
+          } else {
+            stackTwo.appendChild(card);
+          }
+        });
+
+        if (tallOne) {
+          grid.appendChild(tallOne);
+        }
+        grid.appendChild(stackOne);
+        if (tallTwo) {
+          grid.appendChild(tallTwo);
+        } else {
+          const spacer = document.createElement("div");
+          spacer.className = "portfolio-card tall";
+          spacer.setAttribute("aria-hidden", "true");
+          grid.appendChild(spacer);
+        }
+        grid.appendChild(stackTwo);
+        page.appendChild(grid);
+        return page;
+      }
+
+      function updatePortfolioNav() {
+        const pages = portfolioPages ? Array.from(portfolioPages.children) : [];
+        if (!portfolioPanel || !portfolioPages) return;
+        portfolioPanel.classList.toggle("has-extra", pages.length > 1);
+        portfolioPageIndex = Math.min(
+          portfolioPageIndex,
+          Math.max(pages.length - 1, 0),
+        );
+        portfolioPages.style.transform = `translateX(-${portfolioPageIndex * 100}%)`;
+      }
+
+      function addPortfolioProject(title, description, imageSrc) {
+        if (!portfolioPages || !title.trim()) return;
+        const pages = Array.from(portfolioPages.children);
+        let lastPage = pages[pages.length - 1];
+        let cards = lastPage
+          ? Array.from(lastPage.querySelectorAll(".portfolio-card")).filter(
+              (card) => card.getAttribute("aria-hidden") !== "true",
+            )
+          : [];
+
+        if (!lastPage || cards.length >= 6) {
+          lastPage = buildPortfolioPage([]);
+          portfolioPages.appendChild(lastPage);
+          cards = [];
+        }
+
+        const allCards = [
+          ...cards,
+          createPortfolioCard(title, description, imageSrc),
+        ];
+        lastPage.replaceWith(buildPortfolioPage(allCards));
+        portfolioPageIndex = Array.from(portfolioPages.children).length - 1;
+        updatePortfolioNav();
+      }
+
+      projectZoom
+        ?.querySelector(".project-zoom__close")
+        ?.addEventListener("click", closeProjectZoom);
+      projectZoom?.addEventListener("click", (event) => {
+        if (event.target === projectZoom) closeProjectZoom();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeProjectZoom();
+      });
+
+      document
+        .querySelector(".portfolio-arrow--prev")
+        ?.addEventListener("click", () => {
+          portfolioPageIndex = Math.max(0, portfolioPageIndex - 1);
+          updatePortfolioNav();
+        });
+
+      document
+        .querySelector(".portfolio-arrow--next")
+        ?.addEventListener("click", () => {
+          const count = portfolioPages ? portfolioPages.children.length : 0;
+          portfolioPageIndex = Math.min(
+            Math.max(count - 1, 0),
+            portfolioPageIndex + 1,
+          );
+          updatePortfolioNav();
+        });
+
+      document
+        .querySelector(".portfolio-add-form")
+        ?.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const fields = Array.from(
+            event.currentTarget.querySelectorAll("input, textarea"),
+          );
+          addPortfolioProject(
+            fields[0]?.value || "",
+            fields[1]?.value || "",
+            fields[2]?.value || "",
+          );
+          fields.forEach((field) => {
+            field.value = "";
+          });
+        });
+
+      document.querySelectorAll("[data-add-type]").forEach((panel) => {
+        const form = panel.querySelector(".add-form");
+        const input = form?.querySelector("input");
+
+        form?.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const fields = Array.from(form.querySelectorAll("input"));
+
+          if (panel.dataset.addType === "certification") {
+            addCertification(
+              panel,
+              fields[0]?.value || "",
+              fields[1]?.value || "",
+              fields[2]?.value || "",
+            );
+          } else if (
+            panel.dataset.addType === "experience" ||
+            panel.dataset.addType === "education"
+          ) {
+            addEntry(
+              panel,
+              fields[0]?.value || "",
+              fields[1]?.value || "",
+              fields[2]?.value || "",
+              fields[3]?.value || "",
+            );
+          } else {
+            addTag(panel, input?.value || "");
+          }
+
+          fields.forEach((field) => {
+            field.value = "";
+          });
+        });
+      });
+
+      getRealPortfolioCards().forEach(preparePortfolioCard);
+      updatePortfolioNav();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conecta Carreiras | Cadastro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="background.css">
+  <style>
+    :root {
+      --background: #071425;
+      --surface: #111b2b;
+      --border: rgba(255, 255, 255, 0.72);
+      --muted: rgba(255, 255, 255, 0.58);
+      --red: #d11217;
+      --blue: #1374d2;
+      --field: #071425;
+      --gradient: linear-gradient(100.5deg, #00346f 0%, #d11217 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background);
+      color: #fff;
+      font-family: "Inter", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus,
+    a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      display: grid;
+      height: 100vh;
+      min-height: 100vh;
+      place-items: start center;
+      padding: clamp(14px, 3vh, 44px) 24px 18px;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .wrap {
+      width: min(460px, 100%);
+    }
+
+    .step-label {
+      margin: 0 0 4px;
+      color: var(--red);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .progress {
+      height: 4px;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .progress span {
+      display: block;
+      width: 50%;
+      height: 100%;
+      background: var(--red);
+    }
+
+    .card {
+      height: calc(100vh - clamp(72px, 11vh, 114px));
+      min-height: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      background: var(--surface);
+      padding: clamp(18px, 3vh, 24px) 24px clamp(20px, 3vh, 26px);
+      overflow: hidden;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: max-content;
+    }
+
+    .brand svg {
+      width: clamp(44px, 5.2vh, 50px);
+      height: clamp(36px, 4.2vh, 40px);
+      flex: 0 0 auto;
+    }
+
+    .brand-logo {
+      width: clamp(132px, 18vh, 160px);
+      max-height: clamp(42px, 5.2vh, 54px);
+      object-fit: contain;
+      object-position: left center;
+      display: block;
+    }
+
+    .brand strong {
+      display: block;
+      background: linear-gradient(97deg, #00346f 0%, #d11217 95%);
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(30px, 4.2vh, 34px);
+      font-weight: 900;
+      line-height: 0.88;
+    }
+
+    .brand small {
+      display: block;
+      background: linear-gradient(97deg, #00346f 0%, #d11217 95%);
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(12px, 1.7vh, 14px);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .intro {
+      margin: clamp(42px, 8.8vh, 58px) 0 clamp(38px, 8vh, 52px) 4px;
+    }
+
+    .intro h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vh, 32px);
+      font-weight: 800;
+      line-height: 1.08;
+    }
+
+    .intro h1 span {
+      color: var(--red);
+    }
+
+    .intro p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.9vh, 15px);
+      font-weight: 400;
+    }
+
+    .section-title {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: clamp(16px, 3vh, 22px);
+      margin: 0 4px clamp(16px, 2.7vh, 18px);
+      color: #fff;
+      font-size: clamp(19px, 2.8vh, 21px);
+      font-weight: 400;
+    }
+
+    .section-title::before,
+    .section-title::after {
+      height: 2px;
+      background: var(--border);
+      content: "";
+    }
+
+    .fields {
+      margin: 0 4px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: clamp(10px, 2vh, 12px);
+    }
+
+    label {
+      display: block;
+      color: var(--red);
+      font-size: clamp(12px, 1.8vh, 13px);
+      font-weight: 600;
+    }
+
+    .input {
+      position: relative;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .input svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      z-index: 2;
+      width: clamp(20px, 2.8vh, 22px);
+      height: clamp(20px, 2.8vh, 22px);
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.58);
+      pointer-events: none;
+    }
+
+    .input input {
+      width: 100%;
+      height: clamp(38px, 5.4vh, 40px);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--field);
+      color: rgba(255, 255, 255, 0.58);
+      font: inherit;
+      font-size: clamp(13px, 2vh, 15px);
+      font-weight: 600;
+      outline: none;
+      padding: 0 14px 0 46px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .course-field {
+      position: relative;
+    }
+
+    .course-field input {
+      padding-right: 108px;
+    }
+
+    .student-id {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      width: clamp(88px, 11vh, 94px);
+      height: clamp(28px, 4.1vh, 30px);
+      transform: translateY(-50%);
+      place-items: center;
+      border-radius: 10px;
+      background: var(--gradient);
+      color: #fff;
+      font-size: clamp(15px, 2.2vh, 16px);
+      font-weight: 500;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: clamp(28px, 6vh, 36px) 0 0;
+    }
+
+    .linkedin,
+    .manual {
+      display: grid;
+      height: clamp(44px, 6vh, 48px);
+      place-items: center;
+      border-radius: 12px;
+      font-size: clamp(14px, 2.2vh, 16px);
+      font-weight: 800;
+      white-space: nowrap;
+      padding: 0 14px;
+    }
+
+    .linkedin {
+      width: 178px;
+      border: 0;
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .manual {
+      width: 198px;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: clamp(14px, 2.2vh, 16px);
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 28px 16px;
+      }
+
+      .card {
+        min-height: 0;
+        padding: 28px 22px 38px;
+      }
+
+      .intro,
+      .fields,
+      .section-title {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .intro {
+        margin-top: 64px;
+        margin-bottom: 64px;
+      }
+
+      .field-row,
+      .actions {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+
+      .linkedin,
+      .manual {
+        width: 100%;
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="wrap">
+      <p class="step-label">Passo 1 de 2</p>
+      <div class="progress" aria-hidden="true"><span></span></div>
+
+      <section class="card" aria-label="Cadastro do aluno">
+        <a class="brand" href="index.html" aria-label="Voltar para a pÃ¡gina inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
+
+        <div class="intro">
+          <h1>Seja bem-vindo, <span>Victor</span></h1>
+          <p>Complete seu cadastro para achar as vagas ideais para o seu perfil.</p>
+        </div>
+
+        <div class="section-title">Confirme seus dados</div>
+
+        <form class="fields">
+          <div class="field-row">
+            <label>
+              Nome completo
+              <span class="input">
+                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <circle cx="16" cy="10" r="4" stroke="currentColor" stroke-width="2.6"/>
+                  <path d="M6 26c.9-5.5 5.3-8.5 10-8.5s9.1 3 10 8.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+                  <path d="M7.5 26h17" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+                </svg>
+                <input type="text" value="Victor Hugo Braga Alcantara">
+              </span>
+            </label>
+
+            <label>
+              E-mail pessoal
+              <span class="input">
+                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <rect x="5" y="8" width="22" height="17" rx="2" stroke="currentColor" stroke-width="2.6"/>
+                  <path d="M7 10l9 8 9-8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="email" value=".hugo.aabb2@gmail.c...">
+              </span>
+            </label>
+          </div>
+
+          <label>
+            Curso e matrÃ­cula
+            <span class="input course-field">
+              <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <path d="M16 5L28 12L16 19L4 12L16 5Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+                <path d="M8 15v7l8 5 8-5v-7" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+              </svg>
+              <input type="text" value="Bacharelado em Design">
+              <span class="student-id">01907280</span>
+            </span>
+          </label>
+        </form>
+
+        <div class="actions">
+          <a class="linkedin" href="linkedin-login.html">Importar do LinkedIn</a>
+          <a class="manual" href="preenchimento-manual.html">Preencher manualmente</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | UI Design e Interfaces Digitais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.7);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --blue: #0072cf;
+        --yellow: #ffe11f;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .course-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .course-page .site-menu__item {
+        position: relative;
+      }
+
+      .course-page .site-menu__item.is-active {
+        color: var(--red);
+      }
+
+      .course-page .site-menu__item.is-active img {
+        filter: brightness(0) saturate(100%) invert(18%) sepia(92%) saturate(3463%) hue-rotate(345deg) brightness(86%) contrast(101%);
+        opacity: 1;
+      }
+
+      .course-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1450px, calc(100% - 88px));
+        margin: 0 auto;
+        padding: 50px 0 64px;
+      }
+
+      .course-title {
+        width: min(1176px, 100%);
+        margin: 0 auto 22px;
+        font-size: clamp(30px, 3.4vw, 42px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .course-layout {
+        display: grid;
+        width: min(1176px, 100%);
+        margin: 0 auto;
+        grid-template-columns: minmax(420px, 560px) minmax(440px, 620px);
+        justify-content: center;
+        gap: 36px;
+        align-items: start;
+      }
+
+      .course-card,
+      .reviews-card,
+      .details-card {
+        border: 1.25px solid var(--border);
+        border-radius: 18px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+
+      .hero-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1.78;
+        object-fit: cover;
+        border-bottom: 1.25px solid var(--border);
+      }
+
+      .course-meta {
+        padding: 18px 22px 20px;
+      }
+
+      .course-meta h2 {
+        margin: 0 0 12px;
+        font-size: 26px;
+        font-weight: 800;
+      }
+
+      .rating-row,
+      .time-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .rating-row {
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .stars {
+        color: var(--yellow);
+        font-size: 28px;
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+
+      .rating-number {
+        margin-left: 10px;
+        color: #fff;
+        font-size: 32px;
+        font-weight: 500;
+      }
+
+      .time-row {
+        font-size: 32px;
+        font-weight: 400;
+      }
+
+      .time-row svg {
+        width: 38px;
+        height: 38px;
+      }
+
+      .enroll-button {
+        min-width: 172px;
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        text-decoration: none;
+        font-size: 23px;
+        font-weight: 400;
+      }
+
+      .reviews-card {
+        margin-top: 22px;
+        padding: 12px 16px 16px;
+      }
+
+      .reviews-card h2 {
+        margin: 0 0 14px;
+        font-size: 20px;
+        font-weight: 900;
+        text-decoration: underline;
+      }
+
+      .review-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        overflow: hidden;
+      }
+
+      .review-item {
+        min-height: 118px;
+        border-right: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 0 14px;
+        min-width: 0;
+      }
+
+      .review-item:last-child {
+        border-right: 0;
+      }
+
+      .review-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 34px;
+        width: 150px;
+        padding: 0;
+        background: transparent;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        display: block;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #d9d9d9;
+      }
+
+      .review-stars {
+        margin: 7px 0 6px 22px;
+        color: var(--yellow);
+        font-size: 18px;
+        white-space: nowrap;
+      }
+
+      .review-stars span {
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .review-text {
+        min-height: 58px;
+        width: 132px;
+        min-height: 60px;
+        margin-left: 14px;
+        border: 1px solid var(--border);
+        padding: 7px;
+        font-size: 12px;
+        line-height: 1.15;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .details-card {
+        display: grid;
+      }
+
+      .details-main {
+        padding: 24px 28px 22px;
+      }
+
+      .details-main h2 {
+        margin: 0 0 14px;
+        font-size: 30px;
+        line-height: 1.05;
+        font-weight: 900;
+      }
+
+      .details-main p {
+        margin: 0 0 14px;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 16px;
+        line-height: 1.22;
+        font-weight: 500;
+      }
+
+      .module-list {
+        display: grid;
+        gap: 8px;
+        margin: 14px 0 22px;
+      }
+
+      .module-button {
+        width: 100%;
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1.25px solid var(--border);
+        border-radius: 5px;
+        background: transparent;
+        color: #fff;
+        text-align: left;
+        padding: 7px 16px;
+        font: inherit;
+        font-size: 19px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .module-item.is-open .module-button {
+        border-color: #fff;
+        background: rgba(0, 114, 207, 0.18);
+      }
+
+      .module-arrow {
+        display: inline-grid;
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--blue);
+        font-size: 13px;
+        transition: transform 140ms ease;
+      }
+
+      .module-item.is-open .module-arrow {
+        transform: rotate(90deg);
+      }
+
+      .module-content {
+        display: none;
+        margin: 8px 0 4px;
+        border: 1.25px solid rgba(255, 255, 255, 0.38);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 12px 16px;
+      }
+
+      .module-item.is-open .module-content {
+        display: block;
+      }
+
+      .module-content h3 {
+        margin: 0 0 10px;
+        font-size: 17px;
+      }
+
+      .module-content ul {
+        margin: 0;
+        padding-left: 20px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 14px;
+        line-height: 1.35;
+        font-weight: 400;
+      }
+
+      .audience-title {
+        margin: 10px 0 16px;
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .details-footer {
+        border-top: 1.25px solid var(--border);
+        padding: 28px 28px 32px;
+      }
+
+      .details-footer p {
+        max-width: 640px;
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.24;
+        font-weight: 600;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 1100px) {
+        .content { width: min(100% - 32px, 780px); padding-top: 48px; }
+        .course-title, .course-layout { width: 100%; }
+        .course-layout { grid-template-columns: 1fr; gap: 28px; }
+        .details-main h2 { font-size: 36px; }
+        .details-main p, .details-footer p { font-size: 20px; }
+        .module-button { font-size: 22px; }
+        .review-list { grid-template-columns: 1fr; }
+        .review-item { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.35); padding-bottom: 14px; }
+        .review-item:last-child { border-bottom: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="course-page">
+      <div id="site-menu" data-active="trilha" data-auth="true"></div>
+      <section class="content">
+        <h1 class="course-title">UI Design e Interfaces Digitais</h1>
+
+        <div class="course-layout">
+          <section>
+            <article class="course-card hero-card">
+              <img src="IMAGENS/UI_DESIGN.png" alt="UI Design e Interfaces Digitais">
+              <div class="course-meta">
+                <h2>Avalia&ccedil;&otilde;es</h2>
+                <div class="rating-row">
+                  <div><span class="stars">★★★★☆</span><span class="rating-number">4.9</span></div>
+                  <a class="enroll-button is-subscribed" href="#" data-default-text="Inscrever-se">Inscrito</a>
+                </div>
+                <div class="time-row">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span>20h</span>
+                </div>
+              </div>
+            </article>
+
+            <aside class="reviews-card" aria-label="Avaliações do curso">
+              <h2>Avalia&ccedil;&otilde;es:</h2>
+              <div class="review-list">
+                <article class="review-item">
+                  <div class="review-name"><img class="avatar" src="IMAGENS/Juninho.png" alt="Juninho Pereira">Juninho Pereira</div>
+                  <div class="review-stars">★★★★★ <span>5</span></div>
+                  <p class="review-text">Gostei muito do curso e achei muito completo!</p>
+                </article>
+                <article class="review-item">
+                  <div class="review-name"><img class="avatar" src="IMAGENS/Sophia.png" alt="Sophia Dias">Sophia Dias</div>
+                  <div class="review-stars">★★★★★ <span>5</span></div>
+                  <p class="review-text">Eu amei o curso! Os professores explicam muito bem.</p>
+                </article>
+                <article class="review-item">
+                  <div class="review-name"><img class="avatar" src="IMAGENS/Lucas.png" alt="Lucas Souza">Lucas Souza</div>
+                  <div class="review-stars">★★★★★ <span>5</span></div>
+                  <p class="review-text">Muito bom!</p>
+                </article>
+              </div>
+            </aside>
+          </section>
+
+          <section class="details-card">
+            <div class="details-main">
+              <h2>O que voc&ecirc; vai aprender?</h2>
+              <p>Voc&ecirc; ir&aacute; aprender a criar interfaces digitais claras, consistentes e funcionais, entendendo como organizar telas, componentes e fluxos visuais para produtos web e mobile.</p>
+
+              <div class="module-list" aria-label="Módulos do curso">
+                <article class="module-item is-open">
+                  <button class="module-button" type="button">
+                    <span>M&oacute;dulo 1 - Fundamentos de UI</span>
+                    <span class="module-arrow">&rsaquo;</span>
+                  </button>
+                  <div class="module-content">
+                    <h3>Fundamentos de UI</h3>
+                    <ul>
+                      <li>Princ&iacute;pios de hierarquia visual, alinhamento e contraste.</li>
+                      <li>Uso de cores, tipografia e espa&ccedil;amento em interfaces.</li>
+                      <li>Leitura de refer&ecirc;ncias e cria&ccedil;&atilde;o de padr&otilde;es visuais.</li>
+                      <li>Atividade: redesenhar uma tela simples com mais clareza.</li>
+                    </ul>
+                  </div>
+                </article>
+                <article class="module-item">
+                  <button class="module-button" type="button">
+                    <span>M&oacute;dulo 2 - Componentes e Layouts</span>
+                    <span class="module-arrow">&rsaquo;</span>
+                  </button>
+                  <div class="module-content">
+                    <h3>Componentes e Layouts</h3>
+                    <ul>
+                      <li>Constru&ccedil;&atilde;o de bot&otilde;es, cards, menus e campos de formul&aacute;rio.</li>
+                      <li>Organiza&ccedil;&atilde;o de grids para telas responsivas.</li>
+                      <li>Consist&ecirc;ncia visual entre estados, varia&ccedil;&otilde;es e se&ccedil;&otilde;es.</li>
+                      <li>Atividade: montar uma tela de produto com componentes reutiliz&aacute;veis.</li>
+                    </ul>
+                  </div>
+                </article>
+                <article class="module-item">
+                  <button class="module-button" type="button">
+                    <span>M&oacute;dulo 3 - Prot&oacute;tipo Naveg&aacute;vel</span>
+                    <span class="module-arrow">&rsaquo;</span>
+                  </button>
+                  <div class="module-content">
+                    <h3>Prot&oacute;tipo Naveg&aacute;vel</h3>
+                    <ul>
+                      <li>Cria&ccedil;&atilde;o de fluxos entre telas principais.</li>
+                      <li>Microintera&ccedil;&otilde;es, estados de clique e feedback visual.</li>
+                      <li>Prepara&ccedil;&atilde;o de prot&oacute;tipo para apresenta&ccedil;&atilde;o.</li>
+                      <li>Atividade: publicar um fluxo naveg&aacute;vel para valida&ccedil;&atilde;o.</li>
+                    </ul>
+                  </div>
+                </article>
+              </div>
+
+              <h3 class="audience-title">Para quem &eacute;?</h3>
+              <p>Ideal para estudantes e iniciantes da &aacute;rea de comunica&ccedil;&atilde;o, design e tecnologia que desejam criar telas digitais mais profissionais, organizadas e prontas para prototipa&ccedil;&atilde;o.</p>
+            </div>
+            <div class="details-footer">
+              <p>Ao final do curso, o aluno ter&aacute; uma base s&oacute;lida para criar interfaces digitais, organizar componentes, construir telas consistentes e apresentar prot&oacute;tipos com mais seguran&ccedil;a em projetos criativos e de tecnologia.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      document.querySelectorAll(".module-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const item = button.closest(".module-item");
+          item?.classList.toggle("is-open");
+        });
+      });
+
+      document.querySelector(".enroll-button")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const isSubscribed = button.classList.toggle("is-subscribed");
+        button.textContent = isSubscribed ? "Inscrito" : button.dataset.defaultText;
+      });
+    </script>
+  </body>
+</html>

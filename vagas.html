@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Vagas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.74);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.64);
+        --soft: rgba(255, 255, 255, 0.46);
+        --red: #d11217;
+        --green: #0d8f20;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      button { font: inherit; }
+
+      .jobs-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .jobs-page .site-menu__item {
+        position: relative;
+      }
+
+      .jobs-page .site-menu__item.is-active {
+        color: var(--red);
+      }
+
+      .jobs-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .jobs-layout {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: calc(100vh - 90px);
+      }
+
+      .sidebar {
+        display: grid;
+        align-content: start;
+        gap: 18px;
+        padding: 20px 8px 34px;
+        background: rgba(16, 27, 44, 0.62);
+      }
+
+      .sidebar-preview {
+        width: 168px;
+        height: 58px;
+        margin: 0 auto 8px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: rgba(7, 20, 37, 0.45);
+      }
+
+      .side-nav {
+        display: grid;
+        gap: 10px;
+      }
+
+      .side-item {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        align-items: center;
+        min-height: 44px;
+        border: 1.25px solid transparent;
+        border-radius: 10px;
+        color: var(--soft);
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .side-item svg {
+        width: 22px;
+        height: 22px;
+        justify-self: center;
+      }
+
+      .side-item.is-active {
+        border-color: rgba(255, 255, 255, 0.8);
+        background: var(--gradient);
+        color: #fff;
+      }
+
+      .content {
+        padding: 28px 34px 34px;
+      }
+
+      .jobs-head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: end;
+        margin-bottom: 20px;
+      }
+
+      .title-block h1 {
+        margin: 0;
+        font-size: clamp(32px, 4vw, 48px);
+        font-weight: 900;
+        line-height: 0.95;
+      }
+
+      .title-block p {
+        margin: 4px 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .sort-wrap {
+        position: relative;
+      }
+
+      .sort-button,
+      .filter-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .sort-button {
+        gap: 10px;
+        min-width: 152px;
+        height: 36px;
+        padding: 0 12px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .sort-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        z-index: 8;
+        display: none;
+        min-width: 154px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(38, 29, 47, 0.98);
+        padding: 4px;
+      }
+
+      .sort-menu.is-open {
+        display: grid;
+      }
+
+      .sort-menu button {
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: #fff;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px 8px;
+        cursor: pointer;
+      }
+
+      .sort-menu button:hover,
+      .sort-menu button.is-selected {
+        background: var(--red);
+      }
+
+      .filter-button {
+        width: 36px;
+        height: 36px;
+        text-decoration: none;
+      }
+
+      .filter-button svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .jobs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(310px, 1fr));
+        gap: 20px 22px;
+      }
+
+      .job-card {
+        overflow: hidden;
+        border: 1.25px solid var(--border);
+        border-radius: 9px;
+        background: var(--panel);
+      }
+
+      .job-card[data-href] {
+        cursor: pointer;
+      }
+
+      .job-card.is-extra {
+        display: none;
+      }
+
+      .jobs-grid.show-extra .job-card.is-extra {
+        display: block;
+      }
+
+      .job-ribbon {
+        min-height: 24px;
+        padding: 4px 12px;
+        background: var(--gradient);
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .job-body {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 12px;
+        padding: 12px 14px 13px;
+      }
+
+      .company-logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        object-fit: contain;
+        background: #fff;
+      }
+
+      .company-logo.dark {
+        background: #000;
+      }
+
+      .job-main h2 {
+        margin: 1px 0 2px;
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1.05;
+      }
+
+      .company {
+        margin: 0 0 9px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 10.5px;
+        font-weight: 500;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 14px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 18px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 9.5px;
+        font-weight: 700;
+        padding: 0 6px;
+      }
+
+      .job-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .score-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .match,
+      .rating {
+        display: inline-flex;
+        align-items: center;
+        min-height: 23px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 0 9px;
+      }
+
+      .match {
+        background: var(--green);
+      }
+
+      .rating {
+        border: 1px solid var(--border);
+      }
+
+      .apply-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 132px;
+        min-height: 29px;
+        border: 1.25px solid var(--border);
+        border-radius: 999px;
+        background: var(--gradient);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .load-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+      }
+
+      .load-more button {
+        min-width: 170px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .sent-view,
+      .saved-view {
+        display: none;
+      }
+
+      .content.is-sent .jobs-head,
+      .content.is-sent .jobs-grid,
+      .content.is-sent .load-more,
+      .content.is-saved .jobs-head,
+      .content.is-saved .jobs-grid,
+      .content.is-saved .load-more {
+        display: none;
+      }
+
+      .content.is-sent .sent-view {
+        display: block;
+      }
+
+      .content.is-saved .saved-view {
+        display: block;
+      }
+
+      .sent-head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: end;
+        margin-bottom: 26px;
+      }
+
+      .sent-head h1 {
+        margin: 0;
+        font-size: clamp(30px, 3.7vw, 42px);
+        font-weight: 900;
+        line-height: 0.95;
+      }
+
+      .sent-head p {
+        margin: 5px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      .sent-tools {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 210px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 10px;
+        padding: 0 10px;
+      }
+
+      .search-box input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        outline: none;
+      }
+
+      .search-box input::placeholder {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .search-box svg {
+        width: 12px;
+        height: 12px;
+        color: var(--red);
+      }
+
+      .sent-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .sent-card {
+        overflow: hidden;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .sent-ribbon {
+        min-height: 16px;
+        padding: 3px 11px;
+        background: var(--gradient);
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .sent-body {
+        display: grid;
+        grid-template-columns: 56px 1fr 140px 128px;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px 12px;
+      }
+
+      .status-block {
+        display: grid;
+        justify-items: center;
+        gap: 4px;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 82px;
+        min-height: 24px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 0 10px;
+      }
+
+      .status-pill.analysis { background: #0d8f20; }
+      .status-pill.screening { background: #0b5e9e; }
+      .status-pill.interview { background: #6d2b8d; }
+      .status-pill.rejected { background: #c0181d; }
+
+      .sent-date {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 8px;
+        font-weight: 600;
+      }
+
+      .details-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 34px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .details-button span {
+        color: var(--red);
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .save-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.68);
+      }
+
+      .save-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 1100px) {
+        .jobs-layout { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        .jobs-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="jobs-page">
+      <div id="site-menu" data-active="vagas" data-auth="true"></div>
+
+      <div class="jobs-layout">
+        <aside class="sidebar" aria-label="Filtros de vagas">
+          <div class="sidebar-preview"></div>
+          <nav class="side-nav">
+            <a class="side-item is-active" href="#" data-view="jobs"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Vagas</a>
+            <a class="side-item" href="#" data-view="sent"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enviadas</a>
+            <a class="side-item" href="#" data-view="saved"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Salvas</a>
+          </nav>
+        </aside>
+
+        <section class="content">
+          <header class="jobs-head">
+            <div class="title-block">
+              <h1>Vagas dispon&iacute;veis</h1>
+              <p>24 vagas encontradas em seu perfil</p>
+            </div>
+            <div class="toolbar">
+              <div class="sort-wrap">
+                <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">Mais relevantes <span>v</span></button>
+                <div class="sort-menu" role="menu">
+                  <button class="is-selected" type="button">Mais relevantes</button>
+                  <button type="button">Mais recentes</button>
+                  <button type="button">Maior sal&aacute;rio</button>
+                  <button type="button">Maior match</button>
+                </div>
+              </div>
+              <a class="filter-button" href="filtros.html" aria-label="Filtros"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="12" r="2" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="17" r="2" stroke="currentColor" stroke-width="2"/></svg></a>
+            </div>
+          </header>
+
+          <div class="jobs-grid">
+            <article class="job-card" data-href="vaga-simpress.html"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress"><div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">98% de match</span><span class="rating">★ 4.8</span></div><a class="apply-button" href="vaga-simpress.html">Candidate-se</a></div></div></div></article>
+            <article class="job-card"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Sirius"><div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Sirius | Produtos Digitais, Sites, Apps, Intranet e IA</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Presencial</span><span class="tag">$ 2.000 - 2.100</span><span class="tag">4,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">95% de match</span><span class="rating">★ 4.6</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo dark" src="IMAGENS/TATIL_DESIGN.png" alt="Tatil Design"><div class="job-main"><h2>Est&aacute;gio em Design Gr&aacute;fico</h2><p class="company">T&aacute;til Design - T&aacute;til Design de Ideias</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 900 - 1.200</span><span class="tag">4,2km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">93% de match</span><span class="rating">★ 4.5</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Saint-Gobain Brasil"><div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Saint-Gobain Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.500</span><span class="tag">2,5km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">90% de match</span><span class="rating">★ 4.2</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/NATURA.png" alt="Conceito Prime"><div class="job-main"><h2>Est&aacute;gio em Designer Multim&iacute;dia</h2><p class="company">CONCEITO PRIME</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.100 - 2.400</span><span class="tag">2,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">85% de match</span><span class="rating">★ 4.8</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/AMIL.png" alt="Osang Healthcare"><div class="job-main"><h2>Est&aacute;gio em Designer Gr&aacute;fico &amp; Motion</h2><p class="company">Osang do Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">85% de match</span><span class="rating">★ 4.6</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra" data-href="vaga-simpress.html"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress"><div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">98% de match</span><span class="rating">★ 4.8</span></div><a class="apply-button" href="vaga-simpress.html">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Sirius"><div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Sirius | Produtos Digitais, Sites, Apps, Intranet e IA</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Presencial</span><span class="tag">$ 2.000 - 2.100</span><span class="tag">4,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">95% de match</span><span class="rating">★ 4.6</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo dark" src="IMAGENS/TATIL_DESIGN.png" alt="Tatil Design"><div class="job-main"><h2>Est&aacute;gio em Design Gr&aacute;fico</h2><p class="company">T&aacute;til Design - T&aacute;til Design de Ideias</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 900 - 1.200</span><span class="tag">4,2km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">93% de match</span><span class="rating">★ 4.5</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Saint-Gobain Brasil"><div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Saint-Gobain Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.500</span><span class="tag">2,5km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">90% de match</span><span class="rating">★ 4.2</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/NATURA.png" alt="Conceito Prime"><div class="job-main"><h2>Est&aacute;gio em Designer Multim&iacute;dia</h2><p class="company">CONCEITO PRIME</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.100 - 2.400</span><span class="tag">2,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">85% de match</span><span class="rating">★ 4.8</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+            <article class="job-card is-extra"><div class="job-ribbon">✦ Ideal para voc&ecirc;</div><div class="job-body"><img class="company-logo" src="IMAGENS/AMIL.png" alt="Osang Healthcare"><div class="job-main"><h2>Est&aacute;gio em Designer Gr&aacute;fico &amp; Motion</h2><p class="company">Osang do Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,0km da FMU</span></div><div class="job-actions"><div class="score-row"><span class="match">85% de match</span><span class="rating">★ 4.6</span></div><a class="apply-button" href="#">Candidate-se</a></div></div></div></article>
+          </div>
+
+          <div class="load-more"><button type="button">Mostrar mais</button></div>
+
+          <section class="sent-view" aria-label="Candidaturas enviadas">
+            <header class="sent-head">
+              <div>
+                <h1>Candidaturas enviadas</h1>
+                <p>Acompanhe as vagas que voc&ecirc; se candidatou.</p>
+              </div>
+              <div class="sent-tools">
+                <label class="search-box"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar vaga ou empresa..."></label>
+                <a class="filter-button" href="filtros.html" aria-label="Filtros"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="12" r="2" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="17" r="2" stroke="currentColor" stroke-width="2"/></svg></a>
+              </div>
+            </header>
+
+            <div class="sent-list">
+              <article class="sent-card">
+                <div class="sent-ribbon">98% de match</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
+                  <div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span></div></div>
+                  <div class="status-block"><span class="status-pill analysis">Em an&aacute;lise</span><span class="sent-date">Enviada em 20/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+
+              <article class="sent-card">
+                <div class="sent-ribbon">93% de match</div>
+                <div class="sent-body">
+                  <img class="company-logo dark" src="IMAGENS/TATIL_DESIGN.png" alt="Tatil Design">
+                  <div class="job-main"><h2>Est&aacute;gio em Design Gr&aacute;fico</h2><p class="company">T&aacute;til Design - T&aacute;til Design de Ideias</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 900 - 1.200</span><span class="tag">4,2km da FMU</span></div></div>
+                  <div class="status-block"><span class="status-pill screening">Triagem</span><span class="sent-date">Enviada em 10/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+
+              <article class="sent-card">
+                <div class="sent-ribbon">95% de match</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Sirius">
+                  <div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Sirius | Produtos Digitais, Sites, Apps, Intranet e IA</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Presencial</span><span class="tag">$ 2.000 - 2.100</span><span class="tag">4,0km da FMU</span></div></div>
+                  <div class="status-block"><span class="status-pill interview">Entrevista</span><span class="sent-date">Enviada em 05/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+
+              <article class="sent-card">
+                <div class="sent-ribbon">85% de match</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/AMIL.png" alt="Osang Healthcare">
+                  <div class="job-main"><h2>Est&aacute;gio em Designer Gr&aacute;fico &amp; Motion</h2><p class="company">Osang do Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,0km da FMU</span></div></div>
+                  <div class="status-block"><span class="status-pill rejected">N&atilde;o selecionado</span><span class="sent-date">Enviada em 05/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="saved-view" aria-label="Candidaturas salvas">
+            <header class="sent-head">
+              <div>
+                <h1>Candidaturas salvas</h1>
+                <p>Vagas que voc&ecirc; salvou para se candidatar depois.</p>
+              </div>
+              <div class="sent-tools">
+                <label class="search-box"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar vaga ou empresa..."></label>
+                <a class="filter-button" href="filtros.html" aria-label="Filtros"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="12" r="2" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="17" r="2" stroke="currentColor" stroke-width="2"/></svg></a>
+              </div>
+            </header>
+
+            <div class="sent-list">
+              <article class="sent-card">
+                <div class="sent-ribbon">Ideal para voc&ecirc;</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/NATURA.png" alt="Conceito Prime">
+                  <div class="job-main"><h2>Est&aacute;gio em Designer Multim&iacute;dia</h2><p class="company">CONCEITO PRIME</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.100 - 2.400</span><span class="tag">2,0km da FMU</span><span class="tag">★ 4.2</span></div></div>
+                  <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 20/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+
+              <article class="sent-card">
+                <div class="sent-ribbon">Ideal para voc&ecirc;</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Saint-Gobain Brasil">
+                  <div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Saint-Gobain Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.500</span><span class="tag">2,5km da FMU</span><span class="tag">★ 4.0</span></div></div>
+                  <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 05/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+
+              <article class="sent-card">
+                <div class="sent-ribbon">Ideal para voc&ecirc;</div>
+                <div class="sent-body">
+                  <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
+                  <div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span><span class="tag">★ 4.8</span></div></div>
+                  <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 05/04/2026</span></div>
+                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const sortButton = document.querySelector(".sort-button");
+      const sortMenu = document.querySelector(".sort-menu");
+      sortButton?.addEventListener("click", () => {
+        const isOpen = sortMenu.classList.toggle("is-open");
+        sortButton.setAttribute("aria-expanded", String(isOpen));
+      });
+      sortMenu?.querySelectorAll("button").forEach((option) => {
+        option.addEventListener("click", () => {
+          sortMenu.querySelectorAll("button").forEach((item) => item.classList.remove("is-selected"));
+          option.classList.add("is-selected");
+          sortButton.firstChild.textContent = option.textContent + " ";
+          sortMenu.classList.remove("is-open");
+          sortButton.setAttribute("aria-expanded", "false");
+        });
+      });
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".sort-wrap")) {
+          sortMenu?.classList.remove("is-open");
+          sortButton?.setAttribute("aria-expanded", "false");
+        }
+      });
+      document.querySelector(".load-more button")?.addEventListener("click", (event) => {
+        document.querySelector(".jobs-grid")?.classList.add("show-extra");
+        event.currentTarget.style.display = "none";
+      });
+      document.querySelectorAll(".side-item").forEach((item) => {
+        item.addEventListener("click", (event) => {
+          event.preventDefault();
+          document.querySelectorAll(".side-item").forEach((sideItem) => sideItem.classList.remove("is-active"));
+          item.classList.add("is-active");
+          const content = document.querySelector(".content");
+          content?.classList.toggle("is-sent", item.dataset.view === "sent");
+          content?.classList.toggle("is-saved", item.dataset.view === "saved");
+        });
+      });
+      document.querySelectorAll(".sent-view .search-box input, .saved-view .search-box input").forEach((input) => {
+        input.addEventListener("input", () => {
+          const view = input.closest(".sent-view, .saved-view");
+          const query = input.value.trim().toLowerCase();
+          view?.querySelectorAll(".sent-card").forEach((card) => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? "" : "none";
+          });
+        });
+      });
+      document.querySelectorAll(".job-card[data-href]").forEach((card) => {
+        card.addEventListener("click", (event) => {
+          if (event.target.closest("a, button")) return;
+          window.location.href = card.dataset.href;
+        });
+      });
+      const jobRoutes = [
+        { company: "Sirius", href: "vaga-detalhe.html?vaga=sirius" },
+        { company: "Tátil", text: "Design Gr", href: "vaga-detalhe.html?vaga=tatil" },
+        { company: "Saint-Gobain", href: "vaga-detalhe.html?vaga=saint" },
+        { company: "CONCEITO PRIME", href: "vaga-detalhe.html?vaga=conceito" },
+        { company: "Osang", href: "vaga-detalhe.html?vaga=osang" }
+      ];
+      document.querySelectorAll(".job-card").forEach((card) => {
+        if (card.dataset.href) return;
+        const text = card.textContent;
+        const route = jobRoutes.find((item) => text.includes(item.company) && (!item.text || text.includes(item.text)));
+        if (!route) return;
+        card.dataset.href = route.href;
+        card.querySelectorAll(".apply-button").forEach((button) => {
+          button.setAttribute("href", route.href);
+        });
+        card.addEventListener("click", (event) => {
+          if (event.target.closest("a, button")) return;
+          window.location.href = route.href;
+        });
+      });
+      document.querySelector(".jobs-grid")?.addEventListener("click", (event) => {
+        if (event.target.closest("a, button")) return;
+        const card = event.target.closest(".job-card[data-href]");
+        if (card) window.location.href = card.dataset.href;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Processo de Candidatura</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --field: #071425;
+        --panel: rgba(16, 27, 44, 0.72);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      .application-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .application-page .site-menu__item { position: relative; }
+      .application-page .site-menu__item.is-active { color: var(--red); }
+      .application-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1180px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 54px 0 58px;
+      }
+
+      .head {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 28px;
+        align-items: end;
+        margin-bottom: 24px;
+      }
+
+      .head h1 {
+        margin: 0 0 8px;
+        font-size: clamp(36px, 4.2vw, 54px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .head p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      .progress-label {
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.78);
+        text-align: right;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .progress-track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.28);
+      }
+
+      .progress-fill {
+        width: 54%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--gradient);
+      }
+
+      .panel {
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+        padding: 28px 30px;
+      }
+
+      .panel + .panel {
+        margin-top: 20px;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 26px;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .title-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+        color: var(--red);
+        font-weight: 900;
+      }
+
+      .title-icon.device {
+        border-radius: 4px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px 72px;
+      }
+
+      label,
+      .question-title {
+        display: block;
+        margin: 0 0 10px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .required {
+        color: var(--red);
+        font-weight: 900;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        border: 1.25px solid var(--border);
+        border-radius: 7px;
+        background: var(--field);
+        color: #fff;
+        outline: none;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        height: 44px;
+        padding: 0 16px;
+      }
+
+      textarea {
+        min-height: 84px;
+        resize: vertical;
+        padding: 14px 16px 26px;
+      }
+
+      .textarea-wrap {
+        position: relative;
+      }
+
+      .counter {
+        position: absolute;
+        right: 14px;
+        bottom: 10px;
+        color: rgba(255, 255, 255, 0.58);
+        font-size: 12px;
+      }
+
+      .knowledge-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 34px 68px;
+      }
+
+      .option-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 32px;
+      }
+
+      .option-grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .option,
+      .check-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--red);
+      }
+
+      .topics {
+        grid-column: 1 / -1;
+      }
+
+      .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 58px;
+      }
+
+      .security-note {
+        grid-column: 1 / -1;
+        margin: 46px 0 0;
+        color: rgba(255, 255, 255, 0.48);
+        text-align: center;
+        font-size: 12px;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 52px;
+        margin-top: 32px;
+      }
+
+      .back-button,
+      .submit-button {
+        display: inline-flex;
+        min-width: 320px;
+        min-height: 58px;
+        align-items: center;
+        justify-content: center;
+        border: 1.25px solid var(--border);
+        border-radius: 16px;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .back-button {
+        gap: 18px;
+        background: transparent;
+      }
+
+      .back-button span {
+        color: var(--red);
+        font-size: 40px;
+        line-height: 1;
+      }
+
+      .submit-button {
+        background: var(--gradient);
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 940px) {
+        .head,
+        .form-grid,
+        .knowledge-grid,
+        .topics-grid,
+        .option-grid,
+        .option-grid.three {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .back-button,
+        .submit-button {
+          min-width: 0;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="application-page">
+      <div id="site-menu" data-active="vagas" data-auth="true"></div>
+      <section class="content">
+        <header class="head">
+          <div>
+            <h1>Processo de candidatura</h1>
+            <p>Preencha as informações abaixo para concluir a candidatura.</p>
+          </div>
+          <div>
+            <div class="progress-label">Etapa 1 de 2</div>
+            <div class="progress-track"><div class="progress-fill"></div></div>
+          </div>
+        </header>
+
+        <section class="panel">
+          <h2 class="section-title"><span class="title-icon">i</span> Informações básicas</h2>
+          <div class="form-grid">
+            <div>
+              <label for="name">Nome completo <span class="required">*</span></label>
+              <input id="name" type="text" value="Victor Hugo Braga Alcantara" />
+            </div>
+            <div>
+              <label for="email">E-mail <span class="required">*</span></label>
+              <input id="email" type="email" value=".hugo.aabb2@gmail.c..." />
+            </div>
+            <div>
+              <label for="course">Curso e semestre atual <span class="required">*</span></label>
+              <input id="course" type="text" value="Design, 5º semestre" />
+            </div>
+            <div>
+              <label for="portfolio">Link do portfólio (se tiver) <span class="required">*</span></label>
+              <input id="portfolio" type="text" value="https://www.behance..." />
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="section-title"><span class="title-icon device"></span> Conhecimento e raciocínio</h2>
+          <div class="knowledge-grid">
+            <div>
+              <p class="question-title">Você já utilizou o figma? <span class="required">*</span></p>
+              <div class="option-grid">
+                <label class="option"><input type="radio" name="figma-use" /> Sim</label>
+                <label class="option"><input type="radio" name="figma-use" /> Não</label>
+              </div>
+            </div>
+            <div>
+              <p class="question-title">Como você avalia seu nível de figma? <span class="required">*</span></p>
+              <div class="option-grid three">
+                <label class="option"><input type="radio" name="figma-level" /> Básico</label>
+                <label class="option"><input type="radio" name="figma-level" /> Intermediário</label>
+                <label class="option"><input type="radio" name="figma-level" /> Avançado</label>
+              </div>
+            </div>
+            <div>
+              <p class="question-title">Se um usuário não consegue concluir uma tarefa na interface, o que você faria primeiro? <span class="required">*</span></p>
+              <div class="option-grid">
+                <label class="option"><input type="radio" name="decision" /> Mudaria o visual</label>
+                <label class="option"><input type="radio" name="decision" /> Tentaria entender o comportamento do usuário</label>
+                <label class="option"><input type="radio" name="decision" /> Refaria toda a tela</label>
+                <label class="option"><input type="radio" name="decision" /> Adicionaria mais elementos</label>
+              </div>
+            </div>
+            <div>
+              <p class="question-title">O que mais te interessa na área de UI/UX? <span class="required">*</span></p>
+              <div class="textarea-wrap">
+                <textarea maxlength="200" placeholder="Escreva em poucas palavras..."></textarea>
+                <span class="counter">0/200</span>
+              </div>
+            </div>
+            <div class="topics">
+              <p class="question-title">Marque os temas com quais você possui mais familiaridade: <span class="required">*</span></p>
+              <div class="topics-grid">
+                <label class="check-option"><input type="checkbox" /> Wireframes</label>
+                <label class="check-option"><input type="checkbox" /> Pesquisa com usuarios</label>
+                <label class="check-option"><input type="checkbox" /> HTML/CSS básico</label>
+                <label class="check-option"><input type="checkbox" /> Prototipos navegaveis</label>
+                <label class="check-option"><input type="checkbox" /> Usabilidade</label>
+                <label class="check-option"><input type="checkbox" /> Nenhum dos itens acima</label>
+                <label class="check-option"><input type="checkbox" /> Design System</label>
+                <label class="check-option"><input type="checkbox" /> Arquitetura da informação</label>
+              </div>
+            </div>
+            <p class="security-note">Seus dados estão seguros e protegidos conosco.</p>
+          </div>
+        </section>
+
+        <div class="actions">
+          <a class="back-button" href="vaga-simpress.html"><span>←</span> Voltar para vaga</a>
+          <a class="submit-button" href="vagas.html">Enviar candidatura</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const textarea = document.querySelector("textarea");
+      const counter = document.querySelector(".counter");
+      textarea?.addEventListener("input", () => {
+        counter.textContent = `${textarea.value.length}/200`;
+      });
+    </script>
+  </body>
+</html>

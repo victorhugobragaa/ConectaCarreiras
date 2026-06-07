@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Curso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.7);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --blue: #0072cf;
+        --yellow: #ffe11f;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .course-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .course-page .site-menu__item { position: relative; }
+      .course-page .site-menu__item.is-active { color: var(--red); }
+      .course-page .site-menu__item.is-active img {
+        filter: brightness(0) saturate(100%) invert(18%) sepia(92%) saturate(3463%) hue-rotate(345deg) brightness(86%) contrast(101%);
+      }
+      .course-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1450px, calc(100% - 88px));
+        margin: 0 auto;
+        padding: 50px 0 64px;
+      }
+
+      .course-title,
+      .course-layout {
+        width: min(1176px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .course-title {
+        margin-top: 0;
+        margin-bottom: 22px;
+        font-size: clamp(30px, 3.4vw, 42px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .course-layout {
+        display: grid;
+        grid-template-columns: minmax(420px, 560px) minmax(440px, 620px);
+        justify-content: center;
+        gap: 36px;
+        align-items: start;
+      }
+
+      .course-card,
+      .reviews-card,
+      .details-card {
+        border: 1.25px solid var(--border);
+        border-radius: 18px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+
+      .hero-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1.78;
+        object-fit: cover;
+        border-bottom: 1.25px solid var(--border);
+      }
+
+      .course-meta { padding: 18px 22px 20px; }
+      .course-meta h2 { margin: 0 0 12px; font-size: 26px; font-weight: 800; }
+      .rating-row, .time-row { display: flex; align-items: center; gap: 18px; }
+      .rating-row { justify-content: space-between; margin-bottom: 16px; }
+      .stars { color: var(--yellow); font-size: 28px; letter-spacing: 1px; white-space: nowrap; }
+      .rating-number { margin-left: 10px; color: #fff; font-size: 32px; font-weight: 500; }
+      .time-row { font-size: 32px; font-weight: 400; }
+      .time-row svg { width: 38px; height: 38px; }
+
+      .enroll-button {
+        min-width: 172px;
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        text-decoration: none;
+        font-size: 23px;
+        font-weight: 400;
+      }
+
+      .reviews-card { margin-top: 22px; padding: 12px 16px 16px; }
+      .reviews-card h2 { margin: 0 0 14px; font-size: 20px; font-weight: 900; text-decoration: underline; }
+      .review-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; overflow: hidden; }
+      .review-item { min-height: 118px; border-right: 1px solid rgba(255,255,255,.35); padding: 0 14px; min-width: 0; }
+      .review-item:last-child { border-right: 0; }
+      .review-name { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; width: 150px; padding: 0; background: transparent; font-size: 12px; font-weight: 800; }
+      .avatar { width: 32px; height: 32px; display: block; flex: 0 0 auto; border-radius: 50%; object-fit: cover; background: #d9d9d9; }
+      .review-stars { margin: 7px 0 6px 22px; color: var(--yellow); font-size: 18px; white-space: nowrap; }
+      .review-stars span { color: #fff; font-size: 13px; }
+      .review-text { width: 132px; min-height: 60px; margin-left: 14px; border: 1px solid var(--border); padding: 7px; font-size: 12px; line-height: 1.15; color: rgba(255,255,255,.92); }
+
+      .details-card { display: grid; }
+      .details-main { padding: 24px 28px 22px; }
+      .details-main h2 { margin: 0 0 14px; font-size: 30px; line-height: 1.05; font-weight: 900; }
+      .details-main p { margin: 0 0 14px; color: rgba(255,255,255,.92); font-size: 16px; line-height: 1.22; font-weight: 500; }
+      .module-list { display: grid; gap: 8px; margin: 14px 0 22px; }
+      .module-button {
+        width: 100%;
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1.25px solid var(--border);
+        border-radius: 5px;
+        background: transparent;
+        color: #fff;
+        text-align: left;
+        padding: 7px 16px;
+        font: inherit;
+        font-size: 19px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .module-item.is-open .module-button { border-color: #fff; background: rgba(0,114,207,.18); }
+      .module-arrow {
+        display: inline-grid;
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--blue);
+        font-size: 13px;
+        transition: transform 140ms ease;
+      }
+      .module-item.is-open .module-arrow { transform: rotate(90deg); }
+      .module-content { display: none; margin: 8px 0 4px; border: 1.25px solid rgba(255,255,255,.38); border-radius: 10px; background: rgba(255,255,255,.04); padding: 12px 16px; }
+      .module-item.is-open .module-content { display: block; }
+      .module-content h3 { margin: 0 0 10px; font-size: 17px; }
+      .module-content ul { margin: 0; padding-left: 20px; color: rgba(255,255,255,.86); font-size: 14px; line-height: 1.35; font-weight: 400; }
+      .audience-title { margin: 10px 0 16px; font-size: 24px; font-weight: 900; }
+      .details-footer { border-top: 1.25px solid var(--border); padding: 28px 28px 32px; }
+      .details-footer p { max-width: 640px; margin: 0; font-size: 17px; line-height: 1.24; font-weight: 600; }
+      .site-footer { position: relative; z-index: 2; padding: 28px 20px; background: var(--surface); color: rgba(255,255,255,.55); text-align: center; font-size: 13px; }
+
+      @media (max-width: 1100px) {
+        .content { width: min(100% - 32px, 780px); padding-top: 48px; }
+        .course-title, .course-layout { width: 100%; }
+        .course-layout { grid-template-columns: 1fr; gap: 28px; }
+        .review-list { grid-template-columns: 1fr; }
+        .review-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.35); padding-bottom: 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="course-page">
+      <div id="site-menu" data-active="trilha" data-auth="true"></div>
+      <section class="content">
+        <h1 class="course-title"></h1>
+        <div class="course-layout">
+          <section>
+            <article class="course-card hero-card">
+              <img class="course-cover" src="" alt="">
+              <div class="course-meta">
+                <h2>Avalia&ccedil;&otilde;es</h2>
+                <div class="rating-row">
+                  <div><span class="stars">★★★★★</span><span class="rating-number">4.8</span></div>
+                  <a class="enroll-button" href="#" data-default-text="Inscrever-se">Inscrever-se</a>
+                </div>
+                <div class="time-row">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span class="course-hours">20h</span>
+                </div>
+              </div>
+            </article>
+            <aside class="reviews-card" aria-label="Avaliações do curso">
+              <h2>Avalia&ccedil;&otilde;es:</h2>
+              <div class="review-list">
+                <article class="review-item"><div class="review-name"><img class="avatar" src="IMAGENS/Juninho.png" alt="Juninho Pereira">Juninho Pereira</div><div class="review-stars">★★★★★ <span>5</span></div><p class="review-text">Gostei muito do curso e achei muito completo!</p></article>
+                <article class="review-item"><div class="review-name"><img class="avatar" src="IMAGENS/Sophia.png" alt="Sophia Dias">Sophia Dias</div><div class="review-stars">★★★★★ <span>5</span></div><p class="review-text">Os exemplos deixam o conteúdo bem claro.</p></article>
+                <article class="review-item"><div class="review-name"><img class="avatar" src="IMAGENS/Lucas.png" alt="Lucas Souza">Lucas Souza</div><div class="review-stars">★★★★★ <span>5</span></div><p class="review-text">Muito bom!</p></article>
+              </div>
+            </aside>
+          </section>
+          <section class="details-card">
+            <div class="details-main">
+              <h2>O que voc&ecirc; vai aprender?</h2>
+              <p class="course-description"></p>
+              <div class="module-list" aria-label="Módulos do curso"></div>
+              <h3 class="audience-title">Para quem &eacute;?</h3>
+              <p class="course-audience"></p>
+            </div>
+            <div class="details-footer"><p class="course-outcome"></p></div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const baseModules = {
+        html: ["Estrutura semântica", "Estilização responsiva", "Publicação da página"],
+        design: ["Fundamentos visuais", "Componentes e padrões", "Protótipo final"],
+        research: ["Planejamento da pesquisa", "Coleta e análise", "Síntese de insights"],
+        marketing: ["Estratégia de campanha", "Conteúdo e linguagem", "Métricas e otimização"],
+        ia: ["Prompts eficientes", "Fluxos criativos com IA", "Automação aplicada"],
+        video: ["Roteiro e captação", "Edição e ritmo", "Finalização para redes"],
+      };
+
+      const courses = {
+        "html-css": ["HTML & CSS", "IMAGENS/HTML_E_CSS.png", "Você irá construir páginas web com estrutura clara, estilos consistentes e noções de responsividade para projetos digitais.", "Ideal para iniciantes que querem entender a base visual e técnica das interfaces.", "Ao final, você terá uma página completa publicada e preparada para entrar no portfólio.", baseModules.html],
+        "figma": ["Figma Básico ao Avançado", "IMAGENS/Figma_Do_Basico_Ao_Avancado.png", "Você irá dominar recursos essenciais do Figma para criar telas, componentes, protótipos e apresentações profissionais.", "Ideal para estudantes de design que desejam organizar melhor seus arquivos e fluxos.", "Ao final, você terá um protótipo navegável com componentes reutilizáveis.", baseModules.design],
+        "fundamentos-ux": ["Fundamentos de UX Design", "IMAGENS/Fundamentos de UX Design.png", "Você irá conhecer princípios de experiência do usuário e aplicar decisões centradas em necessidades reais.", "Ideal para estudantes que estão começando em UX e produto digital.", "Ao final, você compreenderá como transformar problemas em oportunidades de experiência.", baseModules.research],
+        "experiencia-usuario": ["Design da Experiência do Usuário", "IMAGENS/DESIGN_DA_EXPERIENCA_DO_USUARIO.png", "Você irá mapear fluxos, expectativas e pontos de contato para criar experiências mais fluidas.", "Ideal para quem quer conectar pesquisa, jornada e interface.", "Ao final, você terá uma jornada estruturada com melhorias priorizadas.", baseModules.research],
+        "jornada-cliente": ["Pesquisa de Usuário e Jornada do Cliente", "IMAGENS/Jornada_Do_Cliente.png", "Você irá planejar entrevistas, organizar achados e traduzir dados em jornada do cliente.", "Ideal para quem deseja aprender pesquisa aplicada ao design.", "Ao final, você terá um mapa de jornada com oportunidades claras de projeto.", baseModules.research],
+        "branding": ["Branding e Identidade Visual", "IMAGENS/Branding e Identidade Visual.png", "Você irá criar sistemas de marca com paleta, tipografia, aplicações e direção visual.", "Ideal para estudantes interessados em design gráfico e marca.", "Ao final, você terá um mini manual de identidade visual.", baseModules.design],
+        "ia-design": ["IA para Design e Criatividade", "IMAGENS/IA para Design e Criatividade.png", "Você irá usar IA para pesquisa, referências, exploração visual e aceleração de processos criativos.", "Ideal para designers que querem aumentar repertório e produtividade.", "Ao final, você terá um fluxo criativo com IA documentado.", baseModules.ia],
+        "marketing-digital": ["Marketing Digital para Criativos", "IMAGENS/Marketing Digital para Criativos.png", "Você irá planejar campanhas digitais com linguagem, canais, calendário e indicadores.", "Ideal para criativos que querem atuar com conteúdo e estratégia.", "Ao final, você terá uma campanha pronta para apresentação.", baseModules.marketing],
+        "edicao-video": ["Edição de Vídeo para Social", "IMAGENS/Edição de Vídeo para Social.png", "Você irá editar vídeos curtos com ritmo, cortes, legendas e finalização para redes sociais.", "Ideal para quem quer produzir conteúdo audiovisual objetivo.", "Ao final, você terá um vídeo curto finalizado para portfólio.", baseModules.video],
+        "motion-design": ["Motion Design para Social", "IMAGENS/Motion Design para Social.png", "Você irá animar peças simples para redes, trabalhando entrada, transição e ritmo visual.", "Ideal para designers gráficos que querem adicionar movimento às peças.", "Ao final, você terá uma animação curta de campanha.", baseModules.video],
+        "design-systems": ["Design Systems na Prática", "IMAGENS/Design Systems na Prática.png", "Você irá organizar componentes, estados, tokens e documentação para interfaces consistentes.", "Ideal para quem quer trabalhar melhor em produto digital.", "Ao final, você terá uma biblioteca inicial de componentes.", baseModules.design],
+        "prompt-design": ["Prompt Design para Portfólios", "IMAGENS/Prompt Design para Portfólios.png", "Você irá estruturar prompts para gerar ideias, narrativas e apresentações de projetos.", "Ideal para quem quer melhorar processos criativos e storytelling.", "Ao final, você terá descrições e estudos de caso mais fortes.", baseModules.ia],
+        "copywriting": ["Copywriting para Campanhas", "IMAGENS/Copywriting para Campanhas.png", "Você irá escrever chamadas, argumentos e mensagens para campanhas digitais.", "Ideal para designers e comunicadores que desejam fortalecer narrativa.", "Ao final, você terá peças textuais prontas para uma campanha.", baseModules.marketing],
+        "storytelling": ["Storytelling Visual", "IMAGENS/Storytelling Visual.png", "Você irá montar narrativas visuais com sequência, contraste e intenção comunicacional.", "Ideal para quem cria apresentações, vídeos e peças editoriais.", "Ao final, você terá uma narrativa visual estruturada.", baseModules.video],
+        "direcao-arte": ["Direção de Arte Digital", "IMAGENS/Direção de Arte Digital.png", "Você irá definir conceito, moodboard, composição e direção visual para campanhas.", "Ideal para quem busca repertório em design gráfico e publicidade.", "Ao final, você terá uma direção de arte completa para case.", baseModules.design],
+      };
+
+      const key = new URLSearchParams(location.search).get("course") || "html-css";
+      const notEnrolledCourses = new Set(["ia-design", "marketing-digital", "prompt-design", "copywriting"]);
+      const data = courses[key] || courses["html-css"];
+      document.title = `Conecta Carreiras | ${data[0]}`;
+      document.querySelector(".course-title").textContent = data[0];
+      document.querySelector(".course-cover").src = data[1];
+      document.querySelector(".course-cover").alt = data[0];
+      document.querySelector(".course-description").textContent = data[2];
+      document.querySelector(".course-audience").textContent = data[3];
+      document.querySelector(".course-outcome").textContent = data[4];
+      const enrollButton = document.querySelector(".enroll-button");
+      if (enrollButton && !notEnrolledCourses.has(key)) {
+        enrollButton.classList.add("is-subscribed");
+        enrollButton.textContent = "Inscrito";
+      }
+      document.querySelector(".module-list").innerHTML = data[5].map((title, index) => `
+        <article class="module-item ${index === 0 ? "is-open" : ""}">
+          <button class="module-button" type="button"><span>Módulo ${index + 1} - ${title}</span><span class="module-arrow">&rsaquo;</span></button>
+          <div class="module-content"><h3>${title}</h3><ul><li>Conceitos essenciais aplicados ao curso.</li><li>Exercício prático guiado com foco em portfólio.</li><li>Checklist para revisar e apresentar o resultado final.</li></ul></div>
+        </article>`).join("");
+
+      document.querySelectorAll(".module-button").forEach((button) => {
+        button.addEventListener("click", () => button.closest(".module-item")?.classList.toggle("is-open"));
+      });
+
+      enrollButton?.addEventListener("click", (event) => {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const isSubscribed = button.classList.toggle("is-subscribed");
+        button.textContent = isSubscribed ? "Inscrito" : button.dataset.defaultText;
+      });
+    </script>
+  </body>
+</html>

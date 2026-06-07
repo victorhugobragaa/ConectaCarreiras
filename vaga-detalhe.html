@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Informações da Vaga</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.72);
+        --border: rgba(255,255,255,.52);
+        --muted: rgba(255,255,255,.72);
+        --red: #d11217;
+        --green: #0d8f20;
+        --orange: #ff9826;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0,119,255,.34) 0%, rgba(0,88,190,.2) 34%, rgba(0,52,111,.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0,119,255,.14) 0%, rgba(0,52,111,.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      button { font: inherit; }
+      .job-page { position: relative; z-index: 2; min-height: 100vh; }
+      .job-page .site-menu__item { position: relative; }
+      .job-page .site-menu__item.is-active { color: var(--red); }
+      .job-page .site-menu__item.is-active::after { position: absolute; left: 0; right: 0; bottom: -13px; height: 2px; background: rgba(255,255,255,.62); content: ""; }
+      .content { width: min(1180px, calc(100% - 72px)); margin: 0 auto; padding: 36px 0 54px; }
+      .panel { border: 1.25px solid var(--border); border-radius: 12px; background: var(--panel); }
+      .job-hero { display: grid; grid-template-columns: 100px 1fr auto; gap: 22px; align-items: center; padding: 28px 30px; }
+      .company-logo { width: 96px; height: 96px; border-radius: 18px; object-fit: contain; background: #fff; }
+      .company-logo.dark { background: #000; }
+      .job-title h1 { margin: 0 0 4px; font-size: clamp(30px, 4vw, 46px); line-height: 1; font-weight: 900; }
+      .job-title p { margin: 0 0 14px; color: rgba(255,255,255,.72); font-size: clamp(17px, 2.1vw, 26px); font-weight: 500; }
+      .job-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+      .tag, .rating, .match { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; border-radius: 999px; font-size: 16px; font-weight: 700; line-height: 1; padding: 0 12px; }
+      .tag, .rating { border: 1.25px solid var(--border); color: var(--muted); }
+      .match { align-self: start; margin-top: 3px; background: var(--green); color: #fff; }
+      .job-score { display: grid; gap: 12px; justify-items: start; }
+      .rating { gap: 6px; color: #fff; }
+      .rating span { color: var(--orange); font-size: 20px; }
+      .job-description { margin-top: 18px; padding: 22px 24px 28px; }
+      .section-block + .section-block { margin-top: 30px; }
+      .section-block h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 25px; font-weight: 900; }
+      .section-block h2::before { width: 4px; height: 30px; border-radius: 999px; background: #fff; content: ""; }
+      .section-block p, .section-block ul { margin: 0; color: rgba(255,255,255,.85); font-size: 17px; font-weight: 400; line-height: 1.28; }
+      .section-block p + p { margin-top: 16px; }
+      .section-block ul { display: grid; gap: 5px; list-style: none; padding: 0; }
+      .section-block li { display: grid; grid-template-columns: 20px 1fr; gap: 4px; }
+      .page-actions { display: flex; justify-content: flex-end; gap: 34px; margin-top: 34px; }
+      .save-job, .apply-button { display: inline-flex; align-items: center; justify-content: center; min-width: 300px; min-height: 58px; border: 1.25px solid var(--border); border-radius: 18px; color: #fff; font-size: 26px; font-weight: 900; text-decoration: none; cursor: pointer; }
+      .save-job { gap: 14px; background: transparent; }
+      .save-job img { width: 28px; height: 28px; filter: brightness(0) invert(1); transition: filter 140ms ease; }
+      .save-job.is-saved img { filter: brightness(0) saturate(100%) invert(20%) sepia(83%) saturate(2942%) hue-rotate(343deg) brightness(90%) contrast(103%); }
+      .apply-button { background: var(--gradient); }
+      .site-footer { position: relative; z-index: 2; padding: 28px 20px; background: var(--surface); color: rgba(255,255,255,.55); text-align: center; font-size: 13px; }
+      @media (max-width: 900px) {
+        .job-hero { grid-template-columns: 1fr; }
+        .page-actions { flex-direction: column; align-items: stretch; }
+        .save-job, .apply-button { min-width: 0; width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="job-page">
+      <div id="site-menu" data-active="vagas" data-auth="true"></div>
+      <section class="content">
+        <section class="job-hero panel">
+          <img class="company-logo" id="job-logo" src="IMAGENS/SIRIUS.png" alt="">
+          <div class="job-title">
+            <h1 id="job-title">Estágio em Design</h1>
+            <p id="job-company">Sirius | Produtos Digitais</p>
+            <div class="job-tags" id="job-tags"></div>
+          </div>
+          <div class="job-score">
+            <span class="match" id="job-match">95% de match</span>
+            <span class="rating"><span>★</span> <span id="job-rating-text">4.6</span></span>
+          </div>
+        </section>
+
+        <article class="job-description panel" id="job-description"></article>
+
+        <div class="page-actions">
+          <button class="save-job" type="button" aria-pressed="false">
+            <img src="https://img.icons8.com/material-outlined/24/bookmark-ribbon--v1.png" alt="" aria-hidden="true" />
+            <span>Salvar vaga</span>
+          </button>
+          <a class="apply-button" href="candidatura.html">Candidate-se</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const jobs = {
+        sirius: {
+          title: "Estágio em Design",
+          company: "Sirius | Produtos Digitais, Sites, Apps, Intranet e IA",
+          logo: "IMAGENS/SIRIUS.png",
+          tags: ["São Paulo/SP", "Presencial", "R$ 2.000 - 2.100", "4,0km da FMU"],
+          match: "95% de match",
+          rating: "4.6",
+          about: "A Sirius cria produtos digitais para empresas que precisam transformar atendimento, vendas e processos internos em experiências mais simples.",
+          daily: ["Apoiar a criação de telas para sites, aplicativos e intranets.", "Organizar referências visuais e componentes de interface.", "Participar de revisões com times de produto, tecnologia e conteúdo.", "Acompanhar testes rápidos de usabilidade com usuários internos."],
+          reqs: ["Estar cursando Design, Comunicação, Sistemas ou áreas próximas.", "Conhecimento básico em Figma e organização de arquivos.", "Boa noção de hierarquia visual, grid e tipografia.", "Curiosidade para aprender sobre IA aplicada a produtos digitais."],
+          bonus: ["Conhecimento em HTML/CSS.", "Experiência com protótipos navegáveis.", "Interesse por pesquisa com usuários."],
+          offers: ["Bolsa auxílio competitiva.", "Mentoria com designers de produto.", "Trilha interna de aprendizado em UX e IA."]
+        },
+        tatil: {
+          title: "Estágio em Design Gráfico",
+          company: "Tátil Design - Tátil Design de Ideias",
+          logo: "IMAGENS/TATIL_DESIGN.png",
+          dark: true,
+          tags: ["São Paulo/SP", "Remoto", "R$ 900 - 1.200", "4,2km da FMU"],
+          match: "93% de match",
+          rating: "4.5",
+          about: "A Tátil atua com estratégia de marca, identidade visual e projetos criativos para empresas que querem se comunicar com mais personalidade.",
+          daily: ["Desdobrar peças gráficas para campanhas e apresentações.", "Apoiar pesquisas visuais e moodboards de marca.", "Preparar arquivos para revisão e entrega.", "Participar de rituais criativos com a equipe de design."],
+          reqs: ["Estar cursando Design Gráfico, Publicidade ou áreas correlatas.", "Conhecimento em Illustrator, Photoshop ou Figma.", "Boa percepção de composição, cor e tipografia.", "Portfólio acadêmico ou pessoal com projetos visuais."],
+          bonus: ["Noções de motion design.", "Interesse por branding.", "Organização para lidar com múltiplas entregas."],
+          offers: ["Modelo remoto com encontros criativos.", "Feedbacks frequentes de direção de arte.", "Possibilidade de atuar em projetos variados."]
+        },
+        saint: {
+          title: "Estágio em Design",
+          company: "Saint-Gobain Brasil",
+          logo: "IMAGENS/Saint-Globain.png",
+          tags: ["São Paulo/SP", "Híbrido", "R$ 2.500", "2,5km da FMU"],
+          match: "90% de match",
+          rating: "4.2",
+          about: "A Saint-Gobain é um grupo global ligado a soluções para construção, inovação e sustentabilidade, com atuação forte no Brasil.",
+          daily: ["Apoiar materiais digitais para comunicação interna e treinamento.", "Criar peças visuais para campanhas de experiência do colaborador.", "Organizar templates e guias visuais.", "Participar de alinhamentos com áreas de negócio."],
+          reqs: ["Cursar Design, Comunicação ou Marketing.", "Conhecimento em Figma, Canva ou pacote Adobe.", "Interesse por comunicação corporativa.", "Boa escrita e atenção a detalhes."],
+          bonus: ["Noções de design de apresentação.", "Interesse por sustentabilidade.", "Experiência com organização de arquivos de marca."],
+          offers: ["Bolsa compatível com mercado.", "Ambiente híbrido.", "Contato com projetos de grande escala."]
+        },
+        conceito: {
+          title: "Estágio em Designer Multimídia",
+          company: "CONCEITO PRIME",
+          logo: "IMAGENS/CONCEITO PRIME.png",
+          tags: ["São Paulo/SP", "Híbrido", "R$ 2.100 - 2.400", "2,0km da FMU"],
+          match: "85% de match",
+          rating: "4.8",
+          about: "A Conceito Prime conecta talentos a empresas por meio de comunicação visual, treinamento e produção de materiais multimídia.",
+          daily: ["Criar peças digitais para redes, apresentações e materiais de apoio.", "Editar conteúdos simples de vídeo e imagem.", "Apoiar roteiros visuais para campanhas.", "Organizar banco de imagens e templates."],
+          reqs: ["Cursar Design, Audiovisual, Publicidade ou áreas próximas.", "Conhecimento em edição de imagem.", "Interesse por vídeo, motion e comunicação digital.", "Boa organização para demandas simultâneas."],
+          bonus: ["Noções de After Effects ou Premiere.", "Experiência com social media.", "Conhecimento básico de storytelling visual."],
+          offers: ["Bolsa auxílio atrativa.", "Contato com projetos multimídia.", "Plano de desenvolvimento com feedbacks mensais."]
+        },
+        osang: {
+          title: "Estágio em Designer Gráfico & Motion",
+          company: "Osang do Brasil",
+          logo: "IMAGENS/OSANG DO BRASIL.png",
+          tags: ["São Paulo/SP", "Remoto", "R$ 1.200 - 2.500", "3,0km da FMU"],
+          match: "85% de match",
+          rating: "4.6",
+          about: "A Osang do Brasil atua no setor de saúde e tecnologia, apoiando marcas e equipes com materiais claros, confiáveis e visualmente consistentes.",
+          daily: ["Criar peças gráficas para campanhas e materiais institucionais.", "Apoiar pequenas animações para conteúdos digitais.", "Adaptar layouts para diferentes formatos.", "Trabalhar junto ao marketing em campanhas de produto."],
+          reqs: ["Cursar Design, Publicidade ou Produção Multimídia.", "Conhecimento em Illustrator, Photoshop ou Figma.", "Interesse por motion design.", "Atenção a consistência visual e revisão."],
+          bonus: ["Noções de After Effects.", "Interesse pelo setor de saúde.", "Conhecimento em identidade visual."],
+          offers: ["Modelo remoto.", "Contato com campanhas reais.", "Mentoria com marketing e comunicação."]
+        }
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const key = params.get("vaga") || "sirius";
+      const job = jobs[key] || jobs.sirius;
+      document.title = `Conecta Carreiras | ${job.title}`;
+      document.getElementById("job-title").textContent = job.title;
+      document.getElementById("job-company").textContent = job.company;
+      document.getElementById("job-logo").src = job.logo;
+      document.getElementById("job-logo").alt = job.company;
+      document.getElementById("job-logo").classList.toggle("dark", Boolean(job.dark));
+      document.getElementById("job-match").textContent = job.match;
+      document.getElementById("job-rating-text").textContent = job.rating;
+      document.getElementById("job-tags").innerHTML = job.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
+
+      const list = (items) => `<ul>${items.map((item) => `<li><span>•</span><span>${item}</span></li>`).join("")}</ul>`;
+      document.getElementById("job-description").innerHTML = `
+        <section class="section-block"><h2>Sobre a empresa</h2><p>${job.about}</p></section>
+        <section class="section-block"><h2>O que você vai fazer no dia a dia:</h2>${list(job.daily)}</section>
+        <section class="section-block"><h2>O que esperamos de você (Requisitos):</h2>${list(job.reqs)}</section>
+        <section class="section-block"><h2>Bônus (Não é obrigatório, mas a gente vai adorar):</h2>${list(job.bonus)}</section>
+        <section class="section-block"><h2>O que oferecemos</h2>${list(job.offers)}</section>
+      `;
+
+      const saveButton = document.querySelector(".save-job");
+      saveButton?.addEventListener("click", () => {
+        const isSaved = saveButton.classList.toggle("is-saved");
+        saveButton.setAttribute("aria-pressed", String(isSaved));
+        const icon = saveButton.querySelector("img");
+        if (icon) {
+          icon.src = isSaved
+            ? "https://img.icons8.com/material/24/bookmark-ribbon--v1.png"
+            : "https://img.icons8.com/material-outlined/24/bookmark-ribbon--v1.png";
+        }
+      });
+    </script>
+  </body>
+</html>

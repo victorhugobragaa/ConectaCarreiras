@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Avaliações Simpress</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.7);
+        --border: rgba(255,255,255,.52);
+        --muted: rgba(255,255,255,.72);
+        --red: #d11217;
+        --orange: #ff9826;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0,119,255,.34) 0%, rgba(0,88,190,.2) 34%, rgba(0,52,111,.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0,119,255,.14) 0%, rgba(0,52,111,.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .company-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .company-page .site-menu__item { position: relative; }
+      .company-page .site-menu__item.is-active { color: var(--red); }
+      .company-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255,255,255,.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1180px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 30px 0 58px;
+      }
+
+      .panel {
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+      }
+
+      .company-hero {
+        display: grid;
+        grid-template-columns: 116px 1fr 142px 142px 162px;
+        gap: 22px;
+        align-items: center;
+        min-height: 190px;
+        padding: 32px 28px;
+      }
+
+      .company-logo {
+        width: 116px;
+        height: 116px;
+        border-radius: 24px;
+        object-fit: contain;
+        background: #fff;
+      }
+
+      .company-name h1 {
+        margin: 0 0 10px;
+        font-size: 35px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .company-name p {
+        margin: 0 0 16px;
+        max-width: 370px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .company-score {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 23px;
+        font-weight: 500;
+      }
+
+      .star { color: var(--orange); font-size: 28px; }
+
+      .metric {
+        min-height: 96px;
+        display: grid;
+        place-items: center;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 48px;
+        line-height: .9;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .evaluate-button {
+        min-height: 96px;
+        display: grid;
+        place-items: center;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: 800;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1.5fr .95fr;
+        gap: 22px;
+        margin-top: 22px;
+        align-items: start;
+      }
+
+      .about,
+      .summary,
+      .reviews-panel {
+        padding: 28px 28px;
+      }
+
+      .about h2,
+      .summary h2,
+      .reviews-panel h2 {
+        margin: 0 0 22px;
+        font-size: 31px;
+        font-weight: 900;
+      }
+
+      .about p {
+        margin: 0 0 18px;
+        color: rgba(255,255,255,.86);
+        font-size: 15px;
+        line-height: 1.32;
+        font-weight: 400;
+      }
+
+      .summary dl {
+        margin: 0;
+      }
+
+      .summary dt {
+        margin-top: 16px;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .summary dd {
+        margin: 4px 0 0;
+        color: rgba(255,255,255,.88);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .apply-button {
+        width: min(280px, 90%);
+        min-height: 50px;
+        display: grid;
+        place-items: center;
+        margin: 26px auto -54px;
+        border: 1.25px solid var(--border);
+        border-radius: 18px;
+        background: var(--gradient);
+        color: #fff;
+        text-decoration: none;
+        font-size: 23px;
+        font-weight: 900;
+      }
+
+      .reviews-panel {
+        width: 100%;
+      }
+
+      .review-kicker {
+        margin: 0 0 26px;
+        color: rgba(255,255,255,.52);
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .big-rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        margin: 24px 0 34px;
+      }
+
+      .big-rating strong {
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .big-stars {
+        color: var(--orange);
+        font-size: 44px;
+        letter-spacing: 4px;
+      }
+
+      .review-card {
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        padding: 16px 18px;
+        margin-top: 14px;
+      }
+
+      .review-card small {
+        color: var(--muted);
+      }
+
+      .review-card h3 {
+        margin: 14px 0 10px;
+        font-size: 24px;
+      }
+
+      .review-card .stars-line {
+        color: var(--orange);
+        font-size: 29px;
+        letter-spacing: 2px;
+      }
+
+      .review-card p {
+        margin: 8px 0 0;
+        color: rgba(255,255,255,.85);
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255,255,255,.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 1050px) {
+        .company-hero,
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="company-page">
+      <div id="site-menu" data-active="avaliacoes" data-auth="true"></div>
+      <section class="content">
+        <section class="company-hero panel">
+          <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
+          <div class="company-name">
+            <h1>Simpress</h1>
+            <p>Empresa l&iacute;der em loca&ccedil;&atilde;o e gest&atilde;o de equipamentos de TI</p>
+            <div class="company-score"><span class="star">★</span><span>4.8</span></div>
+          </div>
+          <div class="metric"><div><strong>120</strong><span>Avalia&ccedil;&otilde;es</span></div></div>
+          <div class="metric"><div><strong>56</strong><span>Entrevistas</span></div></div>
+          <a class="evaluate-button" href="enviar-avaliacao.html?empresa=simpress">Avalie</a>
+        </section>
+
+        <section class="info-grid">
+          <div class="left-column">
+            <article class="about panel">
+              <h2>Sobre a Simpress</h2>
+              <p>🔷 Quem &eacute; a Simpress<br>Fundada em 2001, a Simpress &eacute; l&iacute;der no mercado brasileiro de outsourcing de equipamentos de tecnologia, oferecendo solu&ccedil;&otilde;es completas de loca&ccedil;&atilde;o, venda e gest&atilde;o de dispositivos como notebooks, desktops, smartphones, tablets, impressoras e coletores de dados.</p>
+              <p>🔷 Escala, experi&ecirc;ncia e presen&ccedil;a nacional<br>✅ Mais de 2.400 colaboradores<br>✅ 17 filiais estrategicamente localizadas<br>✅ Gest&atilde;o de um parque com mais de 760 mil equipamentos<br>✅ Atendimento a mais de 3.000 clientes corporativos em todo o Brasil</p>
+            </article>
+
+            <section class="reviews-panel panel">
+              <p class="review-kicker">J&aacute; trabalhou nesta empresa, ou seria seu emprego atual? <strong>Avalie</strong></p>
+              <h2>Avalia&ccedil;&otilde;es</h2>
+              <p>Informa&ccedil;&atilde;o baseada em 120 avalia&ccedil;&otilde;es</p>
+              <div class="big-rating"><strong>4.8</strong><span class="big-stars">★★★★☆</span></div>
+              <article class="review-card"><small>Avalia&ccedil;&atilde;o mais recente<br>28 de Maio de 2026</small><h3>Excelente</h3><div class="stars-line">★★★★★</div><p>&Oacute;tima oportunidade para quem deseja trabalhar com TI</p></article>
+              <article class="review-card"><small>Avalia&ccedil;&atilde;o mais recente<br>28 de Maio de 2026</small><h3>Excelente</h3><div class="stars-line">★★★★★</div><p>&Oacute;tima oportunidade para quem deseja trabalhar com TI</p></article>
+            </section>
+          </div>
+
+          <aside class="summary panel">
+            <h2>Resumo</h2>
+            <dl>
+              <dt>Matriz</dt><dd>S&atilde;o Paulo</dd>
+              <dt>Funcion&aacute;rios</dt><dd>Pequena (acima de 100 funcion&aacute;rios)</dd>
+              <dt>Setor</dt><dd>Tecnologia da Informa&ccedil;&atilde;o (TI)</dd>
+              <dt>Site</dt><dd><u>shop.simpress.com.br</u></dd>
+            </dl>
+            <a class="apply-button" href="vagas.html">Candidate-se</a>
+          </aside>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+  </body>
+</html>
+ta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+  </body>
+</html>

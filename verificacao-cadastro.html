@@ -1,0 +1,1129 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conecta Carreiras | Verificacao do cadastro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="background.css">
+  <link rel="stylesheet" href="menu.css">
+  <style>
+    :root {
+      --background: #071425;
+      --surface: #111b2b;
+      --field: #071425;
+      --border: rgba(255, 255, 255, 0.5);
+      --muted: rgba(255, 255, 255, 0.68);
+      --soft: rgba(255, 255, 255, 0.46);
+      --red: #d11217;
+      --blue: #1973c9;
+      --gradient: linear-gradient(100.5deg, #00346f 0%, #d11217 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background);
+      color: #fff;
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    body::before {
+      position: fixed;
+      left: -260px;
+      top: -260px;
+      z-index: 1;
+      width: clamp(620px, 48vw, 860px);
+      height: clamp(680px, 82vh, 960px);
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+        linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+      filter: blur(70px);
+      content: "";
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 0 46px 42px;
+      background: transparent;
+    }
+
+    #site-menu {
+      margin: 0 -46px;
+    }
+
+    .header {
+      display: none !important;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      min-height: clamp(72px, 10vh, 120px);
+      gap: 42px;
+      margin: 0 -46px;
+      padding: 0 30px;
+      background: var(--surface);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand svg {
+      width: clamp(48px, 4.9vw, 84px);
+      height: clamp(48px, 4.9vw, 84px);
+    }
+
+    .brand-logo {
+      width: clamp(150px, 13vw, 230px);
+      max-height: clamp(48px, 4.9vw, 84px);
+      object-fit: contain;
+      object-position: left center;
+      display: block;
+    }
+
+    .brand strong {
+      display: block;
+      background: var(--gradient);
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(25px, 2.45vw, 42px);
+      font-weight: 900;
+      line-height: 0.9;
+    }
+
+    .brand small {
+      display: block;
+      background: var(--gradient);
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(10px, 0.98vw, 16px);
+      font-weight: 500;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(34px, 5vw, 82px);
+      color: var(--soft);
+      font-size: clamp(15px, 1.35vw, 23px);
+      font-weight: 600;
+    }
+
+    .nav span,
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav svg {
+      width: clamp(24px, 2vw, 32px);
+      height: clamp(24px, 2vw, 32px);
+    }
+
+    .header-actions {
+      gap: 18px;
+      color: var(--red);
+    }
+
+    .header-actions svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .success {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 46px 0 26px;
+      max-width: 640px;
+    }
+
+    .success svg {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      color: var(--red);
+    }
+
+    .success h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.08;
+      white-space: nowrap;
+    }
+
+    .success p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(270px, 360px) 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .left-column,
+    .right-column {
+      display: grid;
+      gap: 8px;
+    }
+
+    .panel {
+      border: 1.25px solid var(--border);
+      border-radius: 12px;
+      background: rgba(17, 27, 43, 0.72);
+      padding: 12px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 10px;
+      font-size: 21px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .panel-title svg,
+    .panel-title img,
+    .edit-icon {
+      width: 21px;
+      height: 21px;
+      flex: 0 0 auto;
+    }
+
+    .panel-title img {
+      object-fit: contain;
+    }
+
+    .skill-icon-image {
+      filter: brightness(0) invert(1);
+      opacity: 0.95;
+    }
+
+    .edit-icon {
+      margin-left: auto;
+      cursor: pointer;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .edit-icon:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .panel.is-editing {
+      border-color: rgba(25, 115, 201, 0.95);
+      box-shadow: 0 0 0 1px rgba(25, 115, 201, 0.2);
+    }
+
+    [contenteditable="true"] {
+      border-radius: 6px;
+      outline: 1px solid rgba(25, 115, 201, 0.7);
+      background: rgba(25, 115, 201, 0.08);
+      color: #fff !important;
+      padding: 1px 3px;
+    }
+
+    .image-edit {
+      display: none;
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .panel.is-editing .image-edit {
+      display: grid;
+    }
+
+    .image-edit input,
+    .add-form input {
+      min-width: 0;
+      border: 1.25px solid var(--border);
+      border-radius: 8px;
+      background: var(--field);
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      outline: none;
+      padding: 7px 9px;
+    }
+
+    .image-edit button,
+    .add-form button,
+    .skill-suggestion {
+      border: 0;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 7px 10px;
+    }
+
+    .photo-card {
+      min-height: 158px;
+      text-align: center;
+    }
+
+    .photo-card h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .upload-button {
+      display: grid;
+      width: 126px;
+      height: 26px;
+      margin: 8px auto 0;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.34);
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .personal-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .personal-item,
+    .bio-box,
+    .list-box {
+      border: 1.25px solid var(--border);
+      border-radius: 10px;
+      background: var(--field);
+    }
+
+    .personal-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 54px;
+      padding: 7px 12px;
+    }
+
+    .personal-item svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .personal-item strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.1;
+    }
+
+    .personal-item span {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .completion {
+      position: relative;
+      min-height: 144px;
+    }
+
+    .completion h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .completion p {
+      margin: 4px 0 18px;
+      color: var(--soft);
+      font-size: 12px;
+    }
+
+    .target {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 42px;
+      height: 42px;
+      color: var(--red);
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ring {
+      display: grid;
+      width: 92px;
+      height: 92px;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(var(--red) 0 75%, rgba(9, 21, 38, 0.9) 75% 100%);
+      color: var(--red);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .ring::before {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #071425;
+      content: "";
+    }
+
+    .ring span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .status strong {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .status span {
+      display: block;
+      border-radius: 10px;
+      background: rgba(7, 20, 37, 0.68);
+      color: var(--red);
+      font-weight: 800;
+      padding: 6px 10px;
+    }
+
+    .bio-box {
+      min-height: 58px;
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.22;
+    }
+
+    .list-box {
+      overflow: hidden;
+    }
+
+    .list-box:empty,
+    .certification-list:empty {
+      display: none;
+    }
+
+    .entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1.25px solid var(--border);
+    }
+
+    .entry:last-child {
+      border-bottom: 0;
+    }
+
+    .entry img {
+      width: 46px;
+      height: 46px;
+      align-self: center;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .entry h3 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .entry strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+    }
+
+    .entry p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.18;
+    }
+
+    .empty-panel {
+      min-height: 92px;
+    }
+
+    .empty-panel .panel-title {
+      margin-bottom: 0;
+    }
+
+    .plus {
+      margin-left: auto;
+      display: grid;
+      width: 21px;
+      height: 21px;
+      place-items: center;
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .edit-icon + .plus {
+      margin-left: 12px;
+    }
+
+    .add-form {
+      display: none;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .panel.is-adding .add-form {
+      display: grid;
+    }
+
+    [data-add-type="experience"].is-editing .add-form,
+    [data-add-type="education"].is-editing .add-form {
+      display: grid;
+    }
+
+    .skill-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .skill-suggestion {
+      background: rgba(25, 115, 201, 0.28);
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 600;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag-list > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1.25px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 6px 8px;
+    }
+
+    .skill-panel {
+      padding: 10px 12px;
+    }
+
+    .skill-panel .panel-title {
+      margin-bottom: 8px;
+    }
+
+    .skill-panel .edit-icon {
+      margin-left: auto;
+    }
+
+    .skill-panel .plus {
+      margin-left: auto;
+    }
+
+    .skill-panel .tag-list {
+      margin-top: 0;
+    }
+
+    .skill-panel .tag-list > span {
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 10px;
+    }
+
+    .tag-remove {
+      display: grid;
+      width: 14px;
+      height: 14px;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font: inherit;
+      font-size: 10px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .remove-entry,
+    .remove-certification {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(209, 18, 23, 0.9);
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .panel.is-editing .remove-entry,
+    .certification-card .remove-certification {
+      display: grid;
+    }
+
+    .skill-panel .skill-suggestions {
+      display: none;
+    }
+
+    .skill-panel.is-adding .skill-suggestions {
+      display: flex;
+    }
+
+    .certification-panel {
+      min-height: 108px;
+    }
+
+    .certification-list {
+      display: grid;
+      margin-top: 10px;
+    }
+
+    .certification-list:not(:empty) {
+      overflow: hidden;
+      border: 1.25px solid var(--border);
+      border-radius: 10px;
+      background: var(--field);
+    }
+
+    .certification-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1.25px solid var(--border);
+      padding: 10px 12px;
+    }
+
+    .certification-card:last-child {
+      border-bottom: 0;
+    }
+
+    .certification-card img {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .certification-card strong {
+      display: block;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .certification-card span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .finish {
+      display: grid;
+      width: min(240px, 100%);
+      min-height: 50px;
+      margin: 30px 0 0 auto;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--gradient);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .page > .site-footer {
+      margin: 42px -46px -42px;
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        padding: 22px 18px 40px;
+      }
+
+      .header {
+        grid-template-columns: 1fr auto;
+      }
+
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        gap: 22px;
+        overflow-x: auto;
+        font-size: 18px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .success {
+        margin-top: 36px;
+      }
+    }
+
+    .page > .header {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div id="site-menu" data-active="dashboard" data-auth="true"></div>
+    <header class="header">
+      <a class="brand" href="index.html" aria-label="Voltar para a pagina inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
+
+      <nav class="nav" aria-label="Menu principal">
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/><rect x="4" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/></svg>Dashboard</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="2"/></svg>Vagas</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 5v10a3 3 0 1 0 3-3H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 19V9a3 3 0 1 0-3 3h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Trilha</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19.5l1-5.8-4.2-4.1 5.8-.8L12 3.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Avaliações</span>
+      </nav>
+
+      <div class="header-actions" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="2.4"/><path d="M6.8 19c1-3.1 3.3-4.7 5.2-4.7s4.2 1.6 5.2 4.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </div>
+    </header>
+
+    <section class="success">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7"/><path d="M7.5 12.5l3 3L17 8.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <h1>Dados importados com sucesso! Revise seu perfil.</h1>
+        <p>Processamos seus dados através do LinkedIn, refine os detalhes abaixo para<br>destacar seu perfil</p>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="left-column">
+        <article class="panel photo-card">
+          <h2>Adicionar foto de perfil</h2>
+          <img class="avatar" src="IMAGENS/FOTO_PERFIL.png" alt="Foto de perfil">
+          <span class="upload-button">Fazer Upload</span>
+        </article>
+
+        <article class="panel">
+          <h2 class="panel-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.2-5 5-7 8-7s6.8 2 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Dados pessoais <svg class="edit-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l11-11-4-4L4 16v4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></h2>
+          <div class="personal-list">
+            <div class="personal-item"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.2-5 5-7 8-7s6.8 2 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div><strong>Nome completo:</strong><span>Victor Hugo Braga Alcantara</span></div></div>
+            <div class="personal-item"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="17" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div><strong>Data de nascimento:</strong><span>05/06/2001</span></div></div>
+            <div class="personal-item"><svg viewBox="0 0 24 24" fill="none"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg><div><strong>Localização:</strong><span>São Paulo, SP</span></div></div>
+          </div>
+        </article>
+
+        <article class="panel completion">
+          <h2>Preenchimento do Perfil</h2>
+          <p>Complete seu perfil para melhores matchs</p>
+          <svg class="target" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg>
+          <div class="progress-row">
+            <div class="ring"><span>0%</span></div>
+            <div class="status"><strong>Status:</strong><span>Faltam 2 etapas</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="right-column">
+        <article class="panel">
+          <h2 class="panel-title"><svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M2 20c.8-4 3.4-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 6h8M14 12h8M14 18h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Bio profissional <svg class="edit-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l11-11-4-4L4 16v4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></h2>
+          <div class="bio-box">Estudante de Design apaixonado por criar experiências digitais que conectam pessoas. Com vivência em atendimento e olhar afiado para UI/UX, busco unir estética, acessibilidade e funcionalidade. Idealizador do projeto Voya. Especialista em prototipagem e sempre em busca de resolver problemas complexos com soluções visuais simples e elegantes.</div>
+        </article>
+
+                <article class="panel skill-panel" data-add-type="hard-skill">
+          <h2 class="panel-title"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h8l-1 8 9-12h-8l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Hard Skills <span class="plus">+</span></h2>
+          <div class="tag-list"></div>
+          <form class="add-form"><input type="text" placeholder="Nome da hard skill"><button type="submit">Adicionar</button></form>
+          <div class="skill-suggestions" aria-label="Sugestões de hard skills"></div>
+        </article>
+
+        <article class="panel skill-panel" data-add-type="soft-skill">
+          <h2 class="panel-title"><img class="skill-icon-image" src="https://img.icons8.com/comic/100/brain.png" alt="brain">Soft Skills <span class="plus">+</span></h2>
+          <div class="tag-list"></div>
+          <form class="add-form"><input type="text" placeholder="Nome da soft skill"><button type="submit">Adicionar</button></form>
+          <div class="skill-suggestions" aria-label="Sugestões de soft skills"></div>
+        </article>
+<article class="panel" data-add-type="experience">
+          <h2 class="panel-title"><svg viewBox="0 0 24 24" fill="none"><path d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="2"/></svg>Experiência Profissional <svg class="edit-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l11-11-4-4L4 16v4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></h2>
+          <div class="list-box">
+            <div class="entry"><img src="IMAGENS/COCA-COLA.png" alt=""><div><h3>Assistente Administrativo</h3><strong>Coca-cola FEMSA</strong><p>Sólida vivência em rotinas administrativas e contato direto com o público. Ágil na resolução de problemas e focado em garantir a organização e eficiência das operações do dia a dia.</p></div><div class="image-edit"><input type="text" value="IMAGENS/COCA-COLA.png" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div></div>
+            <div class="entry"><img src="IMAGENS/AMIL.png" alt=""><div><h3>Atendente de Relacionamento</h3><strong>Amil Assistência Médica</strong><p>Experiência focada no relacionamento com o público, prestando suporte ágil e humanizado. Responsável por receber solicitações, mediar conflitos e acompanhar todo o fluxo do atendimento.</p></div><div class="image-edit"><input type="text" value="IMAGENS/AMIL.png" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div></div>
+            <div class="entry"><img src="IMAGENS/NATURA.png" alt=""><div><h3>Jovem Aprendiz</h3><strong>Natura</strong><p>Experiência inicial como Jovem Aprendiz focada no suporte administrativo, organização de arquivos e controle de documentos.</p></div><div class="image-edit"><input type="text" value="IMAGENS/NATURA.png" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div></div>
+          </div>
+          <form class="add-form entry-form">
+            <input type="text" placeholder="Cargo">
+            <input type="text" placeholder="Empresa">
+            <input type="text" placeholder="Descrição">
+            <input type="text" placeholder="IMAGENS/empresa.png">
+            <button type="submit">Adicionar</button>
+          </form>
+        </article>
+
+        <article class="panel" data-add-type="education">
+          <h2 class="panel-title"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4L21 9l-9 5-9-5 9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 12v5l6 3 6-3v-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Educação <svg class="edit-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l11-11-4-4L4 16v4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></h2>
+          <div class="list-box">
+            <div class="entry"><img src="IMAGENS/ENSINO_MÉDIO.png" alt=""><div><h3>Ensino Médio</h3><strong>E.E. Exemplo Qualquer de Escola de Ensino Médio</strong><p>2019 - 2021</p></div><div class="image-edit"><input type="text" value="IMAGENS/ENSINO_MÉDIO.png" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div></div>
+            <div class="entry"><img src="IMAGENS/FIAMFAAM.png" alt=""><div><h3>Bacharelado em Design</h3><strong>FMU | FIAM FAAM</strong><p>07/2024 - 06/2028</p></div><div class="image-edit"><input type="text" value="IMAGENS/FIAMFAAM.png" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div></div>
+          </div>
+          <form class="add-form entry-form">
+            <input type="text" placeholder="Curso">
+            <input type="text" placeholder="Instituição">
+            <input type="text" placeholder="Período">
+            <input type="text" placeholder="IMAGENS/instituicao.png">
+            <button type="submit">Adicionar</button>
+          </form>
+        </article>
+
+                <article class="panel certification-panel" data-add-type="certification">
+          <h2 class="panel-title"><img class="skill-icon-image" src="https://img.icons8.com/ios/50/diploma.png" alt="diploma">Certificações <span class="plus">+</span></h2>
+          <div class="certification-list"></div>
+          <form class="add-form certification-form">
+            <input type="text" placeholder="Nome da certificação">
+            <input type="text" placeholder="Instituição">
+            <input type="text" placeholder="IMAGENS/certificado.png">
+            <button type="submit">Adicionar</button>
+          </form>
+        </article>      </div>
+    </section>
+
+    <a class="finish" href="dashboard.html">Finalizar</a>
+    <footer class="site-footer">© Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+  </main>
+  <script src="menu.js"></script>
+  <script>
+    function hasText(selector) {
+      const item = document.querySelector(selector);
+      return Boolean(item && item.textContent.trim());
+    }
+
+    function updateProfileProgress() {
+      const checks = [
+        hasText(".personal-item:nth-child(1) span"),
+        hasText(".personal-item:nth-child(2) span"),
+        hasText(".personal-item:nth-child(3) span"),
+        Boolean(document.querySelector(".avatar")?.getAttribute("src")?.trim()),
+        hasText(".bio-box"),
+        document.querySelectorAll('[data-add-type="hard-skill"] .tag-list > span').length > 0,
+        document.querySelectorAll('[data-add-type="soft-skill"] .tag-list > span').length > 0,
+        document.querySelectorAll('[data-add-type="experience"] .entry').length > 0,
+        document.querySelectorAll('[data-add-type="education"] .entry').length > 0,
+        document.querySelectorAll(".certification-card").length > 0
+      ];
+      const total = checks.length;
+      const completed = checks.filter(Boolean).length;
+      const percent = Math.round((completed / total) * 100);
+      const missing = total - completed;
+      const ring = document.querySelector(".ring");
+      const ringText = document.querySelector(".ring span");
+      const status = document.querySelector(".status span");
+
+      if (ring) {
+        ring.style.background = `conic-gradient(var(--red) 0 ${percent}%, rgba(9, 21, 38, 0.9) ${percent}% 100%)`;
+      }
+      if (ringText) ringText.textContent = `${percent}%`;
+      if (status) status.textContent = missing === 1 ? "Falta 1 etapa" : `Faltam ${missing} etapas`;
+    }
+
+    const editableSelectors = [
+      ".personal-item span",
+      ".bio-box",
+      ".entry h3",
+      ".entry strong",
+      ".entry p"
+    ];
+
+    document.querySelectorAll(".edit-icon").forEach((icon) => {
+      icon.setAttribute("role", "button");
+      icon.setAttribute("tabindex", "0");
+      icon.setAttribute("aria-label", "Editar seção");
+
+      const togglePanel = () => {
+        const panel = icon.closest(".panel");
+        if (!panel) return;
+
+        const isEditing = panel.classList.toggle("is-editing");
+        panel.querySelectorAll(editableSelectors.join(",")).forEach((item) => {
+          item.contentEditable = String(isEditing);
+          item.spellcheck = false;
+        });
+
+        if (isEditing) {
+          panel.querySelectorAll(".entry").forEach(addEntryRemoveButton);
+          const firstEditable = panel.querySelector('[contenteditable="true"]');
+          if (firstEditable) firstEditable.focus();
+        }
+      };
+
+      icon.addEventListener("click", togglePanel);
+      icon.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          togglePanel();
+        }
+      });
+    });
+
+    function bindImageEditor(entry) {
+      const button = entry.querySelector(".image-edit button");
+      if (!button || button.dataset.bound === "true") return;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const editor = button.closest(".image-edit");
+        const entry = button.closest(".entry");
+        const input = editor?.querySelector("input");
+        const image = entry?.querySelector("img");
+        if (!input || !image || !input.value.trim()) return;
+        image.src = input.value.trim();
+        updateProfileProgress();
+      });
+    }
+
+    function addEntryRemoveButton(entry) {
+      if (entry.querySelector(".remove-entry")) return;
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "remove-entry";
+      remove.setAttribute("aria-label", "Excluir item");
+      remove.textContent = "x";
+      remove.addEventListener("click", () => {
+        entry.remove();
+        updateProfileProgress();
+      });
+      entry.appendChild(remove);
+    }
+
+    document.querySelectorAll(".entry").forEach((entry) => {
+      bindImageEditor(entry);
+      addEntryRemoveButton(entry);
+    });
+
+    document.querySelector(".upload-button")?.addEventListener("click", () => {
+      const path = window.prompt("Informe o caminho da imagem", "IMAGENS/FOTO_PERFIL.png");
+      if (!path || !path.trim()) return;
+      const photoCard = document.querySelector(".photo-card");
+      let avatar = photoCard?.querySelector(".avatar");
+      photoCard?.querySelector(".avatar-placeholder")?.remove();
+      if (!avatar && photoCard) {
+        avatar = document.createElement("img");
+        avatar.className = "avatar";
+        avatar.alt = "Foto de perfil";
+        photoCard.querySelector(".upload-button")?.before(avatar);
+      }
+      if (avatar) avatar.src = path.trim();
+      updateProfileProgress();
+    });
+
+    const hardSkillSuggestions = [
+      "UI/UX Design e Prototipagem",
+      "Design Gráfico e Identidade Visual",
+      "Fotografia e Tratamento de Imagem",
+      "Design da Informação e Diagramação",
+      "Noções de Front-end (HTML5 e CSS)"
+    ];
+
+    const softSkillSuggestions = [
+      "Comunicação Assertiva",
+      "Empatia",
+      "Resolução de Problemas",
+      "Pensamento Crítico",
+      "Colaboração e Trabalho em Equipe",
+      "Adaptabilidade e Flexibilidade",
+      "Gestão de Tempo e Organização",
+      "Inteligência Emocional",
+      "Escuta Ativa",
+      "Pensamento Criativo"
+    ];
+
+    function addTag(panel, value) {
+      const text = value.trim();
+      const tagList = panel.querySelector(".tag-list");
+      if (!text || !tagList) return;
+      const tag = document.createElement("span");
+      const label = document.createElement("span");
+      label.className = "tag-label";
+      label.textContent = text;
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "tag-remove";
+      remove.setAttribute("aria-label", `Remover ${text}`);
+      remove.textContent = "x";
+      remove.addEventListener("click", () => {
+        tag.remove();
+        updateProfileProgress();
+      });
+
+      tag.append(label, remove);
+      tagList.appendChild(tag);
+      updateProfileProgress();
+    }
+
+    function addCertification(panel, title, issuer, imageSrc) {
+      const list = panel.querySelector(".certification-list");
+      if (!list || !title.trim()) return;
+      const card = document.createElement("div");
+      card.className = "certification-card";
+      card.innerHTML = `
+        <img src="${imageSrc.trim() || "IMAGENS/FIAMFAAM.png"}" alt="">
+        <div><strong>${title.trim()}</strong><span>${issuer.trim()}</span></div>
+        <button type="button" class="remove-certification" aria-label="Excluir certificação">x</button>
+      `;
+      card.querySelector(".remove-certification").addEventListener("click", () => {
+        card.remove();
+        updateProfileProgress();
+      });
+      list.appendChild(card);
+      updateProfileProgress();
+    }
+
+    function addEntry(panel, title, subtitle, description, imageSrc) {
+      const list = panel.querySelector(".list-box");
+      if (!list || !title.trim()) return;
+      const entry = document.createElement("div");
+      const imagePath = imageSrc.trim() || "IMAGENS/FIAMFAAM.png";
+      entry.className = "entry";
+      entry.innerHTML = `
+        <img src="${imagePath}" alt="">
+        <div><h3>${title.trim()}</h3><strong>${subtitle.trim()}</strong><p>${description.trim()}</p></div>
+        <div class="image-edit"><input type="text" value="${imagePath}" aria-label="Caminho da imagem"><button type="button">Atualizar imagem</button></div>
+      `;
+      bindImageEditor(entry);
+      addEntryRemoveButton(entry);
+      list.appendChild(entry);
+      updateProfileProgress();
+    }
+
+    document.addEventListener("input", (event) => {
+      if (event.target.matches(editableSelectors.join(","))) {
+        updateProfileProgress();
+      }
+    });
+
+    document.querySelectorAll("[data-add-type]").forEach((panel) => {
+      const plus = panel.querySelector(".plus");
+      const form = panel.querySelector(".add-form");
+      const input = form?.querySelector("input");
+      const suggestions = panel.querySelector(".skill-suggestions");
+
+      plus?.addEventListener("click", () => {
+        panel.classList.toggle("is-adding");
+        if (panel.classList.contains("is-adding")) input?.focus();
+      });
+
+      form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (panel.dataset.addType === "certification") {
+          const fields = Array.from(form.querySelectorAll("input"));
+          addCertification(panel, fields[0]?.value || "", fields[1]?.value || "", fields[2]?.value || "");
+          fields.forEach((field) => {
+            field.value = "";
+          });
+          return;
+        }
+
+        if (panel.dataset.addType === "experience" || panel.dataset.addType === "education") {
+          const fields = Array.from(form.querySelectorAll("input"));
+          addEntry(panel, fields[0]?.value || "", fields[1]?.value || "", fields[2]?.value || "", fields[3]?.value || "");
+          fields.forEach((field) => {
+            field.value = "";
+          });
+          return;
+        }
+
+        if (!input) return;
+        addTag(panel, input.value);
+        input.value = "";
+      });
+
+      const suggestionSet = panel.dataset.addType === "hard-skill"
+        ? hardSkillSuggestions
+        : panel.dataset.addType === "soft-skill"
+          ? softSkillSuggestions
+          : [];
+
+      if (suggestions && suggestionSet.length) {
+        suggestionSet.forEach((label) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "skill-suggestion";
+          button.textContent = label;
+          button.addEventListener("click", () => addTag(panel, label));
+          suggestions.appendChild(button);
+        });
+      }
+    });
+
+    updateProfileProgress();
+  </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Estágio em Design de UI/UX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.72);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --green: #0d8f20;
+        --orange: #ff9826;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      button { font: inherit; }
+
+      .job-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .job-page .site-menu__item { position: relative; }
+      .job-page .site-menu__item.is-active { color: var(--red); }
+      .job-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1180px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 36px 0 54px;
+      }
+
+      .panel {
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+      }
+
+      .job-hero {
+        display: grid;
+        grid-template-columns: 100px 1fr auto;
+        gap: 22px;
+        align-items: center;
+        padding: 28px 30px;
+      }
+
+      .company-logo {
+        width: 96px;
+        height: 96px;
+        border-radius: 18px;
+        object-fit: contain;
+        background: #fff;
+      }
+
+      .job-title h1 {
+        margin: 0 0 4px;
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .job-title p {
+        margin: 0 0 14px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: clamp(17px, 2.1vw, 26px);
+        font-weight: 500;
+      }
+
+      .job-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+
+      .tag,
+      .rating,
+      .match {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 30px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 0 12px;
+      }
+
+      .tag,
+      .rating {
+        border: 1.25px solid var(--border);
+        color: var(--muted);
+      }
+
+      .tag svg {
+        width: 17px;
+        height: 17px;
+        margin-right: 5px;
+      }
+
+      .match {
+        align-self: start;
+        margin-top: 3px;
+        background: var(--green);
+        color: #fff;
+      }
+
+      .job-score {
+        display: grid;
+        gap: 12px;
+        justify-items: start;
+      }
+
+      .rating {
+        gap: 6px;
+        color: #fff;
+      }
+
+      .rating span {
+        color: var(--orange);
+        font-size: 20px;
+      }
+
+      .job-description {
+        margin-top: 18px;
+        padding: 22px 24px 28px;
+      }
+
+      .section-block + .section-block {
+        margin-top: 30px;
+      }
+
+      .section-block h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        font-size: 25px;
+        font-weight: 900;
+      }
+
+      .section-block h2::before {
+        width: 4px;
+        height: 30px;
+        border-radius: 999px;
+        background: #fff;
+        content: "";
+      }
+
+      .section-block p,
+      .section-block ul {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.28;
+      }
+
+      .section-block p + p {
+        margin-top: 16px;
+      }
+
+      .section-block ul {
+        display: grid;
+        gap: 5px;
+        list-style: none;
+        padding: 0;
+      }
+
+      .section-block li {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 4px;
+      }
+
+      .section-block a {
+        color: inherit;
+        text-decoration: underline;
+      }
+
+      .page-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 34px;
+        margin-top: 34px;
+      }
+
+      .save-job,
+      .apply-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 300px;
+        min-height: 58px;
+        border: 1.25px solid var(--border);
+        border-radius: 18px;
+        color: #fff;
+        font-size: 26px;
+        font-weight: 900;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .save-job {
+        gap: 14px;
+        background: transparent;
+      }
+
+      .save-job img {
+        width: 28px;
+        height: 28px;
+        filter: brightness(0) invert(1);
+        transition: filter 140ms ease;
+      }
+
+      .save-job.is-saved img {
+        filter: brightness(0) saturate(100%) invert(20%) sepia(83%) saturate(2942%) hue-rotate(343deg) brightness(90%) contrast(103%);
+      }
+
+      .apply-button {
+        background: var(--gradient);
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 900px) {
+        .job-hero,
+        .page-actions {
+          grid-template-columns: 1fr;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .save-job,
+        .apply-button {
+          min-width: 0;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="job-page">
+      <div id="site-menu" data-active="vagas" data-auth="true"></div>
+      <section class="content">
+        <section class="job-hero panel">
+          <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress" />
+          <div class="job-title">
+            <h1>Estágio em Design de UI/UX</h1>
+            <p>Simpress | Outsourcing de Equipamentos de TI para Empresas</p>
+            <div class="job-tags">
+              <span class="tag">São Paulo/SP</span>
+              <span class="tag">Híbrido</span>
+              <span class="tag">R$ 1.200 - 2.500</span>
+              <span class="tag">3,2km da FMU</span>
+            </div>
+          </div>
+          <div class="job-score">
+            <span class="match">98% de match</span>
+            <span class="rating"><span>★</span> 4.8</span>
+          </div>
+        </section>
+
+        <article class="job-description panel">
+          <section class="section-block">
+            <h2>Sobre a empresa</h2>
+            <p><strong>Quem é a Simpress</strong><br />Fundada em 2001, a Simpress é líder no mercado brasileiro de outsourcing de equipamentos de tecnologia, oferecendo soluções completas de locação, venda e gestão de dispositivos como notebooks, desktops, smartphones, tablets, impressoras e coletores de dados. <a href="#">shop.simpress.com.br</a></p>
+            <p>Com foco em eficiência, economia e produtividade, a Simpress atende empresas de diversos portes e segmentos em todo o Brasil, sempre com tecnologia de ponta e contratos flexíveis.</p>
+            <p><strong>Escala, experiência e presença nacional</strong><br />A força da Simpress está na sua estrutura e experiência:<br />Mais de 2.400 colaboradores<br />17 filiais estrategicamente localizadas<br />Gestão de um parque com mais de 760 mil equipamentos<br />Atendimento a mais de 3.000 clientes corporativos em todo o Brasil.</p>
+          </section>
+
+          <section class="section-block">
+            <h2>O que você vai fazer no dia a dia:</h2>
+            <ul>
+              <li><span>•</span><span>Auxiliar na criação de wireframes, fluxos de usuário e protótipos de alta fidelidade.</span></li>
+              <li><span>•</span><span>Apoiar a equipe em pesquisas com usuários, testes de usabilidade e análise de feedbacks.</span></li>
+              <li><span>•</span><span>Trabalhar em colaboração com designers sêniores e desenvolvedores Front-end para garantir a qualidade das entregas.</span></li>
+              <li><span>•</span><span>Ajudar a documentar e expandir nosso Design System.</span></li>
+              <li><span>•</span><span>Participar de sessões de brainstorming e ideação de novos produtos digitais.</span></li>
+            </ul>
+          </section>
+
+          <section class="section-block">
+            <h2>O que esperamos de você (Requisitos):</h2>
+            <ul>
+              <li><span>•</span><span>Estar cursando Design, Sistemas de Informação, Ciência da Computação ou áreas correlatas.</span></li>
+              <li><span>•</span><span>Conhecimento intermediário na ferramenta Figma e familiaridade com componentes.</span></li>
+              <li><span>•</span><span>Compreensão básica dos princípios de UI, arquitetura de informação e usabilidade.</span></li>
+              <li><span>•</span><span>Ter um portfólio com projetos acadêmicos, pessoais ou redesigns não oficiais.</span></li>
+              <li><span>•</span><span>Muita vontade de aprender, receber feedbacks e crescer na área.</span></li>
+            </ul>
+          </section>
+
+          <section class="section-block">
+            <h2>Bônus (Não é obrigatório, mas a gente vai adorar):</h2>
+            <ul>
+              <li><span>•</span><span>Conhecimento básico em HTML/CSS.</span></li>
+              <li><span>•</span><span>Familiaridade com ferramentas de prototipagem avançada.</span></li>
+              <li><span>•</span><span>Já ter lido "O Design do Dia a Dia", de Don Norman.</span></li>
+            </ul>
+          </section>
+
+          <section class="section-block">
+            <h2>O que oferecemos</h2>
+            <ul>
+              <li><span>•</span><span>Bolsa auxílio de R$ 1.800,00 mensais.</span></li>
+              <li><span>•</span><span>Vale refeição/alimentação de R$ 800,00 mensais no cartão flexível.</span></li>
+              <li><span>•</span><span>Orçamento semestral para cursos e livros.</span></li>
+              <li><span>•</span><span>Plano de saúde completo.</span></li>
+              <li><span>•</span><span>Mentoria semanal 1:1 com liderança de Design.</span></li>
+            </ul>
+          </section>
+        </article>
+
+        <div class="page-actions">
+          <button class="save-job" type="button" aria-pressed="false">
+            <img src="https://img.icons8.com/material-outlined/24/bookmark-ribbon--v1.png" alt="" aria-hidden="true" />
+            <span>Salvar vaga</span>
+          </button>
+          <a class="apply-button" href="candidatura.html">Candidate-se</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const saveButton = document.querySelector(".save-job");
+      saveButton?.addEventListener("click", () => {
+        const isSaved = saveButton.classList.toggle("is-saved");
+        saveButton.setAttribute("aria-pressed", String(isSaved));
+        const icon = saveButton.querySelector("img");
+        if (icon) {
+          icon.src = isSaved
+            ? "https://img.icons8.com/material/24/bookmark-ribbon--v1.png"
+            : "https://img.icons8.com/material-outlined/24/bookmark-ribbon--v1.png";
+        }
+      });
+    </script>
+  </body>
+</html>

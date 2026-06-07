@@ -1,0 +1,825 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="background.css" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --background: #071425;
+        --surface: #101b2c;
+        --field: #071425;
+        --border: rgba(255, 255, 255, 0.5);
+        --muted: rgba(255, 255, 255, 0.68);
+        --soft: rgba(255, 255, 255, 0.48);
+        --red: #d11217;
+        --green: #0f8f20;
+        --blue: #1973c9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--background);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse at 0% 0%,
+            rgba(0, 119, 255, 0.34) 0%,
+            rgba(0, 88, 190, 0.2) 34%,
+            rgba(0, 52, 111, 0.08) 58%,
+            transparent 76%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(0, 119, 255, 0.14) 0%,
+            rgba(0, 52, 111, 0.08) 44%,
+            transparent 72%
+          );
+        filter: blur(70px);
+        content: "";
+      }
+
+      .dashboard-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .dashboard-page .site-menu__item.is-active {
+        color: var(--red);
+      }
+
+      .dashboard-page .site-menu__item.is-active img {
+        filter: brightness(0) saturate(100%) invert(18%) sepia(92%)
+          saturate(3463%) hue-rotate(345deg) brightness(86%) contrast(101%);
+        opacity: 1;
+      }
+
+      .dashboard-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.56);
+        content: "";
+      }
+
+      .dashboard-page .site-menu__item {
+        position: relative;
+      }
+
+      .dashboard-page .site-menu__actions {
+        align-items: center;
+      }
+
+      .profile-thumb {
+        width: 38px;
+        height: 38px;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .content {
+        padding: 26px 30px 70px;
+      }
+
+      .hero {
+        margin-bottom: 14px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(32px, 4vw, 46px);
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .hero h1 span {
+        color: var(--red);
+      }
+
+      .hero p {
+        max-width: 440px;
+        margin: 6px 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.25;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(240px, 330px) 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .panel {
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: rgba(16, 27, 44, 0.72);
+        padding: 10px;
+      }
+
+      .panel h2 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 8px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .panel small {
+        display: block;
+        color: var(--soft);
+        font-size: 11px;
+        font-weight: 400;
+        margin-top: 2px;
+      }
+
+      .completion-title {
+        display: block;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 0.95;
+      }
+
+      .completion-subtitle {
+        margin: 2px 0 0;
+        color: var(--soft);
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.15;
+      }
+
+      .completion-card {
+        position: relative;
+        min-height: 142px;
+      }
+
+      .completion-head {
+        display: grid;
+        grid-template-columns: 1fr 42px;
+        gap: 10px;
+        align-items: start;
+        margin-bottom: 18px;
+      }
+
+      .target {
+        width: 40px;
+        height: 40px;
+        color: var(--red);
+      }
+
+      .progress-row {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-top: 0;
+      }
+
+      .ring {
+        position: relative;
+        display: grid;
+        width: 84px;
+        height: 84px;
+        place-items: center;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--red) 0 75%,
+          rgba(9, 21, 38, 0.9) 75% 100%
+        );
+        color: var(--red);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .ring::before {
+        position: absolute;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: var(--background);
+        content: "";
+      }
+
+      .ring span {
+        position: relative;
+        z-index: 1;
+      }
+
+      .status strong {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 7px;
+      }
+
+      .status span {
+        display: inline-block;
+        border-radius: 10px;
+        background: rgba(7, 20, 37, 0.75);
+        color: var(--red);
+        font-size: 11px;
+        font-weight: 800;
+        padding: 5px 9px;
+      }
+
+      .history-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .history-item {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: center;
+        min-height: 54px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: var(--field);
+        padding: 8px 10px;
+        font-size: 12px;
+        line-height: 1.1;
+      }
+
+      .history-item svg {
+        width: 23px;
+        height: 23px;
+        color: var(--red);
+      }
+
+      .history-item strong {
+        display: block;
+        font-size: 12px;
+      }
+
+      .history-item span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 2px;
+      }
+
+      .history-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #fff;
+        font-size: 10px;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      .matches-panel {
+        padding: 12px 14px;
+      }
+
+      .matches-panel h2 {
+        margin-bottom: 14px;
+        font-size: 22px;
+        font-weight: 500;
+      }
+
+      .matches {
+        display: grid;
+        gap: 8px;
+      }
+
+      .match-card {
+        display: grid;
+        grid-template-columns: 42px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        min-height: 70px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: var(--field);
+        padding: 10px 14px;
+      }
+
+      .match-card[data-href] {
+        cursor: pointer;
+      }
+
+      .match-logo {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 9px;
+        background: #fff;
+        color: #000;
+        font-weight: 900;
+        overflow: hidden;
+      }
+
+      .match-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .match-logo--purple {
+        background: #8f2cff;
+        color: #fff;
+        font-size: 28px;
+      }
+
+      .match-card h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.05;
+      }
+
+      .match-card p {
+        margin: 3px 0 0;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .match-score {
+        border-radius: 999px;
+        background: var(--green);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 800;
+        padding: 10px 14px;
+        white-space: nowrap;
+      }
+
+      .movements-panel {
+        position: relative;
+        padding: 12px 14px;
+      }
+
+      .movements-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .movements-header h2 {
+        margin-bottom: 0;
+        font-size: 22px;
+        font-weight: 500;
+      }
+
+      .featured-role {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .featured-role span {
+        display: block;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+
+      .movement-list {
+        position: relative;
+        display: grid;
+        gap: 20px;
+      }
+
+      .movement-list::before {
+        position: absolute;
+        left: 15px;
+        top: 24px;
+        bottom: 24px;
+        width: 1.25px;
+        background: var(--border);
+        content: "";
+      }
+
+      .movement {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 8px;
+        align-items: center;
+        min-height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 999px;
+        background: var(--field);
+        padding: 5px 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .movement svg {
+        width: 20px;
+        height: 20px;
+        color: var(--red);
+      }
+
+      .movement strong {
+        display: block;
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .movement span {
+        display: block;
+        color: var(--soft);
+        font-size: 9px;
+        margin-top: 2px;
+      }
+
+      .site-footer {
+        margin-top: 42px;
+      }
+
+      .completion-card {
+        min-height: 146px !important;
+        padding: 9px 11px 12px !important;
+      }
+
+      .completion-head {
+        grid-template-columns: 1fr 40px !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+      }
+
+      .completion-title {
+        font-size: 18px !important;
+        font-weight: 500 !important;
+        line-height: 0.96 !important;
+      }
+
+      .completion-subtitle {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        line-height: 1.15 !important;
+        margin-top: 1px !important;
+      }
+
+      .target {
+        justify-self: end !important;
+        width: 38px !important;
+        height: 38px !important;
+      }
+
+      .progress-row {
+        gap: 28px !important;
+        margin-top: 0 !important;
+      }
+
+      .ring {
+        width: 86px !important;
+        height: 86px !important;
+      }
+
+      .ring::before {
+        width: 58px !important;
+        height: 58px !important;
+      }
+
+      .match-card h3 {
+        font-weight: 700 !important;
+      }
+
+      .match-card p,
+      .featured-role span {
+        font-weight: 400 !important;
+      }
+
+      .movement {
+        grid-template-columns: 20px 1fr !important;
+        gap: 4px !important;
+        padding-left: 8px !important;
+      }
+
+      .movement svg {
+        width: 18px !important;
+        height: 18px !important;
+      }
+
+      .movement-list::before {
+        left: 17px !important;
+      }
+
+      .site-footer {
+        margin-top: 24px !important;
+      }
+
+      @media (max-width: 900px) {
+        .content {
+          padding: 22px 18px 56px;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .match-card {
+          grid-template-columns: 42px 1fr;
+        }
+
+        .match-score {
+          grid-column: 2;
+          width: max-content;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="dashboard-page">
+      <div id="site-menu" data-active="dashboard" data-auth="true"></div>
+      <section class="content">
+        <div class="hero">
+          <h1>Olá, <span>Victor</span></h1>
+          <p>
+            Radar profissional atualizado. Pronto para encontrar a vaga
+            perfeita?
+          </p>
+        </div>
+
+        <section class="dashboard-grid">
+          <aside class="stack">
+            <article class="panel completion-card">
+              <div class="completion-head">
+                <div>
+                  <h2 class="completion-title">Preenchimento de Perfil</h2>
+                  <p class="completion-subtitle">
+                    Complete seu perfil para melhores matchs
+                  </p>
+                </div>
+                <svg class="target" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="5"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                  />
+                  <circle cx="12" cy="12" r="1.8" fill="currentColor" />
+                </svg>
+              </div>
+              <div class="progress-row">
+                <div class="ring"><span>75%</span></div>
+                <div class="status">
+                  <strong>Status:</strong><span>Faltam 3 etapas</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <h2>Histórico do seu Perfil</h2>
+              <div class="history-list">
+                <div class="history-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                  </svg>
+                  <div>
+                    <strong>5 empresas visualizaram seu perfil</strong
+                    ><span>Últimas 48 horas</span>
+                  </div>
+                </div>
+                <div class="history-item">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M3 17l6-6 4 4 7-9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15 6h5v5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Dica Conecta:</strong
+                    ><span
+                      >Complete o curso de Gestão de Crises da FMU para aumentar
+                      suas chances em 27% para vagas de Social Media
+                      Senior.</span
+                    ><a class="history-link" href="#">Ver curso...</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </aside>
+
+          <section class="stack">
+            <article class="panel matches-panel">
+              <h2>Matchs do seu perfil</h2>
+              <div class="matches">
+                <div class="match-card" data-href="vaga-simpress.html">
+                  <div class="match-logo">
+                    <img src="IMAGENS/SIMPRESS.png" alt="Simpress" />
+                  </div>
+                  <div>
+                    <h3>Estágio em Design de UI/UX</h3>
+                    <p>
+                      Simpress | Outsourcing de Equipamentos de TI para Empresas
+                    </p>
+                  </div>
+                  <span class="match-score">98% de match</span>
+                </div>
+                <div class="match-card" data-href="vaga-detalhe.html?vaga=sirius">
+                  <div class="match-logo">
+                    <span
+                      style="
+                        width: 26px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background: #d5d819;
+                        display: block;
+                      "
+                    ></span>
+                  </div>
+                  <div>
+                    <h3>Estágio em Design</h3>
+                    <p>
+                      Sirius | Produtos Digitais, Sites, Apps, Intranet e IA
+                    </p>
+                  </div>
+                  <span class="match-score">90% de match</span>
+                </div>
+                <div class="match-card" data-href="vaga-detalhe.html?vaga=tatil">
+                  <div
+                    class="match-logo"
+                    style="background: #000; color: #fff; font-size: 16px"
+                  >
+                    tátil
+                  </div>
+                  <div>
+                    <h3>Estágio em Design Gráfico</h3>
+                    <p>Tátil Design - Tátil Design de Ideias</p>
+                  </div>
+                  <span class="match-score">85% de match</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel movements-panel">
+              <div class="movements-header">
+                <h2>Últimas movimentações</h2>
+                <div class="featured-role">
+                  Estágio em Design de UI/UX<span
+                    >Simpress | Outsourcing de Equipamentos de TI para
+                    Empresas</span
+                  >
+                </div>
+              </div>
+              <div class="movement-list">
+                <div class="movement">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 12l2.5 2.5L16 9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Envio do Currículo</strong
+                    ><span>Em 14/06/2026</span>
+                  </div>
+                </div>
+                <div class="movement">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M12 7v5l3 2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Triagem pelo RH</strong><span>Em andamento</span>
+                  </div>
+                </div>
+                <div class="movement">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="6"
+                      y="10"
+                      width="12"
+                      height="9"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M9 10V7a3 3 0 0 1 6 0v3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <div>
+                    <strong>Entrevista com o RH</strong
+                    ><span>Aguardando etapa anterior</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        © Conecta Carreiras 2026. Todos os Direitos Reservados.
+      </footer>
+    </main>
+    <script src="menu.js"></script>
+    <script>
+      const profileTrigger = document.querySelector(
+        ".site-menu__profile-trigger",
+      );
+      if (profileTrigger) {
+        profileTrigger.innerHTML =
+          '<img class="profile-thumb" src="IMAGENS/FOTO_PERFIL.png" alt="Perfil">';
+      }
+      document.querySelectorAll(".match-card[data-href]").forEach((card) => {
+        card.addEventListener("click", () => {
+          window.location.href = card.dataset.href;
+        });
+      });
+    </script>
+  </body>
+</html>

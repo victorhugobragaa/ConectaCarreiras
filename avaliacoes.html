@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Avaliações</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.7);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --orange: #ff9826;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .reviews-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .reviews-page .site-menu__item {
+        position: relative;
+      }
+
+      .reviews-page .site-menu__item.is-active {
+        color: var(--red);
+      }
+
+      .reviews-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        width: min(1180px, calc(100% - 120px));
+        margin: 0 auto;
+        padding: 58px 0 64px;
+      }
+
+      .hero {
+        margin-bottom: 42px;
+      }
+
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 3.4vw, 42px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .hero p {
+        max-width: 980px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: clamp(15px, 1.45vw, 20px);
+        line-height: 1.35;
+        font-weight: 400;
+      }
+
+      .section-title {
+        margin: 0 0 24px;
+        font-size: clamp(24px, 2.6vw, 34px);
+        font-weight: 600;
+      }
+
+      .companies-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(280px, 1fr));
+        gap: 20px 26px;
+        justify-content: center;
+      }
+
+      .company-card {
+        min-height: 118px;
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr);
+        align-items: center;
+        gap: 18px;
+        border: 1.25px solid var(--border);
+        border-radius: 14px;
+        background: var(--panel);
+        padding: 14px 18px;
+      }
+
+      .company-card[role="link"] {
+        cursor: pointer;
+      }
+
+      .company-logo {
+        width: 78px;
+        height: 78px;
+        border-radius: 16px;
+        object-fit: contain;
+        background: #fff;
+      }
+
+      .company-logo.is-dark {
+        background: #000;
+      }
+
+      .brand-fallback {
+        display: grid;
+        place-items: center;
+        width: 78px;
+        height: 78px;
+        border-radius: 16px;
+        background: linear-gradient(140deg, #22b8ff, #2343ff);
+        color: #fff;
+        font-size: 36px;
+        font-weight: 900;
+        line-height: 0.9;
+        text-align: center;
+      }
+
+      .brand-fallback.v4 {
+        background: #e60012;
+        font-size: 64px;
+      }
+
+      .brand-fallback.publi {
+        background: linear-gradient(140deg, #ff9f2f 0%, #f5d93a 48%, #e0005a 100%);
+        color: #111;
+        font-size: 70px;
+      }
+
+      .company-info h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .rating-line {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 14px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .star {
+        color: var(--orange);
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .rating-value {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .pill-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 92px;
+        height: 28px;
+        border: 1.25px solid var(--border);
+        border-radius: 999px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .load-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 26px;
+      }
+
+      .load-more button {
+        min-width: 170px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: transparent;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 1000px) {
+        .content { width: min(100% - 32px, 720px); padding-top: 48px; }
+        .companies-grid { grid-template-columns: 1fr; }
+        .company-card { grid-template-columns: 90px 1fr; padding: 20px; }
+        .company-logo, .brand-fallback { width: 86px; height: 86px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="reviews-page">
+      <div id="site-menu" data-active="avaliacoes" data-auth="true"></div>
+      <section class="content">
+        <header class="hero">
+          <h1>Avalia&ccedil;&otilde;es</h1>
+          <p>Conhe&ccedil;a as melhores empresas para trabalhar, acessando mais de 16 milh&otilde;es de avalia&ccedil;&otilde;es.</p>
+        </header>
+
+        <h2 class="section-title">Empresas Populares :</h2>
+
+        <section class="companies-grid" aria-label="Empresas populares">
+          <article class="company-card" onclick="window.location.href='avaliacao-simpress.html'" role="link" tabindex="0">
+            <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
+            <div class="company-info"><h2>Simpress</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.8</span><span>(+ de 100 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="avaliacao-simpress.html">Sal&aacute;rio</a><a class="pill-button" href="avaliacao-simpress.html">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/Saint-Globain.png" alt="Saint-Gobain">
+            <div class="company-info"><h2>Saint-Gobain</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.2</span><span>(+ de 1000 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/BW.png" alt="BW BrandWorks">
+            <div class="company-info"><h2>BW BrandWorks</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.8</span><span>(+ de 510 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo is-dark" src="IMAGENS/TATIL_DESIGN.png" alt="T&aacute;til">
+            <div class="company-info"><h2>T&aacute;til</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.5</span><span>(+ de 670 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/CONCEITO PRIME.png" alt="CONCEITO PRIME">
+            <div class="company-info"><h2>CONCEITO PRIME</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.8</span><span>(+ de 100 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/V4.png" alt="V4 Company">
+            <div class="company-info"><h2>V4 Company</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.9</span><span>(+ de 1000 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Sirius">
+            <div class="company-info"><h2>Sirius</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.6</span><span>(+ de 70 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/OSANG DO BRASIL.png" alt="Osang">
+            <div class="company-info"><h2>Osang</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.6</span><span>(+ de 30 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+          <article class="company-card">
+            <img class="company-logo" src="IMAGENS/Publl.png" alt="Publi Nation">
+            <div class="company-info"><h2>Publi Nation</h2><div class="rating-line"><span class="star">★</span><span class="rating-value">4.5</span><span>(+ de 500 avalia&ccedil;&otilde;es)</span></div><div class="actions"><a class="pill-button" href="#">Sal&aacute;rio</a><a class="pill-button" href="#">Vagas</a></div></div>
+          </article>
+        </section>
+        <div class="load-more"><button type="button">Mostrar mais</button></div>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const companyRoutes = {
+        "Saint-Gobain": "avaliacao-empresa.html?empresa=saint",
+        "BW BrandWorks": "avaliacao-empresa.html?empresa=bw",
+        "Tátil": "avaliacao-empresa.html?empresa=tatil",
+        "CONCEITO PRIME": "avaliacao-empresa.html?empresa=conceito",
+        "V4 Company": "avaliacao-empresa.html?empresa=v4",
+        "Sirius": "avaliacao-empresa.html?empresa=sirius",
+        "Osang": "avaliacao-empresa.html?empresa=osang",
+        "Publi Nation": "avaliacao-empresa.html?empresa=publi"
+      };
+
+      const prepareCompanyCards = () => {
+        document.querySelectorAll(".company-card").forEach((card) => {
+          const name = card.querySelector("h2")?.textContent.trim();
+          const href = name === "Simpress" ? "avaliacao-simpress.html" : companyRoutes[name];
+          if (!href) return;
+          card.dataset.href = href;
+          card.setAttribute("role", "link");
+          card.setAttribute("tabindex", "0");
+          card.querySelectorAll(".pill-button").forEach((button) => {
+            button.setAttribute("href", href);
+          });
+        });
+      };
+
+      prepareCompanyCards();
+      document.querySelector(".companies-grid")?.addEventListener("click", (event) => {
+        if (event.target.closest("a, button")) return;
+        const card = event.target.closest(".company-card[data-href]");
+        if (card) window.location.href = card.dataset.href;
+      });
+
+      document.querySelector(".load-more button")?.addEventListener("click", () => {
+        const grid = document.querySelector(".companies-grid");
+        const cards = Array.from(grid?.querySelectorAll(".company-card") || []).slice(0, 9);
+        cards.forEach((card) => grid.appendChild(card.cloneNode(true)));
+        prepareCompanyCards();
+      });
+    </script>
+  </body>
+</html>

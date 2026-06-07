@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Carreiras | Trilha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(7, 20, 37, 0.68);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.68);
+        --red: #d11217;
+        --blue: #008be8;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .trail-page {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .trail-page .site-menu__item {
+        position: relative;
+      }
+
+      .trail-page .site-menu__item.is-active {
+        color: var(--red);
+      }
+
+      .trail-page .site-menu__item.is-active img {
+        filter: brightness(0) saturate(100%) invert(18%) sepia(92%) saturate(3463%) hue-rotate(345deg) brightness(86%) contrast(101%);
+        opacity: 1;
+      }
+
+      .trail-page .site-menu__item.is-active::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -13px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.62);
+        content: "";
+      }
+
+      .content {
+        padding: 34px 36px 64px;
+        overflow-x: hidden;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .title-row h1 {
+        margin: 0;
+        font-size: clamp(30px, 3.4vw, 42px);
+        font-weight: 900;
+      }
+
+      .trail-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        width: min(1220px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+        gap: 24px;
+        margin-bottom: 12px;
+      }
+
+      .trail-tools {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 340px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 10px;
+        padding: 0 10px;
+      }
+
+      .search-box svg {
+        width: 12px;
+        height: 12px;
+        color: var(--red);
+      }
+
+      .search-box input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        outline: none;
+      }
+
+      .search-box input::placeholder {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .filter-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .filter-button svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .course-filter-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        z-index: 8;
+        display: none;
+        width: 220px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: rgba(7, 20, 37, 0.98);
+        overflow: hidden;
+        text-align: left;
+      }
+
+      .course-filter-menu.is-open {
+        display: block;
+      }
+
+      .filter-title {
+        display: block;
+        padding: 12px 12px 3px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 900;
+        text-decoration: underline;
+      }
+
+      .filter-check {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 12px;
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .filter-check input {
+        width: 13px;
+        height: 13px;
+        accent-color: #0a72cf;
+        margin: 0;
+      }
+
+      .filter-category {
+        border-top: 1px solid rgba(255, 255, 255, 0.38);
+      }
+
+      .filter-category button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 14px;
+        text-align: left;
+        padding: 6px 12px;
+        cursor: pointer;
+      }
+
+      .filter-category button span {
+        display: inline-grid;
+        width: 14px;
+        height: 14px;
+        place-items: center;
+        border-radius: 50%;
+        background: #0a72cf;
+        font-size: 10px;
+        line-height: 1;
+      }
+
+      .filter-options {
+        display: none;
+        gap: 4px;
+        padding: 0 12px 9px;
+      }
+
+      .filter-category.is-open .filter-options {
+        display: grid;
+      }
+
+      .courses-shell {
+        width: min(1220px, 100%);
+        margin: 0 auto;
+        background: transparent;
+      }
+
+      .tabs {
+        display: flex;
+        padding-left: 0;
+        transform: translateY(1px);
+      }
+
+      .tab {
+        min-width: 132px;
+        height: 32px;
+        border: 1.25px solid var(--border);
+        border-radius: 10px 10px 0 0;
+        background: transparent;
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .tab.is-active {
+        background: #fff;
+        color: #071425;
+      }
+
+      .courses-panel {
+        min-height: 650px;
+        margin: 0;
+        border: 1.25px solid var(--border);
+        border-radius: 0 12px 12px 12px;
+        background: var(--panel);
+        padding: 38px 36px 34px;
+      }
+
+      .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 250px);
+        justify-content: center;
+        gap: 30px;
+      }
+
+      .course-card {
+        width: 250px;
+        border: 1.25px solid rgba(255, 255, 255, 0.35);
+        border-radius: 8px;
+        background: rgba(7, 20, 37, 0.64);
+        overflow: hidden;
+      }
+
+      .course-card[role="link"] {
+        cursor: pointer;
+      }
+
+      .course-card.is-hidden {
+        display: none;
+      }
+
+      .course-thumb {
+        position: relative;
+        overflow: hidden;
+        width: 250px;
+        height: 140px;
+        border: 0;
+        border-radius: 0;
+        background: #0d1626;
+      }
+
+      .course-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(1.05) contrast(1.03);
+      }
+
+      .course-badge {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        border-radius: 8px 0 0 0;
+        background: var(--gradient);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 6px;
+      }
+
+      .course-card h2 {
+        min-height: 48px;
+        margin: 8px 10px 6px;
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.15;
+      }
+
+      .course-status {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 10px 10px;
+      }
+
+      .progress {
+        width: 92px;
+        height: 12px;
+        border: 1px solid var(--border);
+        background: #071425;
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        background: #fff;
+      }
+
+      .percent {
+        font-size: 22px;
+        font-weight: 500;
+      }
+
+      .completed {
+        color: #fff;
+        margin: 0 10px 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .completed::before {
+        color: #2bc14f;
+        content: "✓ ";
+      }
+
+      .not-enrolled {
+        color: #fff;
+        margin: 0 10px 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .not-enrolled::before {
+        color: var(--red);
+        content: "✕ ";
+      }
+
+      .reviews {
+        margin: 0 10px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .bottom-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 10px 10px;
+      }
+
+      .stars {
+        color: #f5dc2f;
+        font-size: 16px;
+        white-space: nowrap;
+      }
+
+      .stars span {
+        color: #fff;
+        font-size: 12px;
+      }
+
+      .access-button {
+        min-width: 74px;
+        min-height: 24px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--gradient);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      .load-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+      }
+
+      .load-more button {
+        min-width: 170px;
+        height: 36px;
+        border: 1.25px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        .content { padding: 22px 18px 56px; }
+        .trail-head { align-items: flex-start; flex-direction: column; }
+        .tabs { padding-left: 0; }
+        .tab { min-width: 150px; height: 42px; font-size: 18px; }
+        .courses-panel { padding: 28px 20px; }
+        .courses-grid { grid-template-columns: repeat(2, 250px); justify-content: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="trail-page">
+      <div id="site-menu" data-active="trilha" data-auth="true"></div>
+      <section class="content">
+        <header class="trail-head">
+          <div class="title-row">
+            <h1>Cursos</h1>
+          </div>
+          <div class="trail-tools">
+            <label class="search-box"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar curso..."></label>
+            <button class="filter-button" type="button" aria-label="Filtros" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="12" r="2" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="17" r="2" stroke="currentColor" stroke-width="2"/></svg></button>
+            <aside class="course-filter-menu" aria-label="Filtros de cursos">
+              <strong class="filter-title">Cursos:</strong>
+              <label class="filter-check"><input class="recommended-filter" type="checkbox"> Indicados para voc&ecirc;</label>
+              <div class="filter-category">
+                <button type="button">Design Gr&aacute;fico <span>›</span></button>
+                <div class="filter-options">
+                  <label class="filter-check"><input type="checkbox" data-tag="midias-sociais"> M&iacute;dias Sociais</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="branding"> Branding e Identidade Visual</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="editorial"> Editorial</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="motion"> Motion Design</label>
+                </div>
+              </div>
+              <div class="filter-category">
+                <button type="button">Intelig&ecirc;ncia Artificial <span>›</span></button>
+                <div class="filter-options">
+                  <label class="filter-check"><input type="checkbox" data-tag="ia-design"> IA para Design</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="prompt-design"> Prompt Design</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="automacao-criativa"> Automa&ccedil;&atilde;o Criativa</label>
+                </div>
+              </div>
+              <div class="filter-category">
+                <button type="button">Marketing e Comunica&ccedil;&atilde;o <span>›</span></button>
+                <div class="filter-options">
+                  <label class="filter-check"><input type="checkbox" data-tag="marketing-digital"> Marketing Digital</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="copywriting"> Copywriting</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="conteudo"> Planejamento de Conte&uacute;do</label>
+                </div>
+              </div>
+              <div class="filter-category">
+                <button type="button">UX/UI Design <span>›</span></button>
+                <div class="filter-options">
+                  <label class="filter-check"><input type="checkbox" data-tag="prototipagem"> Prototipagem</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="pesquisa-usuarios"> Pesquisa com Usu&aacute;rios</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="design-system"> Design System</label>
+                </div>
+              </div>
+              <div class="filter-category">
+                <button type="button">Audio Visual <span>›</span></button>
+                <div class="filter-options">
+                  <label class="filter-check"><input type="checkbox" data-tag="edicao-video"> Edi&ccedil;&atilde;o de V&iacute;deo</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="storytelling"> Storytelling Visual</label>
+                  <label class="filter-check"><input type="checkbox" data-tag="captacao-social"> Capta&ccedil;&atilde;o para Social</label>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </header>
+
+        <section class="courses-shell" aria-label="Cursos inscritos">
+          <div class="tabs">
+            <button class="tab is-active" type="button" data-filter="todos">Todos</button>
+            <button class="tab" type="button" data-filter="andamento">Em andamento</button>
+            <button class="tab" type="button" data-filter="concluido">Conclu&iacute;dos</button>
+          </div>
+
+          <div class="courses-panel">
+            <div class="courses-grid">
+              <article class="course-card" data-status="andamento" data-tags="prototipagem design-system" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=html-css'">
+                <div class="course-thumb"><img src="IMAGENS/HTML_E_CSS.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>HTML &amp; CSS</h2>
+                <div class="course-status"><div class="progress"><span style="width:30%"></span></div><strong class="percent">30%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.8</span></span><a class="access-button" href="curso.html?course=html-css">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="andamento" data-tags="prototipagem design-system" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso-ux.html'">
+                <div class="course-thumb"><img src="IMAGENS/UI_DESIGN.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>UI Design e Interfaces Digitais</h2>
+                <div class="course-status"><div class="progress"><span style="width:80%"></span></div><strong class="percent">80%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.8</span></span><a class="access-button" href="curso-ux.html">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="andamento" data-tags="prototipagem" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=figma'">
+                <div class="course-thumb"><img src="IMAGENS/Figma_Do_Basico_Ao_Avancado.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>Figma B&aacute;sico ao Avan&ccedil;ado</h2>
+                <div class="course-status"><div class="progress"><span style="width:25%"></span></div><strong class="percent">25%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=figma">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="concluido" data-tags="prototipagem pesquisa-usuarios" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=fundamentos-ux'">
+                <div class="course-thumb"><img src="IMAGENS/Fundamentos de UX Design.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>Fundamentos de UX Design</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=fundamentos-ux">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="concluido" data-tags="pesquisa-usuarios" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=experiencia-usuario'">
+                <div class="course-thumb"><img src="IMAGENS/DESIGN_DA_EXPERIENCA_DO_USUARIO.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>Design da Experi&ecirc;ncia do Usu&aacute;rio</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=experiencia-usuario">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="concluido" data-tags="pesquisa-usuarios storytelling" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=jornada-cliente'">
+                <div class="course-thumb"><img src="IMAGENS/Jornada_Do_Cliente.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>Pesquisa de Usu&aacute;rio e Jornada do Cliente</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.7</span></span><a class="access-button" href="curso.html?course=jornada-cliente">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="andamento" data-tags="branding midias-sociais" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=branding'">
+                <div class="course-thumb"><img src="IMAGENS/Branding e Identidade Visual.png" alt=""><span class="course-badge">Design Gr&aacute;fico</span></div>
+                <h2>Branding e Identidade Visual</h2>
+                <div class="course-status"><div class="progress"><span style="width:45%"></span></div><strong class="percent">45%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.8</span></span><a class="access-button" href="curso.html?course=branding">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="nao-inscrito" data-tags="ia-design automacao-criativa" data-recommended="true" role="link" tabindex="0" onclick="window.location.href='curso.html?course=ia-design'">
+                <div class="course-thumb"><img src="IMAGENS/IA para Design e Criatividade.png" alt=""><span class="course-badge">IA</span></div>
+                <h2>IA para Design e Criatividade</h2>
+                <div class="not-enrolled">N&atilde;o inscrito</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=ia-design">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="nao-inscrito" data-tags="marketing-digital conteudo" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=marketing-digital'">
+                <div class="course-thumb"><img src="IMAGENS/Marketing Digital para Criativos.png" alt=""><span class="course-badge">Marketing</span></div>
+                <h2>Marketing Digital para Criativos</h2>
+                <div class="not-enrolled">N&atilde;o inscrito</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.6</span></span><a class="access-button" href="curso.html?course=marketing-digital">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="concluido" data-tags="edicao-video captacao-social" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=edicao-video'">
+                <div class="course-thumb"><img src="IMAGENS/Edição de Vídeo para Social.png" alt=""><span class="course-badge">Audio Visual</span></div>
+                <h2>Edi&ccedil;&atilde;o de V&iacute;deo para Social</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.8</span></span><a class="access-button" href="curso.html?course=edicao-video">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="andamento" data-tags="motion midias-sociais" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=motion-design'">
+                <div class="course-thumb"><img src="IMAGENS/Motion Design para Social.png" alt=""><span class="course-badge">Design Gr&aacute;fico</span></div>
+                <h2>Motion Design para Social</h2>
+                <div class="course-status"><div class="progress"><span style="width:35%"></span></div><strong class="percent">35%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.7</span></span><a class="access-button" href="curso.html?course=motion-design">Acessar</a></div>
+              </article>
+              <article class="course-card" data-status="andamento" data-tags="design-system prototipagem" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=design-systems'">
+                <div class="course-thumb"><img src="IMAGENS/Design Systems na Prática.png" alt=""><span class="course-badge">UX/UI Design</span></div>
+                <h2>Design Systems na Pr&aacute;tica</h2>
+                <div class="course-status"><div class="progress"><span style="width:60%"></span></div><strong class="percent">60%</strong></div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=design-systems">Acessar</a></div>
+              </article>
+              <article class="course-card is-extra" data-status="nao-inscrito" data-tags="prompt-design ia-design" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=prompt-design'">
+                <div class="course-thumb"><img src="IMAGENS/Prompt Design para Portfólios.png" alt=""><span class="course-badge">IA</span></div>
+                <h2>Prompt Design para Portf&oacute;lios</h2>
+                <div class="not-enrolled">N&atilde;o inscrito</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.6</span></span><a class="access-button" href="curso.html?course=prompt-design">Acessar</a></div>
+              </article>
+              <article class="course-card is-extra" data-status="nao-inscrito" data-tags="copywriting marketing-digital" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=copywriting'">
+                <div class="course-thumb"><img src="IMAGENS/Copywriting para Campanhas.png" alt=""><span class="course-badge">Marketing</span></div>
+                <h2>Copywriting para Campanhas</h2>
+                <div class="not-enrolled">N&atilde;o inscrito</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.8</span></span><a class="access-button" href="curso.html?course=copywriting">Acessar</a></div>
+              </article>
+              <article class="course-card is-extra" data-status="concluido" data-tags="storytelling edicao-video" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=storytelling'">
+                <div class="course-thumb"><img src="IMAGENS/Storytelling Visual.png" alt=""><span class="course-badge">Audio Visual</span></div>
+                <h2>Storytelling Visual</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.7</span></span><a class="access-button" href="curso.html?course=storytelling">Acessar</a></div>
+              </article>
+              <article class="course-card is-extra" data-status="concluido" data-tags="editorial branding" data-recommended="false" role="link" tabindex="0" onclick="window.location.href='curso.html?course=direcao-arte'">
+                <div class="course-thumb"><img src="IMAGENS/Direção de Arte Digital.png" alt=""><span class="course-badge">Design Gr&aacute;fico</span></div>
+                <h2>Dire&ccedil;&atilde;o de Arte Digital</h2>
+                <div class="completed">Conclu&iacute;do</div>
+                <div class="reviews">Avalia&ccedil;&otilde;es</div>
+                <div class="bottom-row"><span class="stars">★★★★★ <span>4.9</span></span><a class="access-button" href="curso.html?course=direcao-arte">Acessar</a></div>
+              </article>
+            </div>
+            <div class="load-more"><button type="button">Mostrar mais</button></div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <script src="menu.js"></script>
+    <script>
+      const coursesGrid = document.querySelector(".courses-grid");
+      const loadMore = document.querySelector(".load-more");
+      const searchInput = document.querySelector(".search-box input");
+      const recommendedFilter = document.querySelector(".recommended-filter");
+      let currentCourseTab = "todos";
+      let visibleCourseCount = 8;
+
+      function getSelectedTags() {
+        return Array.from(document.querySelectorAll(".filter-options input:checked"))
+          .map((input) => input.dataset.tag)
+          .filter(Boolean);
+      }
+
+      function applyCourseFilters() {
+        const selectedTags = getSelectedTags();
+        const recommendedOnly = Boolean(recommendedFilter?.checked);
+        const query = (searchInput?.value || "").trim().toLowerCase();
+        const matchingCards = [];
+
+        document.querySelectorAll(".course-card").forEach((card) => {
+          const title = card.querySelector("h2")?.textContent.toLowerCase() || "";
+          const cardTags = (card.dataset.tags || "").split(" ");
+          const matchesTab = currentCourseTab === "todos" || card.dataset.status === currentCourseTab;
+          const matchesTags = selectedTags.length === 0 || selectedTags.some((tag) => cardTags.includes(tag));
+          const matchesRecommended = !recommendedOnly || card.dataset.recommended === "true";
+          const matchesSearch = query.length === 0 || title.includes(query);
+
+          if (matchesTab && matchesTags && matchesRecommended && matchesSearch) {
+            matchingCards.push(card);
+          }
+          card.classList.add("is-hidden");
+        });
+
+        matchingCards.forEach((card, index) => {
+          card.classList.toggle("is-hidden", index >= visibleCourseCount);
+        });
+
+        if (loadMore) {
+          loadMore.style.display = matchingCards.length > visibleCourseCount ? "" : "none";
+        }
+      }
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach((item) => item.classList.remove("is-active"));
+          tab.classList.add("is-active");
+          currentCourseTab = tab.dataset.filter || "todos";
+          visibleCourseCount = 8;
+          applyCourseFilters();
+        });
+      });
+
+      const courseFilterButton = document.querySelector(".trail-tools .filter-button");
+      const courseFilterMenu = document.querySelector(".course-filter-menu");
+      courseFilterButton?.addEventListener("click", () => {
+        const isOpen = courseFilterMenu.classList.toggle("is-open");
+        courseFilterButton.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      document.querySelectorAll(".filter-category button").forEach((button) => {
+        button.addEventListener("click", () => {
+          button.closest(".filter-category")?.classList.toggle("is-open");
+        });
+      });
+
+      document.querySelectorAll(".course-filter-menu input").forEach((input) => {
+        input.addEventListener("change", () => {
+          visibleCourseCount = 8;
+          applyCourseFilters();
+        });
+      });
+
+      searchInput?.addEventListener("input", () => {
+        visibleCourseCount = 8;
+        applyCourseFilters();
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".trail-tools")) {
+          courseFilterMenu?.classList.remove("is-open");
+          courseFilterButton?.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      document.querySelector(".load-more button")?.addEventListener("click", (event) => {
+        visibleCourseCount += 8;
+        applyCourseFilters();
+      });
+
+      applyCourseFilters();
+    </script>
+  </body>
+</html>
