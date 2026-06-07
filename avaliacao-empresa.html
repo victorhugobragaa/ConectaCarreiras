@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conecta Carreiras | Avaliações</title>
+        <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Avaliações</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -41,7 +42,7 @@
       .metric span { color: var(--muted); font-size: 15px; }
       .evaluate-button { min-height: 96px; display: grid; place-items: center; border: 1.25px solid var(--border); border-radius: 12px; background: var(--gradient); color: #fff; text-decoration: none; font-size: 24px; font-weight: 800; }
       .info-grid { display: grid; grid-template-columns: 1.5fr .95fr; gap: 22px; margin-top: 22px; align-items: start; }
-      .left-column { display: flex; flex-direction: column; gap: 22px; }
+      .left-column { display: flex; flex-direction: column; gap: 14px; }
       .about, .summary, .reviews-panel { padding: 28px; }
       .about h2, .summary h2, .reviews-panel h2 { margin: 0 0 22px; font-size: 31px; font-weight: 900; }
       .about p { margin: 0 0 18px; color: rgba(255,255,255,.86); font-size: 15px; line-height: 1.32; font-weight: 400; }
@@ -60,7 +61,7 @@
       .review-card .stars-line { color: var(--orange); font-size: 29px; letter-spacing: 2px; }
       .review-card p { margin: 8px 0 0; color: rgba(255,255,255,.85); }
       .site-footer { position: relative; z-index: 2; padding: 28px 20px; background: var(--surface); color: rgba(255,255,255,.55); text-align: center; font-size: 13px; }
-      @media (max-width: 1050px) { .company-hero, .info-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 1050px) { .company-hero, .info-grid { grid-template-columns: 1fr; } .reviews-panel { width: 100%; } }
     </style>
   </head>
   <body>
@@ -80,27 +81,29 @@
         </section>
 
         <section class="info-grid">
-          <article class="about panel">
-            <h2 id="about-title">Sobre a empresa</h2>
-            <div id="about-copy"></div>
-          </article>
+          <div class="left-column">
+            <article class="about panel">
+              <h2 id="about-title">Sobre a empresa</h2>
+              <div id="about-copy"></div>
+            </article>
+
+            <section class="reviews-panel panel">
+              <p class="review-kicker">Já trabalhou nesta empresa, ou seria seu emprego atual? <strong>Avalie</strong></p>
+              <h2>Avaliações</h2>
+              <p id="reviews-label">Informação baseada em avaliações</p>
+              <div class="big-rating"><strong id="big-rating">4.6</strong><span class="big-stars">★★★★☆</span></div>
+              <div id="review-list"></div>
+            </section>
+          </div>
           <aside class="summary panel">
             <h2>Resumo</h2>
             <dl id="summary-list"></dl>
             <a class="apply-button" href="vagas.html">Candidate-se</a>
           </aside>
         </section>
-
-        <section class="reviews-panel panel">
-          <p class="review-kicker">Já trabalhou nesta empresa, ou seria seu emprego atual? <strong>Avalie</strong></p>
-          <h2>Avaliações</h2>
-          <p id="reviews-label">Informação baseada em avaliações</p>
-          <div class="big-rating"><strong id="big-rating">4.6</strong><span class="big-stars">★★★★☆</span></div>
-          <div id="review-list"></div>
-        </section>
       </section>
     </main>
-    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
     <script src="menu.js"></script>
     <script>
       const companies = {
@@ -133,10 +136,6 @@
       document.getElementById("reviews-label").textContent = `Informação baseada em ${company.reviews} avaliações`;
       document.getElementById("big-rating").textContent = company.rating;
       document.getElementById("review-list").innerHTML = company.review.map((text) => `<article class="review-card"><small>Avaliação mais recente<br>28 de Maio de 2026</small><h3>Excelente</h3><div class="stars-line">★★★★★</div><p>${text}</p></article>`).join("");
-    </script>
-  </body>
-</html>
-).join("");
     </script>
   </body>
 </html>

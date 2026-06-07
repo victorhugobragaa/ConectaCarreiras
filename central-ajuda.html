@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <title>Central de Ajuda | Conecta Carreiras</title>
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: #0b1626;
+        --line: rgba(255, 255, 255, 0.58);
+        --muted: rgba(255, 255, 255, 0.68);
+        --red: #d11217;
+        --blue: #0070d8;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+        min-height: calc(100vh - 96px);
+      }
+
+      .content {
+        width: min(1120px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 42px 0 56px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr minmax(280px, 390px);
+        align-items: end;
+        gap: 24px;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .hero p {
+        max-width: 700px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        padding: 0 14px;
+        background: rgba(6, 15, 29, 0.72);
+      }
+
+      .search img {
+        width: 16px;
+        height: 16px;
+        filter: brightness(0) saturate(100%) invert(18%) sepia(87%) saturate(3941%) hue-rotate(344deg) brightness(93%) contrast(95%);
+      }
+
+      .search input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: #fff;
+        font: 600 13px "Inter", Arial, sans-serif;
+      }
+
+      .help-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .help-card,
+      .faq-panel,
+      .contact-card {
+        border: 1.5px solid var(--line);
+        border-radius: 14px;
+        background: rgba(11, 22, 38, 0.74);
+      }
+
+      .help-card {
+        min-height: 132px;
+        padding: 20px;
+      }
+
+      .help-card h2,
+      .contact-card h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .help-card p,
+      .contact-card p,
+      details p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .lower-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.65fr;
+        gap: 18px;
+      }
+
+      .faq-panel {
+        padding: 12px 20px;
+      }
+
+      details {
+        padding: 16px 0;
+      }
+
+      details + details {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      summary {
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      details p {
+        margin-top: 10px;
+      }
+
+      .contact-card {
+        align-self: start;
+        padding: 22px;
+      }
+
+      .contact-button {
+        display: inline-grid;
+        min-width: 180px;
+        min-height: 42px;
+        margin-top: 18px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 900px) {
+        .content {
+          width: min(100% - 32px, 720px);
+        }
+
+        .hero,
+        .help-grid,
+        .lower-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="site-menu" data-active="none" data-auth="true"></div>
+    <main class="page">
+      <section class="content">
+        <header class="hero">
+          <div>
+            <h1>Central de Ajuda</h1>
+            <p>Encontre respostas rápidas sobre candidaturas, perfil, cursos, avaliações e privacidade.</p>
+          </div>
+          <label class="search">
+            <img src="https://img.icons8.com/ios-filled/50/search--v1.png" alt="" aria-hidden="true" />
+            <input type="search" placeholder="Buscar ajuda..." />
+          </label>
+        </header>
+
+        <section class="help-grid" aria-label="Atalhos de ajuda">
+          <article class="help-card">
+            <h2>Candidaturas</h2>
+            <p>Acompanhe etapas, veja detalhes da vaga e entenda o que cada status significa.</p>
+          </article>
+          <article class="help-card">
+            <h2>Perfil e currículo</h2>
+            <p>Edite informações pessoais, experiências, educação, habilidades e portfólio.</p>
+          </article>
+          <article class="help-card">
+            <h2>Privacidade</h2>
+            <p>Controle visibilidade do perfil, dados compartilhados e preferências de comunicação.</p>
+          </article>
+        </section>
+
+        <div class="lower-grid">
+          <section class="faq-panel" aria-label="Perguntas frequentes">
+            <details open>
+              <summary>Como salvo uma vaga?</summary>
+              <p>Abra os detalhes da vaga e clique em Salvar vaga. O ícone preenchido indica que ela foi adicionada às suas vagas salvas.</p>
+            </details>
+            <details>
+              <summary>Como altero minhas preferências de notificação?</summary>
+              <p>Acesse Configurações pelo menu do perfil e ajuste alertas de vagas, e-mails semanais e atualizações de candidatura.</p>
+            </details>
+            <details>
+              <summary>Por que meu preenchimento de perfil muda?</summary>
+              <p>O percentual é atualizado conforme você adiciona dados relevantes, como bio, experiências, educação, certificados e habilidades.</p>
+            </details>
+            <details>
+              <summary>As avaliações são anônimas?</summary>
+              <p>Sim. As avaliações enviadas ajudam outros candidatos e são exibidas sem identificar o autor.</p>
+            </details>
+          </section>
+
+          <aside class="contact-card">
+            <h2>Precisa falar com alguém?</h2>
+            <p>Envie uma solicitação para o suporte da Conecta Carreiras. Nossa equipe responde em até dois dias úteis.</p>
+            <a class="contact-button" href="mailto:suporte@conectacarreiras.com.br">Enviar solicitação</a>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
+    <script src="menu.js"></script>
+  </body>
+</html>

@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conecta Carreiras | Informações da Vaga</title>
+        <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Informações da Vaga</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -73,8 +74,9 @@
       .section-block p + p { margin-top: 16px; }
       .section-block ul { display: grid; gap: 5px; list-style: none; padding: 0; }
       .section-block li { display: grid; grid-template-columns: 20px 1fr; gap: 4px; }
-      .page-actions { display: flex; justify-content: flex-end; gap: 34px; margin-top: 34px; }
-      .save-job, .apply-button { display: inline-flex; align-items: center; justify-content: center; min-width: 300px; min-height: 58px; border: 1.25px solid var(--border); border-radius: 18px; color: #fff; font-size: 26px; font-weight: 900; text-decoration: none; cursor: pointer; }
+      .section-block li > span:first-child::before { color: #fff; content: "•"; }
+      .page-actions { display: flex; justify-content: flex-end; gap: 24px; margin-top: 28px; }
+      .save-job, .apply-button { display: inline-flex; align-items: center; justify-content: center; min-width: 220px; min-height: 46px; border: 1.25px solid var(--border); border-radius: 12px; color: #fff; font-size: 20px; font-weight: 900; text-decoration: none; cursor: pointer; }
       .save-job { gap: 14px; background: transparent; }
       .save-job img { width: 28px; height: 28px; filter: brightness(0) invert(1); transition: filter 140ms ease; }
       .save-job.is-saved img { filter: brightness(0) saturate(100%) invert(20%) sepia(83%) saturate(2942%) hue-rotate(343deg) brightness(90%) contrast(103%); }
@@ -115,7 +117,7 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
     <script src="menu.js"></script>
     <script>
       const jobs = {
@@ -200,7 +202,7 @@
       document.getElementById("job-rating-text").textContent = job.rating;
       document.getElementById("job-tags").innerHTML = job.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
 
-      const list = (items) => `<ul>${items.map((item) => `<li><span>•</span><span>${item}</span></li>`).join("")}</ul>`;
+      const list = (items) => `<ul>${items.map((item) => `<li><span></span><span>${item}</span></li>`).join("")}</ul>`;
       document.getElementById("job-description").innerHTML = `
         <section class="section-block"><h2>Sobre a empresa</h2><p>${job.about}</p></section>
         <section class="section-block"><h2>O que você vai fazer no dia a dia:</h2>${list(job.daily)}</section>

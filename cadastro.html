@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conecta Carreiras | Cadastro</title>
+      <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Cadastro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -249,9 +250,9 @@
     }
 
     .actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
       margin: clamp(28px, 6vh, 36px) 0 0;
     }
@@ -262,26 +263,26 @@
       height: clamp(44px, 6vh, 48px);
       place-items: center;
       border-radius: 12px;
-      font-size: clamp(14px, 2.2vh, 16px);
+      width: 100%;
+      min-width: 0;
+      font-size: clamp(12px, 1.9vh, 14px);
       font-weight: 800;
-      white-space: nowrap;
-      padding: 0 14px;
+      line-height: 1.08;
+      text-align: center;
+      white-space: normal;
+      padding: 0 10px;
     }
 
     .linkedin {
-      width: 178px;
       border: 0;
       background: var(--blue);
       color: #fff;
     }
 
     .manual {
-      width: 198px;
       border: 2px solid #fff;
       background: transparent;
       color: #fff;
-      font-size: clamp(14px, 2.2vh, 16px);
-      text-align: center;
     }
 
     @media (max-width: 760px) {
@@ -309,14 +310,33 @@
       .field-row,
       .actions {
         grid-template-columns: 1fr;
-        flex-direction: column;
       }
 
       .linkedin,
       .manual {
-        width: 100%;
-        font-size: 22px;
+        font-size: 16px;
       }
+    }
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 22px 20px;
+      background: #101b2c;
+      color: rgba(255, 255, 255, 0.55);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .site-footer a {
+      color: rgba(255, 255, 255, 0.74);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
   </style>
 </head>
@@ -327,7 +347,7 @@
       <div class="progress" aria-hidden="true"><span></span></div>
 
       <section class="card" aria-label="Cadastro do aluno">
-        <a class="brand" href="index.html" aria-label="Voltar para a pÃ¡gina inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
+        <a class="brand" href="index.html" aria-label="Voltar para a página inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
 
         <div class="intro">
           <h1>Seja bem-vindo, <span>Victor</span></h1>
@@ -363,7 +383,7 @@
           </div>
 
           <label>
-            Curso e matrÃ­cula
+            Curso e matrícula
             <span class="input course-field">
               <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
                 <path d="M16 5L28 12L16 19L4 12L16 5Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
@@ -382,6 +402,7 @@
       </section>
     </div>
   </main>
+  <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
 </body>
 </html>
 

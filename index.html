@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conecta Carreiras | PROPAGANDA DO SITE</title>
+        <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | PROPAGANDA DO SITE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -51,6 +52,22 @@
         },
       };
     </script>
+    <style>
+      [data-node-id="2:55"],
+      [data-node-id="2:67"],
+      [data-node-id="2:62"],
+      [data-node-id="2:63"],
+      [data-node-id="2:64"] {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      [data-home-logo="true"] {
+        width: 150px !important;
+        height: 56px !important;
+        top: 14px !important;
+      }
+    </style>
   </head>
   <body class="m-0 min-h-screen overflow-hidden bg-levelup-background">
     <main
@@ -254,7 +271,8 @@
       </div>
 
       <div
-        class="absolute contents left-[30px] top-[18px]"
+        class="absolute contents hidden left-[30px] top-[18px]"
+        style="display: none"
         data-node-id="2:55"
         data-name="Conecta Carreiras"
       >
@@ -285,8 +303,16 @@
         </p>
       </div>
 
+      <img
+        src="IMAGENS/LOGO.png"
+        alt="Conecta Carreiras"
+        data-home-logo="true"
+        class="absolute left-[30px] top-[14px] h-[56px] w-[150px] object-contain object-left"
+      />
+
       <p
-        class="absolute left-[470px] top-[47px] whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-levelup-muted-alt"
+        class="absolute left-[470px] top-[47px] hidden whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-levelup-muted-alt"
+        style="display: none"
         data-node-id="2:67"
       >
         <img
@@ -299,7 +325,8 @@
         Dashboard
       </p>
       <p
-        class="absolute left-[729px] top-[47px] whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        class="absolute left-[729px] top-[47px] hidden whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        style="display: none"
         data-node-id="2:62"
       >
         <svg
@@ -327,7 +354,8 @@
         Vagas
       </p>
       <p
-        class="absolute left-[919px] top-[47px] whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        class="absolute left-[919px] top-[47px] hidden whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        style="display: none"
         data-node-id="2:63"
       >
         <img
@@ -341,7 +369,8 @@
         Trilha
       </p>
       <p
-        class="absolute left-[1101px] top-[47px] whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        class="absolute left-[1101px] top-[47px] hidden whitespace-nowrap break-words font-sans text-[24px] font-semibold leading-normal text-[rgba(255,255,255,0.5)]"
+        style="display: none"
         data-node-id="2:64"
       >
         <svg
@@ -396,9 +425,7 @@
         </p>
       </a>
     </main>
-    <footer class="site-footer site-footer--fixed">
-      © Conecta Carreiras 2026. Todos os Direitos Reservados.
-    </footer>
+    <footer class="site-footer site-footer--fixed"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
     <script src="JavaScript.js"></script>
   </body>
 </html>

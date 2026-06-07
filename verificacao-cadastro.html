@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conecta Carreiras | Verificacao do cadastro</title>
+      <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Verificacao do cadastro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -175,6 +176,17 @@
       color: var(--muted);
       font-size: 14px;
       line-height: 1.2;
+    }
+
+    .success p.single-line {
+      max-width: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .success p.single-line {
+        white-space: normal;
+      }
     }
 
     .layout {
@@ -737,7 +749,7 @@
 </head>
 <body>
   <main class="page">
-    <div id="site-menu" data-active="dashboard" data-auth="true"></div>
+    <div id="site-menu" data-active="none" data-auth="true"></div>
     <header class="header">
       <a class="brand" href="index.html" aria-label="Voltar para a pagina inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
 
@@ -758,7 +770,7 @@
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7"/><path d="M7.5 12.5l3 3L17 8.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <div>
         <h1>Dados importados com sucesso! Revise seu perfil.</h1>
-        <p>Processamos seus dados através do LinkedIn, refine os detalhes abaixo para<br>destacar seu perfil</p>
+        <p class="single-line">Processamos seus dados através do LinkedIn, refine os detalhes abaixo para destacar seu perfil</p>
       </div>
     </section>
 
@@ -853,7 +865,7 @@
     </section>
 
     <a class="finish" href="dashboard.html">Finalizar</a>
-    <footer class="site-footer">© Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
   </main>
   <script src="menu.js"></script>
   <script>

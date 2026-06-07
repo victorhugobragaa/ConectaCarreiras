@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <title>Política de Privacidade | Conecta Carreiras</title>
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: #0b1626;
+        --line: rgba(255, 255, 255, 0.58);
+        --muted: rgba(255, 255, 255, 0.68);
+        --red: #d11217;
+        --blue: #0070d8;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+        min-height: calc(100vh - 96px);
+      }
+
+      .content {
+        width: min(1140px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 48px 0 58px;
+      }
+
+      .page-head {
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--red);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(34px, 4vw, 52px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .page-head p {
+        max-width: 780px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(14px, 1.25vw, 17px);
+        line-height: 1.45;
+      }
+
+      .privacy-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .privacy-panel,
+      .privacy-aside {
+        border: 1.5px solid var(--line);
+        border-radius: 14px;
+        background: rgba(11, 22, 38, 0.72);
+      }
+
+      .privacy-panel {
+        overflow: hidden;
+      }
+
+      .privacy-section {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 18px;
+        padding: 22px 24px;
+      }
+
+      .privacy-section + .privacy-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .section-number {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1.5px solid rgba(255, 255, 255, 0.62);
+        border-radius: 10px;
+        color: var(--red);
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .privacy-section h2,
+      .privacy-aside h2 {
+        margin: 0 0 10px;
+        font-size: clamp(18px, 1.65vw, 23px);
+        line-height: 1.1;
+      }
+
+      .privacy-section p,
+      .privacy-section li,
+      .privacy-aside p,
+      .privacy-aside li {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .privacy-section p,
+      .privacy-aside p {
+        margin: 0;
+      }
+
+      .privacy-section ul,
+      .privacy-aside ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      .privacy-aside {
+        position: sticky;
+        top: 112px;
+        padding: 22px;
+      }
+
+      .privacy-aside .contact-pill {
+        display: inline-grid;
+        min-height: 40px;
+        margin-top: 16px;
+        padding: 0 18px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--gradient);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .privacy-link {
+        color: #fff;
+        font-weight: 800;
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 760px) {
+        .content {
+          width: min(100% - 32px, 680px);
+        }
+
+        .privacy-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .privacy-aside {
+          position: static;
+        }
+
+        .privacy-section {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="site-menu" data-active="none" data-auth="true"></div>
+    <main class="page">
+      <section class="content">
+        <header class="page-head">
+          <p class="eyebrow">Privacidade e transparência</p>
+          <h1>Política de Privacidade</h1>
+          <p>
+            A Conecta Carreiras utiliza seus dados para melhorar sua jornada profissional, recomendar vagas, cursos e oportunidades compatíveis com o seu perfil.
+          </p>
+        </header>
+
+        <div class="privacy-layout">
+          <section class="privacy-panel" aria-label="Termos da política de privacidade">
+            <article class="privacy-section">
+              <span class="section-number">01</span>
+              <div>
+                <h2>Dados que coletamos</h2>
+                <p>Coletamos apenas as informações necessárias para criar sua experiência profissional dentro da plataforma.</p>
+                <ul>
+                  <li>Nome, e-mail, localização, formação e dados de contato.</li>
+                  <li>Currículo, experiências, educação, certificados, habilidades e portfólio.</li>
+                  <li>Interações com vagas, cursos, avaliações, notificações e candidaturas.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="privacy-section">
+              <span class="section-number">02</span>
+              <div>
+                <h2>Como usamos seus dados</h2>
+                <p>
+                  Usamos seus dados para recomendar vagas, calcular compatibilidade, personalizar trilhas de cursos, acompanhar candidaturas e melhorar a experiência na Conecta Carreiras.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-section">
+              <span class="section-number">03</span>
+              <div>
+                <h2>Compartilhamento com empresas</h2>
+                <p>
+                  Empresas visualizam suas informações profissionais quando você se candidata, salva uma vaga com autorização de contato ou mantém o perfil visível para recrutadores.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-section">
+              <span class="section-number">04</span>
+              <div>
+                <h2>Segurança das informações</h2>
+                <p>
+                  Aplicamos controles técnicos e organizacionais para reduzir riscos de acesso indevido, perda, alteração ou uso inadequado dos dados armazenados.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-section">
+              <span class="section-number">05</span>
+              <div>
+                <h2>Seus direitos</h2>
+                <p>
+                  Você pode solicitar revisão, atualização, cópia ou exclusão dos seus dados. Também pode ajustar preferências de visibilidade e comunicação em Configurações.
+                </p>
+              </div>
+            </article>
+          </section>
+
+          <aside class="privacy-aside">
+            <h2>Resumo</h2>
+            <p>Esta política explica como seus dados são tratados para conectar você a vagas, cursos e empresas com mais transparência.</p>
+            <ul>
+              <li>Você controla a visibilidade do perfil.</li>
+              <li>Avaliações são tratadas de forma anônima.</li>
+              <li>Dados profissionais só são enviados quando há ação sua.</li>
+            </ul>
+            <a class="contact-pill" href="central-ajuda.html">Falar com suporte</a>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
+    <script src="menu.js"></script>
+  </body>
+</html>

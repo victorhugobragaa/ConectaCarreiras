@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conecta Carreiras | Avaliação Enviada</title>
+        <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Avaliação Enviada</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -63,7 +64,7 @@
 
       .success-layout {
         width: min(1320px, calc(100% - 72px));
-        min-height: calc(100vh - 70px);
+        min-height: calc(100vh - 92px);
         display: flex;
         align-items: center;
         margin: 0 auto;
@@ -117,15 +118,15 @@
 
       .home-button {
         display: inline-flex;
-        width: min(420px, 100%);
-        min-height: 60px;
+        width: min(360px, 100%);
+        min-height: 52px;
         align-items: center;
         justify-content: center;
         border: 1.25px solid var(--border);
         border-radius: 10px;
         background: var(--gradient);
         color: #fff;
-        font-size: clamp(20px, 2.2vw, 26px);
+        font-size: clamp(18px, 1.7vw, 22px);
         font-weight: 900;
         text-decoration: none;
       }
@@ -135,11 +136,17 @@
         bottom: 0;
         right: 0;
         z-index: -1;
+        display: flex;
+        width: min(680px, 50vw);
+        justify-content: flex-end;
       }
 
       .success-art img {
         display: block;
-        width: min(550px, 45vw);
+        width: 100%;
+        max-height: calc(100vh - 96px);
+        object-fit: contain;
+        object-position: right bottom;
       }
 
       .site-footer {
@@ -176,14 +183,14 @@
           <span class="check-icon" aria-hidden="true"></span>
           <h1>Sua avaliação foi enviada com sucesso</h1>
           <p>Agradecemos o envio. Em breve, nossa equipe analisará sua avaliação e você receberá um retorno dentro de três a cinco dias. Caso tenha dúvidas, <em>entre em contato com nosso suporte.</em></p>
-          <a class="home-button" href="index.html">Voltar a Home</a>
+          <a class="home-button" href="avaliacoes.html">Voltar a Home</a>
         </div>
         <div class="success-art">
           <img src="IMAGENS/Avaliação_Enviada.png" alt="Pessoa visualizando avaliações enviadas" />
         </div>
       </section>
     </main>
-    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
     <script src="menu.js"></script>
   </body>
 </html>

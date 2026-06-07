@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conecta Carreiras | Vagas</title>
+        <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Vagas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -84,15 +85,6 @@
         gap: 18px;
         padding: 20px 8px 34px;
         background: rgba(16, 27, 44, 0.62);
-      }
-
-      .sidebar-preview {
-        width: 168px;
-        height: 58px;
-        margin: 0 auto 8px;
-        border: 1.25px solid var(--border);
-        border-radius: 8px;
-        background: rgba(7, 20, 37, 0.45);
       }
 
       .side-nav {
@@ -538,6 +530,17 @@
         line-height: 1;
       }
 
+      .process-details { display: none; padding: 0 12px 14px; }
+      .sent-card.is-open .process-details { display: block; }
+      .process-track { position: relative; display: grid; gap: 10px; padding-left: 12px; }
+      .process-movement { position: relative; z-index: 1; display: grid; grid-template-columns: 30px 1fr; gap: 9px; align-items: center; min-height: 42px; border: 1.25px solid var(--border); border-radius: 999px; background: var(--field); padding: 7px 12px; }
+      .process-movement:not(:last-child)::after { position: absolute; left: 26px; top: 100%; width: 1.25px; height: 10px; background: var(--border); content: ""; }
+      .process-movement svg { width: 22px; height: 22px; justify-self: center; color: var(--red); }
+      .process-movement.is-rejected strong,
+      .process-movement.is-rejected svg { color: #ff2a35; }
+      .process-movement strong { display: block; font-size: 13px; line-height: 1.05; }
+      .process-movement span { display: block; margin-top: 2px; color: rgba(255, 255, 255, 0.62); font-size: 10px; line-height: 1.1; }
+
       .save-icon {
         display: grid;
         width: 34px;
@@ -576,7 +579,6 @@
 
       <div class="jobs-layout">
         <aside class="sidebar" aria-label="Filtros de vagas">
-          <div class="sidebar-preview"></div>
           <nav class="side-nav">
             <a class="side-item is-active" href="#" data-view="jobs"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Vagas</a>
             <a class="side-item" href="#" data-view="sent"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enviadas</a>
@@ -640,7 +642,7 @@
                   <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
                   <div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span></div></div>
                   <div class="status-block"><span class="status-pill analysis">Em an&aacute;lise</span><span class="sent-date">Enviada em 20/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-simpress.html">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
 
@@ -650,7 +652,7 @@
                   <img class="company-logo dark" src="IMAGENS/TATIL_DESIGN.png" alt="Tatil Design">
                   <div class="job-main"><h2>Est&aacute;gio em Design Gr&aacute;fico</h2><p class="company">T&aacute;til Design - T&aacute;til Design de Ideias</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 900 - 1.200</span><span class="tag">4,2km da FMU</span></div></div>
                   <div class="status-block"><span class="status-pill screening">Triagem</span><span class="sent-date">Enviada em 10/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-detalhe.html?vaga=tatil">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
 
@@ -660,7 +662,7 @@
                   <img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Sirius">
                   <div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Sirius | Produtos Digitais, Sites, Apps, Intranet e IA</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Presencial</span><span class="tag">$ 2.000 - 2.100</span><span class="tag">4,0km da FMU</span></div></div>
                   <div class="status-block"><span class="status-pill interview">Entrevista</span><span class="sent-date">Enviada em 05/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-detalhe.html?vaga=sirius">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
 
@@ -670,7 +672,7 @@
                   <img class="company-logo" src="IMAGENS/AMIL.png" alt="Osang Healthcare">
                   <div class="job-main"><h2>Est&aacute;gio em Designer Gr&aacute;fico &amp; Motion</h2><p class="company">Osang do Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">Remoto</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,0km da FMU</span></div></div>
                   <div class="status-block"><span class="status-pill rejected">N&atilde;o selecionado</span><span class="sent-date">Enviada em 05/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-detalhe.html?vaga=osang">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
             </div>
@@ -695,7 +697,7 @@
                   <img class="company-logo" src="IMAGENS/NATURA.png" alt="Conceito Prime">
                   <div class="job-main"><h2>Est&aacute;gio em Designer Multim&iacute;dia</h2><p class="company">CONCEITO PRIME</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.100 - 2.400</span><span class="tag">2,0km da FMU</span><span class="tag">★ 4.2</span></div></div>
                   <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 20/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-detalhe.html?vaga=conceito">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
 
@@ -705,7 +707,7 @@
                   <img class="company-logo" src="IMAGENS/SIRIUS.png" alt="Saint-Gobain Brasil">
                   <div class="job-main"><h2>Est&aacute;gio em Design</h2><p class="company">Saint-Gobain Brasil</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 2.500</span><span class="tag">2,5km da FMU</span><span class="tag">★ 4.0</span></div></div>
                   <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 05/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-detalhe.html?vaga=saint">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
 
@@ -715,7 +717,7 @@
                   <img class="company-logo" src="IMAGENS/SIMPRESS.png" alt="Simpress">
                   <div class="job-main"><h2>Est&aacute;gio em Design de UI/UX</h2><p class="company">Simpress | Outsourcing de Equipamentos de TI para Empresas</p><div class="tags"><span class="tag">S&atilde;o Paulo/SP</span><span class="tag">H&iacute;brido</span><span class="tag">$ 1.200 - 2.500</span><span class="tag">3,2km da FMU</span><span class="tag">★ 4.8</span></div></div>
                   <div class="status-block"><span class="save-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v17l-5-3-5 3V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="sent-date">Salva em 05/04/2026</span></div>
-                  <a class="details-button" href="#">Ver detalhes <span>&rsaquo;</span></a>
+                  <a class="details-button" href="vaga-simpress.html">Ver detalhes <span>&rsaquo;</span></a>
                 </div>
               </article>
             </div>
@@ -724,7 +726,7 @@
       </div>
     </main>
 
-    <footer class="site-footer">&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</footer>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
     <script src="menu.js"></script>
     <script>
       const sortButton = document.querySelector(".sort-button");
@@ -772,6 +774,45 @@
           });
         });
       });
+
+      document.querySelectorAll(".sent-view .details-button").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          const card = button.closest(".sent-card");
+          if (!card) return;
+          if (!card.querySelector(".process-details")) {
+            const details = document.createElement("div");
+            const cardText = card.textContent;
+            const iconDone = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12.3l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            const iconClock = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            const iconLock = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 10V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+            const iconRejected = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+            const stages = [
+              { title: "Envio do Currículo", note: "Enviado e recebido pela empresa", icon: iconDone },
+              { title: "Triagem pelo RH", note: "Em andamento", icon: iconClock },
+              { title: "Entrevista com o RH", note: "Aguardando etapa anterior", icon: iconLock }
+            ];
+            if (cardText.includes("Entrevista")) {
+              stages[1] = { title: "Triagem pelo RH", note: "Concluída", icon: iconDone };
+              stages[2] = { title: "Entrevista com o RH", note: "Em andamento", icon: iconClock };
+            }
+            if (cardText.includes("Não selecionado")) {
+              stages[1] = { title: "Triagem pelo RH", note: "Concluída", icon: iconDone };
+              stages[2] = { title: "Entrevista com o RH", note: "Finalizada", icon: iconDone };
+              stages.push({ title: "Desclassificado", note: "Processo encerrado para esta vaga", icon: iconRejected, className: "is-rejected" });
+            }
+            details.className = "process-details";
+            details.innerHTML = `
+              <div class="process-track" aria-label="Andamento da candidatura">
+                ${stages.map((stage) => `<div class="process-movement ${stage.className || ""}">${stage.icon}<div><strong>${stage.title}</strong><span>${stage.note}</span></div></div>`).join("")}
+              </div>
+            `;
+            card.appendChild(details);
+          }
+          card.classList.toggle("is-open");
+        });
+      });
+
       document.querySelectorAll(".job-card[data-href]").forEach((card) => {
         card.addEventListener("click", (event) => {
           if (event.target.closest("a, button")) return;

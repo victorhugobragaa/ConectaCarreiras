@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conecta Carreiras | Login Aluno</title>
+      <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+<title>Conecta Carreiras | Login Aluno</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -305,7 +306,7 @@
       background: var(--field);
       color: #fff;
       font: inherit;
-      font-size: clamp(15px, 1.15vw, 19px);
+      font-size: clamp(13px, 0.95vw, 15px);
       outline: none;
       padding: 0 18px 0 46px;
     }
@@ -355,6 +356,27 @@
         margin-bottom: 28px;
       }
     }
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 22px 20px;
+      background: #101b2c;
+      color: rgba(255, 255, 255, 0.55);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .site-footer a {
+      color: rgba(255, 255, 255, 0.74);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
   </style>
 </head>
 <body>
@@ -363,7 +385,7 @@
       <div class="visual-panel">
         <img class="visual-bg" src="IMAGENS/FUNDO%20LOGIN.png" alt="">
 
-        <a href="index.html" class="brand" aria-label="Voltar para a pÃ¡gina inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
+        <a href="index.html" class="brand" aria-label="Voltar para a página inicial"><img class="brand-logo" src="IMAGENS/LOGO.png" alt="Conecta Carreiras"></a>
 
         <p class="visual-copy">
           Onde o seu talento encontra as melhores oportunidades do mercado tech
@@ -432,6 +454,7 @@
       </div>
     </section>
   </main>
+  <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
   <script>
     const birthdateInput = document.querySelector('input[name="birthdate"]');
     const modeButtons = document.querySelectorAll("[data-login-mode]");
