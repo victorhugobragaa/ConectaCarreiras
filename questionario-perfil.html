@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="IMAGENS/Faicon.png" />
+    <title>Conecta Carreiras | Questionário de Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <style>
+      :root {
+        --bg: #071425;
+        --surface: #101b2c;
+        --panel: rgba(16, 27, 44, 0.72);
+        --border: rgba(255, 255, 255, 0.52);
+        --muted: rgba(255, 255, 255, 0.72);
+        --red: #d11217;
+        --blue: #00346f;
+        --gradient: linear-gradient(100.5deg, #00346f 25.34%, #da0015 97.29%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--bg);
+        color: #fff;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        left: -260px;
+        top: -260px;
+        z-index: 1;
+        width: clamp(620px, 48vw, 860px);
+        height: clamp(680px, 82vh, 960px);
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 0% 0%, rgba(0, 119, 255, 0.34) 0%, rgba(0, 88, 190, 0.2) 34%, rgba(0, 52, 111, 0.08) 58%, transparent 76%),
+          linear-gradient(135deg, rgba(0, 119, 255, 0.14) 0%, rgba(0, 52, 111, 0.08) 44%, transparent 72%);
+        filter: blur(70px);
+        content: "";
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .profile-questionnaire {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      .content {
+        width: min(1120px, calc(100% - 72px));
+        margin: 0 auto;
+        padding: 34px 0 44px;
+      }
+
+      .head {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 18px;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .title-icon {
+        width: 34px;
+        height: 34px;
+        color: var(--red);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(28px, 3.2vw, 42px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .head p {
+        max-width: 720px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .progress-label {
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.78);
+        text-align: right;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .progress-track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.28);
+      }
+
+      .progress-fill {
+        width: 54%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--gradient);
+      }
+
+      .question-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .question-card {
+        min-height: 232px;
+        border: 1.25px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+        padding: 18px 20px 20px;
+      }
+
+      .question-title {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        gap: 12px;
+        align-items: start;
+        margin: 0 0 18px;
+        font-size: clamp(18px, 1.75vw, 24px);
+        line-height: 1.08;
+        font-weight: 700;
+      }
+
+      .number {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--gradient);
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .options {
+        display: grid;
+        gap: 11px;
+        padding-left: 22px;
+      }
+
+      .options--compact {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px 26px;
+        padding-left: 22px;
+      }
+
+      .option {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: clamp(15px, 1.35vw, 20px);
+        font-weight: 750;
+        line-height: 1.1;
+        cursor: pointer;
+      }
+
+      .options--compact .option {
+        font-size: clamp(13px, 1.15vw, 16px);
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--red);
+        cursor: pointer;
+      }
+
+      .other-tool {
+        grid-column: 1 / -1;
+        margin-top: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: clamp(12px, 1.05vw, 15px);
+        font-weight: 800;
+      }
+
+      .other-tool input {
+        display: block;
+        width: min(100%, 320px);
+        height: 32px;
+        margin-top: 8px;
+        border: 1.25px solid rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        background: #071425;
+        color: #fff;
+        padding: 0 12px;
+        outline: none;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 180px;
+        justify-content: end;
+        margin-top: 24px;
+      }
+
+      .submit-button {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: center;
+        border: 1.75px solid var(--border);
+        border-radius: 14px;
+        color: #fff;
+        font-size: clamp(18px, 1.65vw, 24px);
+        font-weight: 900;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .submit-button {
+        border-color: rgba(255, 255, 255, 0.55);
+        background: var(--gradient);
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        padding: 28px 20px;
+        background: var(--surface);
+        color: rgba(255, 255, 255, 0.55);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 940px) {
+        .content {
+          width: min(100% - 32px, 760px);
+          padding-top: 36px;
+        }
+
+        .head,
+        .question-grid,
+        .actions {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          gap: 14px;
+        }
+
+        .question-card {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="profile-questionnaire">
+      <div id="site-menu" data-active="none" data-auth="true"></div>
+      <section class="content">
+        <header class="head">
+          <div>
+            <div class="title">
+              <svg class="title-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 20h4.8L19.2 9.6a2.1 2.1 0 0 0 0-3L17.4 4.8a2.1 2.1 0 0 0-3 0L4 15.2V20z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M13.5 5.8l4.7 4.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <h1>Questionário de perfil</h1>
+            </div>
+            <p>6 perguntas rápidas para personalizar suas vagas e nos ajudar a trazer recomendações mais alinhadas ao seu perfil.</p>
+          </div>
+          <div class="progress">
+            <div class="progress-label">Etapa 1 de 2</div>
+            <div class="progress-track"><div class="progress-fill"></div></div>
+          </div>
+        </header>
+
+        <form id="profileForm">
+          <section class="question-grid" aria-label="Questionário de perfil">
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">1</span><span>Qual área você tem mais interesse?</span></h2>
+              <div class="options">
+                <label class="option"><input type="radio" name="area" checked /> UX/UI Design</label>
+                <label class="option"><input type="radio" name="area" /> Design Gráfico</label>
+                <label class="option"><input type="radio" name="area" /> Motion Design</label>
+                <label class="option"><input type="radio" name="area" /> Produto Digital</label>
+                <label class="option"><input type="radio" name="area" /> Marketing</label>
+                <label class="option"><input type="radio" name="area" /> Outra</label>
+              </div>
+            </article>
+
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">2</span><span>Qual modalidade de trabalho você prefere?</span></h2>
+              <div class="options">
+                <label class="option"><input type="checkbox" name="modalidade" /> Presencial</label>
+                <label class="option"><input type="checkbox" name="modalidade" /> Híbrido</label>
+                <label class="option"><input type="checkbox" name="modalidade" /> Remoto</label>
+                <label class="option"><input type="checkbox" name="modalidade" /> Sem preferência</label>
+              </div>
+            </article>
+
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">3</span><span>Qual sua disponibilidade para estágio?</span></h2>
+              <div class="options">
+                <label class="option"><input type="checkbox" name="disponibilidade" /> Manhã</label>
+                <label class="option"><input type="checkbox" name="disponibilidade" /> Tarde</label>
+                <label class="option"><input type="checkbox" name="disponibilidade" /> Noite</label>
+                <label class="option"><input type="checkbox" name="disponibilidade" /> Integral</label>
+              </div>
+            </article>
+
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">4</span><span>Quais ferramentas você possui conhecimento?</span></h2>
+              <div class="options options--compact">
+                <label class="option"><input type="checkbox" name="ferramentas" /> Figma</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> Canva</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> Photoshop</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> HTML/CSS</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> Illustrator</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> Outra</label>
+                <label class="option"><input type="checkbox" name="ferramentas" /> After Effects</label>
+                <label class="other-tool">Escreva outra ferramenta (opcional)<input type="text" name="outraFerramenta" /></label>
+              </div>
+            </article>
+
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">5</span><span>Qual faixa de bolsa você procura?</span></h2>
+              <div class="options">
+                <label class="option"><input type="checkbox" name="bolsa" /> Até R$ 1.000</label>
+                <label class="option"><input type="checkbox" name="bolsa" /> R$ 1.000 - R$ 1.500</label>
+                <label class="option"><input type="checkbox" name="bolsa" /> R$ 1.500 - R$ 2.000</label>
+                <label class="option"><input type="checkbox" name="bolsa" /> Acima de R$ 2.000</label>
+              </div>
+            </article>
+
+            <article class="question-card">
+              <h2 class="question-title"><span class="number">6</span><span>Qual seu principal objetivo profissional atualmente?</span></h2>
+              <div class="options">
+                <label class="option"><input type="radio" name="objetivo" /> Conseguir o primeiro estágio</label>
+                <label class="option"><input type="radio" name="objetivo" checked /> Ganhar experiência prática</label>
+                <label class="option"><input type="radio" name="objetivo" /> Desenvolver portfólio</label>
+                <label class="option"><input type="radio" name="objetivo" /> Efetivação futura</label>
+                <label class="option"><input type="radio" name="objetivo" /> Migrar de área</label>
+              </div>
+            </article>
+          </section>
+
+          <div class="actions">
+            <button class="submit-button" type="submit">Enviar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer class="site-footer"><span>&copy; Conecta Carreiras 2026. Todos os Direitos Reservados.</span><a href="politica-privacidade.html">Política de Privacidade</a></footer>
+    <script src="menu.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const origem = params.get("origem") || "linkedin";
+      const nextPage = origem === "manual" ? "preenchimento-manual.html" : "verificacao-cadastro.html";
+      document.getElementById("profileForm")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        window.location.href = nextPage;
+      });
+    </script>
+  </body>
+</html>

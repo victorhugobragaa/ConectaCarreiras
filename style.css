@@ -26,8 +26,8 @@ body {
   --job-h: clamp(142px, 17vh, 184px);
   --job-left: min(calc(100vw - var(--job-w) - clamp(32px, 7vw, 125px)), 1103px);
   --job-top: clamp(222px, 35vh, 390px);
-  --status-left: min(calc(50vw + 24px), 919px);
-  --status-top: calc(var(--header-h) + clamp(38px, 5.2vh, 62px));
+  --status-left: min(calc(var(--job-left) + var(--job-w) * 0.14), calc(100vw - var(--status-w) - 32px));
+  --status-top: calc(var(--job-top) - var(--status-h) - clamp(18px, 3vh, 28px));
   --status-w: clamp(150px, 10.9vw, 188px);
   --status-h: clamp(30px, 3.36vw, 37.6px);
   --status-icon: clamp(18px, 1.3vw, 22.56px);
