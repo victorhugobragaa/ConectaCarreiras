@@ -17,7 +17,7 @@ body {
   --hero-top: clamp(132px, 22vh, 270px);
   --hero-width: clamp(600px, 54vw, 908px);
   --hero-font: clamp(34px, 3.55vw, 62px);
-  --copy-top: clamp(350px, 52vh, 510px);
+  --copy-top: max(calc(var(--hero-top) + (var(--hero-font) * 3.45) + clamp(22px, 4vh, 48px)), clamp(350px, 52vh, 510px));
   --copy-font: clamp(17px, 1.55vw, 30px);
   --cta-top: clamp(462px, 71vh, 724px);
   --cta-w: clamp(180px, 15vw, 250px);
@@ -351,7 +351,7 @@ body {
   #figma-frame {
     --hero-width: calc(100vw - 48px);
     --hero-font: clamp(34px, 7vw, 48px);
-    --copy-top: clamp(360px, 55vh, 430px);
+    --copy-top: calc(var(--hero-top) + (var(--hero-font) * 3.45) + clamp(22px, 4vh, 42px));
     --copy-font: clamp(16px, 3vw, 20px);
     --cta-top: clamp(505px, 78vh, 590px);
     --job-left: var(--hero-left);
